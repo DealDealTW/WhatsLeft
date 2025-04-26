@@ -102,7 +102,10 @@ export type TranslationKey = keyof typeof translations['en'] |
   'selectSubcategory' | 'expiresOn' | 'notifyMe' | 'daysBeforeExpiry' | 
   'notificationDisabled' | 'saveChanges' | 'deleteItemConfirm' | 
   'deleteItemConfirmDesc' | 'reAddToDashboard' | 'addToShopListZero' | 
-  'closeModalAndDoNothing';
+  'closeModalAndDoNothing' |
+  // 退出對話框相關的鍵
+  'exitPromptTitle' | 'exitPromptDescription' | 'exit' | 'cancel' |
+  'viewBasicTutorial' | 'viewAdvancedTutorial' | 'viewTutorial';
 
 export const useTranslation = (language: SupportedLanguage) => {
   const t = (key: TranslationKey, params?: Record<string, string | number>): string => {

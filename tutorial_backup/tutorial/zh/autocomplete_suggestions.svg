@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景 -->
+  <rect width="600" height="400" fill="#f5f5f5"/>
+  
+  <!-- 標題 -->
+  <text x="300" y="40" font-family="Arial, sans-serif" font-size="22" font-weight="bold" text-anchor="middle" fill="#333333">智能自動完成建議</text>
+  
+  <!-- 搜尋欄 -->
+  <rect x="150" y="70" width="300" height="45" rx="8" ry="8" fill="#ffffff" stroke="#e0e0e0" stroke-width="2"/>
+  <text x="170" y="100" font-family="Arial, sans-serif" font-size="16" fill="#333333">蘋</text>
+  <line x1="185" y1="100" x2="185" y2="85" stroke="#333333" stroke-width="2" stroke-linecap="round">
+    <animate attributeName="opacity" values="1;0;1" dur="1.5s" repeatCount="indefinite"/>
+  </line>
+  
+  <!-- 搜尋圖標 -->
+  <circle cx="430" cy="93" r="12" fill="none" stroke="#4a5568" stroke-width="2"/>
+  <line x1="438" y1="101" x2="445" y2="108" stroke="#4a5568" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- 建議下拉選單背景 -->
+  <rect x="150" y="115" width="300" height="165" rx="8" ry="8" fill="#ffffff" stroke="#e0e0e0" stroke-width="2"/>
+  
+  <!-- 建議項目 - 已加亮 -->
+  <rect x="155" y="120" width="290" height="40" rx="5" ry="5" fill="#ebf8ff"/>
+  <text x="170" y="145" font-family="Arial, sans-serif" font-size="16" fill="#333333">蘋果</text>
+  <text x="425" y="145" font-family="Arial, sans-serif" font-size="12" fill="#718096" text-anchor="end">常用</text>
+  
+  <!-- 其他建議項目 -->
+  <line x1="155" y1="165" x2="445" y2="165" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="170" y="190" font-family="Arial, sans-serif" font-size="16" fill="#333333">蘋果汁</text>
+  <text x="425" y="190" font-family="Arial, sans-serif" font-size="12" fill="#718096" text-anchor="end">飲料</text>
+  
+  <line x1="155" y1="205" x2="445" y2="205" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="170" y="230" font-family="Arial, sans-serif" font-size="16" fill="#333333">蘋果派</text>
+  <text x="425" y="230" font-family="Arial, sans-serif" font-size="12" fill="#718096" text-anchor="end">甜點</text>
+  
+  <line x1="155" y1="245" x2="445" y2="245" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="170" y="270" font-family="Arial, sans-serif" font-size="16" fill="#333333">蘋果醋</text>
+  <text x="425" y="270" font-family="Arial, sans-serif" font-size="12" fill="#718096" text-anchor="end">調味料</text>
+  
+  <!-- 歷史記錄面板 -->
+  <rect x="150" y="290" width="300" height="80" rx="8" ry="8" fill="#ffffff" stroke="#e0e0e0" stroke-width="2"/>
+  <text x="170" y="315" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#333333">最近搜尋</text>
+  
+  <!-- 歷史項目 -->
+  <rect x="170" y="325" width="70" height="30" rx="15" ry="15" fill="#f7fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="205" y="345" font-family="Arial, sans-serif" font-size="13" fill="#4a5568" text-anchor="middle">香蕉</text>
+  
+  <rect x="250" y="325" width="70" height="30" rx="15" ry="15" fill="#f7fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="285" y="345" font-family="Arial, sans-serif" font-size="13" fill="#4a5568" text-anchor="middle">牛奶</text>
+  
+  <rect x="330" y="325" width="90" height="30" rx="15" ry="15" fill="#f7fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="375" y="345" font-family="Arial, sans-serif" font-size="13" fill="#4a5568" text-anchor="middle">蘋果派</text>
+  
+  <!-- 鍵盤導航提示 -->
+  <rect x="440" y="165" width="30" height="30" rx="5" ry="5" fill="#edf2f7" stroke="#cbd5e0" stroke-width="1"/>
+  <text x="455" y="185" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#4a5568" text-anchor="middle">↓</text>
+  
+  <rect x="440" y="120" width="30" height="30" rx="5" ry="5" fill="#edf2f7" stroke="#cbd5e0" stroke-width="1"/>
+  <text x="455" y="140" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#4a5568" text-anchor="middle">↑</text>
+  
+  <rect x="480" y="142" width="60" height="30" rx="5" ry="5" fill="#edf2f7" stroke="#cbd5e0" stroke-width="1"/>
+  <text x="510" y="162" font-family="Arial, sans-serif" font-size="13" font-weight="bold" fill="#4a5568" text-anchor="middle">Enter</text>
+  
+  <!-- 說明注釋 -->
+  <text x="300" y="385" font-family="Arial, sans-serif" font-size="14" font-style="italic" text-anchor="middle" fill="#666666">根據使用頻率和最近搜尋智能推薦自動完成</text>
+</svg> 

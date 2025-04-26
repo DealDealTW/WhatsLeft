@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Gradient Background -->
+  <defs>
+    <linearGradient id="orangeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff8c00;stop-opacity:0.2"/>
+      <stop offset="100%" style="stop-color:#ff8c00;stop-opacity:0.05"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#orangeGradient)"/>
+  
+  <!-- Header -->
+  <text x="300" y="50" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#333333" text-anchor="middle">Advanced Features</text>
+  <text x="300" y="80" font-family="Arial, sans-serif" font-size="16" fill="#666666" text-anchor="middle">Unlock the full power of WhatsLeft</text>
+  
+  <!-- Feature Previews -->
+  <!-- Feature 1: Categories -->
+  <rect x="80" y="120" width="120" height="100" rx="10" ry="10" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+  <circle cx="140" cy="150" r="25" fill="#ff8c00" fill-opacity="0.8"/>
+  <path d="M140 145 l-10 10 l5 0 l0 8 l10 0 l0 -8 l5 0 z" fill="white"/>
+  <text x="140" y="190" font-family="Arial, sans-serif" font-size="12" fill="#333333" text-anchor="middle">Smart Categories</text>
+  
+  <!-- Feature 2: Family Sharing -->
+  <rect x="240" y="120" width="120" height="100" rx="10" ry="10" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+  <circle cx="300" cy="150" r="25" fill="#ff8c00" fill-opacity="0.8"/>
+  <path d="M290 145 a10 10 0 1 0 0 0.1 M310 145 a10 10 0 1 0 0 0.1 M300 155 a20 20 0 1 0 0 0.1" stroke="white" stroke-width="2" fill="none"/>
+  <text x="300" y="190" font-family="Arial, sans-serif" font-size="12" fill="#333333" text-anchor="middle">Family Sharing</text>
+  
+  <!-- Feature 3: Data Insights -->
+  <rect x="400" y="120" width="120" height="100" rx="10" ry="10" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+  <circle cx="460" cy="150" r="25" fill="#ff8c00" fill-opacity="0.8"/>
+  <path d="M445 160 L460 140 L475 150 L475 160 L445 160 Z" fill="white"/>
+  <path d="M445 150 L460 130 L475 140" stroke="white" stroke-width="2" fill="none"/>
+  <text x="460" y="190" font-family="Arial, sans-serif" font-size="12" fill="#333333" text-anchor="middle">Data Insights</text>
+  
+  <!-- Feature 4: Notification -->
+  <rect x="80" y="240" width="120" height="100" rx="10" ry="10" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+  <circle cx="140" cy="270" r="25" fill="#ff8c00" fill-opacity="0.8"/>
+  <path d="M140 260 a5 5 0 1 0 0 0.1 M140 280 l0 -10 M130 280 l20 0" stroke="white" stroke-width="2" fill="none"/>
+  <text x="140" y="310" font-family="Arial, sans-serif" font-size="12" fill="#333333" text-anchor="middle">Custom Alerts</text>
+  
+  <!-- Feature 5: Shopping -->
+  <rect x="240" y="240" width="120" height="100" rx="10" ry="10" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+  <circle cx="300" cy="270" r="25" fill="#ff8c00" fill-opacity="0.8"/>
+  <path d="M285 260 l0 20 l30 0 l0 -20 M285 260 l-5 -10 l10 0 M310 260 l5 -10 l-10 0" stroke="white" stroke-width="2" fill="none"/>
+  <text x="300" y="310" font-family="Arial, sans-serif" font-size="12" fill="#333333" text-anchor="middle">Auto Shopping Lists</text>
+  
+  <!-- Feature 6: Settings -->
+  <rect x="400" y="240" width="120" height="100" rx="10" ry="10" fill="white" stroke="#e0e0e0" stroke-width="1"/>
+  <circle cx="460" cy="270" r="25" fill="#ff8c00" fill-opacity="0.8"/>
+  <path d="M460 260 a10 10 0 1 0 0 0.1 M460 255 l0 -10 M460 285 l0 10 M445 270 l-10 0 M475 270 l10 0" stroke="white" stroke-width="2" fill="none"/>
+  <text x="460" y="310" font-family="Arial, sans-serif" font-size="12" fill="#333333" text-anchor="middle">Advanced Settings</text>
+  
+  <!-- Footer -->
+  <text x="300" y="380" font-family="Arial, sans-serif" font-size="14" fill="#333333" text-anchor="middle">Swipe to explore advanced features →</text>
+</svg> 

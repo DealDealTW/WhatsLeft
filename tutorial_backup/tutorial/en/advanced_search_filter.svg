@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="600" height="400" fill="#f5f5f5"/>
+  
+  <!-- Title -->
+  <text x="300" y="40" font-family="Arial, sans-serif" font-size="22" font-weight="bold" text-anchor="middle" fill="#333333">Advanced Filtering &amp; Sorting</text>
+  
+  <!-- Phone screen -->
+  <rect x="220" y="70" width="240" height="400" rx="20" ry="20" fill="#333333"/>
+  <rect x="230" y="90" width="220" height="360" rx="5" ry="5" fill="#ffffff"/>
+  
+  <!-- App interface top -->
+  <rect x="230" y="90" width="220" height="50" rx="5" ry="5" fill="#4299e1"/>
+  <text x="290" y="120" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#ffffff">WhatsLeft</text>
+  
+  <!-- Search bar -->
+  <rect x="240" y="105" width="140" height="20" rx="10" ry="10" fill="#ffffff" fill-opacity="0.2"/>
+  <text x="260" y="120" font-family="Arial, sans-serif" font-size="10" text-anchor="start" fill="#ffffff">Search items...</text>
+  <circle cx="400" cy="115" r="9" fill="#ffffff" fill-opacity="0.2"/>
+  <path d="M397,115 L403,115 M400,112 L400,118" stroke="#ffffff" stroke-width="1.5"/>
+  
+  <!-- Filter panel -->
+  <rect x="240" y="150" width="200" height="120" rx="5" ry="5" fill="#f0f4f8" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="340" y="170" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#333333">Advanced Filters</text>
+  
+  <!-- Filter option: Category -->
+  <rect x="250" y="180" width="180" height="25" rx="3" ry="3" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="265" y="196" font-family="Arial, sans-serif" font-size="12" text-anchor="start" fill="#333333">Category:</text>
+  <text x="330" y="196" font-family="Arial, sans-serif" font-size="12" text-anchor="start" fill="#4299e1">Food, Household</text>
+  <path d="M415,190 L425,190 M420,185 L420,195" stroke="#4299e1" stroke-width="1" stroke-linecap="round"/>
+  
+  <!-- Filter option: Status -->
+  <rect x="250" y="210" width="180" height="25" rx="3" ry="3" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="265" y="226" font-family="Arial, sans-serif" font-size="12" text-anchor="start" fill="#333333">Status:</text>
+  <text x="330" y="226" font-family="Arial, sans-serif" font-size="12" text-anchor="start" fill="#4299e1">Expiring Soon</text>
+  <path d="M415,220 L425,220 M420,215 L420,225" stroke="#4299e1" stroke-width="1" stroke-linecap="round"/>
+  
+  <!-- Filter option: Sort -->
+  <rect x="250" y="240" width="180" height="25" rx="3" ry="3" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="265" y="256" font-family="Arial, sans-serif" font-size="12" text-anchor="start" fill="#333333">Sort by:</text>
+  <text x="330" y="256" font-family="Arial, sans-serif" font-size="12" text-anchor="start" fill="#4299e1">Expiry Date (Asc)</text>
+  <path d="M415,250 L425,250 M420,245 L420,255" stroke="#4299e1" stroke-width="1" stroke-linecap="round"/>
+  
+  <!-- Apply filter button -->
+  <rect x="270" y="270" width="140" height="30" rx="5" ry="5" fill="#4299e1"/>
+  <text x="340" y="290" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#ffffff">Apply Filters</text>
+  
+  <!-- Filter results -->
+  <rect x="240" y="310" width="200" height="130" rx="5" ry="5" fill="#f0f4f8" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="340" y="330" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#333333">Filter Results</text>
+  
+  <!-- Result item 1 -->
+  <rect x="250" y="340" width="180" height="30" rx="3" ry="3" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <circle cx="265" cy="355" r="8" fill="#fbd38d"/>
+  <text x="280" y="358" font-family="Arial, sans-serif" font-size="12" text-anchor="start" fill="#333333">Milk</text>
+  <text x="400" y="358" font-family="Arial, sans-serif" font-size="10" text-anchor="end" fill="#dd6b20">3 days</text>
+  
+  <!-- Result item 2 -->
+  <rect x="250" y="375" width="180" height="30" rx="3" ry="3" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <circle cx="265" cy="390" r="8" fill="#fbd38d"/>
+  <text x="280" y="393" font-family="Arial, sans-serif" font-size="12" text-anchor="start" fill="#333333">Yogurt</text>
+  <text x="400" y="393" font-family="Arial, sans-serif" font-size="10" text-anchor="end" fill="#dd6b20">5 days</text>
+  
+  <!-- Result item 3 -->
+  <rect x="250" y="410" width="180" height="30" rx="3" ry="3" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <circle cx="265" cy="425" r="8" fill="#9ae6b4"/>
+  <text x="280" y="428" font-family="Arial, sans-serif" font-size="12" text-anchor="start" fill="#333333">Vegetables</text>
+  <text x="400" y="428" font-family="Arial, sans-serif" font-size="10" text-anchor="end" fill="#38a169">7 days</text>
+  
+  <!-- Left side: Filter tips -->
+  <rect x="50" y="150" width="140" height="150" rx="10" ry="10" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="120" y="170" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#333333">Filter Tips</text>
+  
+  <!-- Filter feature 1 -->
+  <circle cx="70" cy="195" r="5" fill="#4299e1"/>
+  <text x="120" y="200" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666666">Filter by category</text>
+  
+  <!-- Filter feature 2 -->
+  <circle cx="70" cy="225" r="5" fill="#4299e1"/>
+  <text x="120" y="230" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666666">Sort by expiry date</text>
+  
+  <!-- Filter feature 3 -->
+  <circle cx="70" cy="255" r="5" fill="#4299e1"/>
+  <text x="120" y="260" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666666">Search specific items</text>
+  
+  <!-- Filter feature 4 -->
+  <circle cx="70" cy="285" r="5" fill="#4299e1"/>
+  <text x="120" y="290" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666666">Hide expired items</text>
+  
+  <!-- Right side: Quick sort -->
+  <rect x="490" y="150" width="90" height="150" rx="10" ry="10" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="535" y="170" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#333333">Quick Sort</text>
+  
+  <!-- Sort option 1 -->
+  <rect x="505" y="185" width="60" height="25" rx="5" ry="5" fill="#ebf8ff" stroke="#90cdf4" stroke-width="1"/>
+  <text x="535" y="202" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#3182ce">Name</text>
+  
+  <!-- Sort option 2 -->
+  <rect x="505" y="215" width="60" height="25" rx="5" ry="5" fill="#ebf8ff" stroke="#90cdf4" stroke-width="1"/>
+  <text x="535" y="232" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#3182ce">Category</text>
+  
+  <!-- Sort option 3 -->
+  <rect x="505" y="245" width="60" height="25" rx="5" ry="5" fill="#4299e1" stroke="#90cdf4" stroke-width="1"/>
+  <text x="535" y="262" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#ffffff">Expiry</text>
+  
+  <!-- Sort option 4 -->
+  <rect x="505" y="275" width="60" height="25" rx="5" ry="5" fill="#ebf8ff" stroke="#90cdf4" stroke-width="1"/>
+  <text x="535" y="292" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#3182ce">Added Date</text>
+  
+  <!-- Connection lines -->
+  <path d="M190,230 C200,230 210,230 220,230" fill="none" stroke="#666666" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <polygon points="215,225 220,230 215,235" fill="#666666"/>
+  
+  <path d="M450,230 C460,230 470,230 490,230" fill="none" stroke="#666666" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <polygon points="485,225 490,230 485,235" fill="#666666"/>
+  
+  <!-- Annotation -->
+  <text x="300" y="380" font-family="Arial, sans-serif" font-size="14" font-style="italic" text-anchor="middle" fill="#666666" opacity="0">Use powerful filtering tools to quickly find the items you need</text>
+</svg> 

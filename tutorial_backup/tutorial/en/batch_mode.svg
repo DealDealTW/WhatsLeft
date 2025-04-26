@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="600" height="400" fill="#f5f5f5"/>
+  
+  <!-- Title -->
+  <text x="300" y="40" font-family="Arial, sans-serif" font-size="22" font-weight="bold" text-anchor="middle" fill="#333333">Single Item vs Batch Mode</text>
+  
+  <!-- Left side: Single item mode -->
+  <rect x="50" y="70" width="240" height="280" rx="10" ry="10" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="170" y="95" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#333333">Single Item Mode</text>
+  
+  <!-- Single mode icon -->
+  <circle cx="90" cy="120" r="20" fill="#4299e1"/>
+  <text x="90" y="127" font-family="Arial, sans-serif" font-size="22" font-weight="bold" text-anchor="middle" fill="#ffffff">1</text>
+  
+  <!-- Single mode description -->
+  <text x="120" y="115" font-family="Arial, sans-serif" font-size="14" fill="#333333">Add one item at a time</text>
+  <text x="120" y="135" font-family="Arial, sans-serif" font-size="12" fill="#666666">Complete detailed information</text>
+  
+  <!-- Single mode flow chart -->
+  <rect x="70" y="155" width="200" height="40" rx="5" ry="5" fill="#ebf8ff" stroke="#90cdf4" stroke-width="1"/>
+  <text x="170" y="180" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#3182ce">Tap Add Button</text>
+  
+  <line x1="170" y1="195" x2="170" y2="215" stroke="#90cdf4" stroke-width="2" stroke-dasharray="2,2"/>
+  <polygon points="165,215 170,225 175,215" fill="#90cdf4"/>
+  
+  <rect x="70" y="225" width="200" height="40" rx="5" ry="5" fill="#ebf8ff" stroke="#90cdf4" stroke-width="1"/>
+  <text x="170" y="250" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#3182ce">Fill Item Details</text>
+  
+  <line x1="170" y1="265" x2="170" y2="285" stroke="#90cdf4" stroke-width="2" stroke-dasharray="2,2"/>
+  <polygon points="165,285 170,295 175,285" fill="#90cdf4"/>
+  
+  <rect x="70" y="295" width="200" height="40" rx="5" ry="5" fill="#ebf8ff" stroke="#90cdf4" stroke-width="1"/>
+  <text x="170" y="320" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#3182ce">Save and Return to Dashboard</text>
+  
+  <!-- Right side: Batch mode -->
+  <rect x="310" y="70" width="240" height="280" rx="10" ry="10" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="430" y="95" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#333333">Batch Mode</text>
+  
+  <!-- Batch mode icon -->
+  <circle cx="350" cy="120" r="20" fill="#805ad5"/>
+  <text x="350" y="127" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#ffffff">n+</text>
+  
+  <!-- Batch mode description -->
+  <text x="380" y="115" font-family="Arial, sans-serif" font-size="14" fill="#333333">Add multiple items in sequence</text>
+  <text x="380" y="135" font-family="Arial, sans-serif" font-size="12" fill="#666666">Improve efficiency, save time</text>
+  
+  <!-- Batch mode flow chart -->
+  <rect x="330" y="155" width="200" height="40" rx="5" ry="5" fill="#f3e8ff" stroke="#d6bcfa" stroke-width="1"/>
+  <text x="430" y="180" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#805ad5">Enable Batch Mode</text>
+  
+  <line x1="430" y1="195" x2="430" y2="215" stroke="#d6bcfa" stroke-width="2" stroke-dasharray="2,2"/>
+  <polygon points="425,215 430,225 435,215" fill="#d6bcfa"/>
+  
+  <rect x="330" y="225" width="200" height="40" rx="5" ry="5" fill="#f3e8ff" stroke="#d6bcfa" stroke-width="1"/>
+  <text x="430" y="245" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#805ad5">Quick Add Items 1, 2, 3...</text>
+  <text x="430" y="260" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#805ad5">No need to return to dashboard</text>
+  
+  <line x1="430" y1="265" x2="430" y2="285" stroke="#d6bcfa" stroke-width="2" stroke-dasharray="2,2"/>
+  <polygon points="425,285 430,295 435,285" fill="#d6bcfa"/>
+  
+  <rect x="330" y="295" width="200" height="40" rx="5" ry="5" fill="#f3e8ff" stroke="#d6bcfa" stroke-width="1"/>
+  <text x="430" y="320" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#805ad5">Exit Batch Mode When Finished</text>
+  
+  <!-- Arrow connecting the two modes -->
+  <path d="M290,200 L310,200" stroke="#666666" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <polygon points="305,195 315,200 305,205" fill="#666666"/>
+  
+  <!-- Annotation -->
+  <text x="300" y="370" font-family="Arial, sans-serif" font-size="14" font-style="italic" text-anchor="middle" fill="#666666">Choose the mode that best fits your needs</text>
+</svg> 

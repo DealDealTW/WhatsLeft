@@ -26,7 +26,7 @@ const BottomNav: React.FC = () => {
   
   return (
     <div className="fixed bottom-[50px] left-0 right-0 h-20 bg-background/95 backdrop-blur-sm border-t border-border/30 flex items-center justify-around z-50 safe-area-bottom">
-      <div className="max-w-md w-full mx-auto flex items-center justify-around" role="navigation" aria-label="主导航">
+      <div className="max-w-md w-full mx-auto flex items-center justify-around" role="navigation" aria-label="主導航">
         <Link 
           to="/" 
           className={cn(
@@ -69,7 +69,7 @@ const BottomNav: React.FC = () => {
           )}
           tabIndex={0}
           aria-current={isActive('/shoplist') ? "page" : undefined}
-          aria-label="ShopList"
+          aria-label={t('shopList')}
         >
           <div className="relative">
             <ShoppingCart className="h-6 w-6" />
@@ -79,7 +79,7 @@ const BottomNav: React.FC = () => {
               </span>
             )}
           </div>
-          <span className="label-text mt-1 font-medium">ShopList</span>
+          <span className="label-text mt-1 font-medium">{t('shopList')}</span>
           {isActive('/shoplist') && (
             <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-9 h-0.5 bg-primary rounded-full animate-slide-up-fade" />
           )}

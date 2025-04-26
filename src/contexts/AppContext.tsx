@@ -138,6 +138,23 @@ interface AppContextType {
   setDashboardGroupBySubcategory: (value: boolean) => void;
   shopListGroupBySubcategory: boolean;
   setShopListGroupBySubcategory: (value: boolean) => void;
+  // 添加多選模式狀態
+  dashboardMultiSelectMode: boolean;
+  setDashboardMultiSelectMode: (value: boolean) => void;
+  shoplistMultiSelectMode: boolean;
+  setShopListMultiSelectMode: (value: boolean) => void;
+  
+  // 添加模態框狀態
+  isProfileModalOpen: boolean;
+  setIsProfileModalOpen: (value: boolean) => void;
+  isFilterModalOpen: boolean;
+  setIsFilterModalOpen: (value: boolean) => void;
+  isSortModalOpen: boolean;
+  setIsSortModalOpen: (value: boolean) => void;
+  isItemModalOpen: boolean;
+  setIsItemModalOpen: (value: boolean) => void;
+  showExitPrompt: boolean;
+  setShowExitPrompt: (value: boolean) => void;
   
   // Add the currentUser property
   currentUser?: {
@@ -244,10 +261,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return savedSort || 'expiry';
   });
   
-  const [filter, setFilter] = useState<FilterType>(() => {
-    // 始終使用'All'作為初始值
-    return 'All';
-  });
+  // 狀態管理 - 篩選器 (總是初始化為 'All')
+  const [filter, setFilter] = useState<FilterType>('All');
   const [darkMode, setDarkMode] = useState<boolean>(() => {
     const savedDarkMode = localStorage.getItem('whatsleftDarkMode');
     return savedDarkMode ? JSON.parse(savedDarkMode) : false;
@@ -284,6 +299,17 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // 教學狀態
   const [showTutorial, setShowTutorial] = useState<boolean>(false); // 初始為 false
+
+  // 添加多選模式狀態
+  const [dashboardMultiSelectMode, setDashboardMultiSelectMode] = useState<boolean>(false);
+  const [shoplistMultiSelectMode, setShopListMultiSelectMode] = useState<boolean>(false);
+
+  // 添加模態框狀態
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState<boolean>(false);
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState<boolean>(false);
+  const [isSortModalOpen, setIsSortModalOpen] = useState<boolean>(false);
+  const [isItemModalOpen, setIsItemModalOpen] = useState<boolean>(false);
+  const [showExitPrompt, setShowExitPrompt] = useState<boolean>(false);
 
   // Fetch initial session and subscribe to auth changes
   useEffect(() => {
@@ -362,10 +388,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     // 如果設置改變，應用新的默認值
     if (!localStorage.getItem('whatsleftViewMode')) {
       setViewMode(settings.defaultViewMode);
-    }
-    
-    if (!localStorage.getItem('whatsleftFilter')) {
-      setFilter(settings.defaultCategory);
     }
   }, [settings]);
 
@@ -932,6 +954,23 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         setDashboardGroupBySubcategory,
         shopListGroupBySubcategory,
         setShopListGroupBySubcategory,
+        // 添加多選模式狀態
+        dashboardMultiSelectMode,
+        setDashboardMultiSelectMode,
+        shoplistMultiSelectMode,
+        setShopListMultiSelectMode,
+        
+        // 添加模態框狀態
+        isProfileModalOpen,
+        setIsProfileModalOpen,
+        isFilterModalOpen,
+        setIsFilterModalOpen,
+        isSortModalOpen,
+        setIsSortModalOpen,
+        isItemModalOpen,
+        setIsItemModalOpen,
+        showExitPrompt,
+        setShowExitPrompt,
         
         // Add the currentUser property
         currentUser: {

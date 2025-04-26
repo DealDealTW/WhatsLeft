@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f9f9f9" rx="10" ry="10" />
+  
+  <!-- Dashboard Screen -->
+  <rect x="150" y="30" width="500" height="540" rx="20" ry="20" fill="white" stroke="#ddd" stroke-width="2" />
+  
+  <!-- Items Grid -->
+  <!-- Row 1: Apple and Lamb (Red / Expired) -->
+  <rect x="180" y="50" width="200" height="100" rx="10" ry="10" fill="#FEE2E2" stroke="#FECACA" stroke-width="1" />
+  <text x="200" y="80" font-family="Arial" font-size="18" font-weight="bold" fill="#333333">Apple</text>
+  <text x="350" y="80" font-family="Arial" font-size="16" fill="#333333">×4</text>
+  <text x="200" y="110" font-family="Arial" font-size="14" fill="#555555">24/04/2025</text>
+  <rect x="260" y="95" width="60" height="25" rx="12.5" ry="12.5" fill="#FEE2E2" stroke="#EF4444" stroke-width="1" />
+  <text x="270" y="112" font-family="Arial" font-size="12" fill="#EF4444">Today</text>
+  
+  <rect x="420" y="50" width="200" height="100" rx="10" ry="10" fill="#FEE2E2" stroke="#FECACA" stroke-width="1" />
+  <text x="440" y="80" font-family="Arial" font-size="18" font-weight="bold" fill="#333333">Lamb</text>
+  <text x="590" y="80" font-family="Arial" font-size="16" fill="#333333">×2</text>
+  <text x="440" y="110" font-family="Arial" font-size="14" fill="#555555">25/04/2025</text>
+  <rect x="500" y="95" width="80" height="25" rx="12.5" ry="12.5" fill="#FEE2E2" stroke="#EF4444" stroke-width="1" />
+  <text x="507" y="112" font-family="Arial" font-size="12" fill="#EF4444">Tomorrow</text>
+  
+  <!-- Row 2: Beef and Milk (Yellow / Expiring Soon) -->
+  <rect x="180" y="170" width="200" height="100" rx="10" ry="10" fill="#FEF3C7" stroke="#FDE68A" stroke-width="1" />
+  <text x="200" y="200" font-family="Arial" font-size="18" font-weight="bold" fill="#333333">Beef</text>
+  <text x="350" y="200" font-family="Arial" font-size="16" fill="#333333">×3</text>
+  <text x="200" y="230" font-family="Arial" font-size="14" fill="#555555">27/04/2025</text>
+  <rect x="260" y="215" width="60" height="25" rx="12.5" ry="12.5" fill="#FEF3C7" stroke="#F59E0B" stroke-width="1" />
+  <text x="267" y="232" font-family="Arial" font-size="12" fill="#F59E0B">3 days</text>
+  
+  <rect x="420" y="170" width="200" height="100" rx="10" ry="10" fill="#E2F4EA" stroke="#10B981" stroke-width="1" />
+  <text x="440" y="200" font-family="Arial" font-size="18" font-weight="bold" fill="#333333">Milk</text>
+  <text x="590" y="200" font-family="Arial" font-size="16" fill="#333333">×1</text>
+  <text x="440" y="230" font-family="Arial" font-size="14" fill="#555555">01/05/2025</text>
+  <rect x="500" y="215" width="60" height="25" rx="12.5" ry="12.5" fill="#E2F4EA" stroke="#10B981" stroke-width="1" />
+  <text x="507" y="232" font-family="Arial" font-size="12" fill="#10B981">7 days</text>
+  
+  <!-- Row 3: Orange and Eggs (Green / Fresh) -->
+  <rect x="180" y="290" width="200" height="100" rx="10" ry="10" fill="#E2F4EA" stroke="#10B981" stroke-width="1" />
+  <text x="200" y="320" font-family="Arial" font-size="18" font-weight="bold" fill="#333333">Orange</text>
+  <text x="350" y="320" font-family="Arial" font-size="16" fill="#333333">×6</text>
+  <text x="200" y="350" font-family="Arial" font-size="14" fill="#555555">01/05/2025</text>
+  <rect x="260" y="335" width="60" height="25" rx="12.5" ry="12.5" fill="#E2F4EA" stroke="#10B981" stroke-width="1" />
+  <text x="267" y="352" font-family="Arial" font-size="12" fill="#10B981">7 days</text>
+  
+  <rect x="420" y="290" width="200" height="100" rx="10" ry="10" fill="#E2F4EA" stroke="#10B981" stroke-width="1" />
+  <text x="440" y="320" font-family="Arial" font-size="18" font-weight="bold" fill="#333333">Eggs</text>
+  <text x="590" y="320" font-family="Arial" font-size="16" fill="#333333">×8</text>
+  <text x="440" y="350" font-family="Arial" font-size="14" fill="#555555">08/05/2025</text>
+  <rect x="500" y="335" width="75" height="25" rx="12.5" ry="12.5" fill="#E2F4EA" stroke="#10B981" stroke-width="1" />
+  <text x="507" y="352" font-family="Arial" font-size="12" fill="#10B981">14 days</text>
+  
+  <!-- Row 4: Shampoo (Green / Long Expiry) -->
+  <rect x="180" y="410" width="200" height="100" rx="10" ry="10" fill="#E2F4EA" stroke="#10B981" stroke-width="1" />
+  <text x="200" y="440" font-family="Arial" font-size="18" font-weight="bold" fill="#333333">Shampoo</text>
+  <text x="350" y="440" font-family="Arial" font-size="16" fill="#333333">×1</text>
+  <text x="200" y="470" font-family="Arial" font-size="14" fill="#555555">24/04/2026</text>
+  <rect x="260" y="455" width="75" height="25" rx="12.5" ry="12.5" fill="#E2F4EA" stroke="#10B981" stroke-width="1" />
+  <text x="267" y="472" font-family="Arial" font-size="12" fill="#10B981">365 days</text>
+  
+  <!-- Highlight Annotations -->
+  <!-- Red Items Highlight -->
+  <rect x="175" y="45" width="450" height="110" rx="5" ry="5" fill="none" stroke="#EF4444" stroke-width="2" stroke-dasharray="5,5" />
+  <text x="100" y="100" font-family="Arial" font-size="18" font-weight="bold" fill="#EF4444">Red: Expired or today</text>
+  <line x1="175" y1="100" x2="160" y2="100" stroke="#EF4444" stroke-width="2" />
+  
+  <!-- Yellow Items Highlight -->
+  <rect x="175" y="165" width="210" height="110" rx="5" ry="5" fill="none" stroke="#F59E0B" stroke-width="2" stroke-dasharray="5,5" />
+  <text x="90" y="220" font-family="Arial" font-size="18" font-weight="bold" fill="#F59E0B">Yellow: Expiring soon</text>
+  <line x1="175" y1="220" x2="160" y2="220" stroke="#F59E0B" stroke-width="2" />
+  
+  <!-- Green Items Highlight -->
+  <rect x="410" y="165" width="215" height="350" rx="5" ry="5" fill="none" stroke="#10B981" stroke-width="2" stroke-dasharray="5,5" />
+  <text x="635" y="320" font-family="Arial" font-size="18" font-weight="bold" fill="#10B981">Green: Fresh</text>
+  <line x1="625" y1="320" x2="600" y2="320" stroke="#10B981" stroke-width="2" />
+</svg> 

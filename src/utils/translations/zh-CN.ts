@@ -21,7 +21,10 @@ export const zhCN = {
   daysUntilExpiry: '剩余天数',
   notifyBefore: '提前通知',
   days: '天',
-  save: '保存',
+  save: '确认',
+  saveChanges: '确认更改',
+  saveAndAddMore: '确认并添加更多',
+  saveToDashboard: '确认到仪表板',
   cancel: '取消',
   delete: '删除',
   edit: '编辑',
@@ -214,7 +217,7 @@ export const zhCN = {
   contactSupportMessage: '正在打开电子邮件客户端以联系支持',
   reportBugsDesc: '发现错误？告诉我们，我们会尽快修复。',
   suggestFeaturesDesc: '有新功能的想法？我们很乐意听取您的建议！',
-  viewTutorial: '查看教程',
+  viewTutorial: '查看使用教程',
   emptyDashboardMessage: '再也不用猜家里 WhatsLeft！\n\n点击下方的"+"按钮添加您的第一个物品——可以打字、语音输入或拍照。',
   frequentlyAskedQuestions: '常见问题',
   basicUsage: '基本用法',
@@ -329,8 +332,8 @@ export const zhCN = {
   originalLanguage: '原始语言',
   translatedFrom: '翻译自 {lang}',
   removed: '已移除',
-  processed: '已處理',
-  unprocessed: '未處理',
+  processed: '已处理',
+  unprocessed: '未处理',
   uncategorized: '未分类',
   showUngrouped: '显示所有物品',
   showBySubcategory: '按子类别分组',
@@ -348,10 +351,10 @@ export const zhCN = {
   wastedItems: '浪费物品',
   
   // Add new tooltips for Insight page
-  uniqueItemsTrackedTooltip: '所选时间范围内追踪的独特物品总数',
-  efficiencyRateTooltip: '在到期日前使用的物品百分比',
-  unitsUsedInTimeTooltip: '所选时间范围内在到期日前使用的物品数量',
-  unitsWastedTooltip: '所选时间范围内在使用前过期的物品数量',
+  uniqueItemsTrackedTooltip: '已追踪的独特物品总数，每次添加新物品时都会计为+1，即使是在不同时间添加相同的物品。',
+  efficiencyRateTooltip: '使用的单位数与追踪的总单位数之比。计算方式为(已使用单位 / 总追踪单位) × 100。不包括仍在库存中或已删除的物品。',
+  unitsUsedInTimeTooltip: '标记为"已使用"的单位总数，无论是在到期日之前还是之后使用。',
+  unitsWastedTooltip: '用户标记为"已浪费"的单位总数。',
   detailedCategories: '详细分类',
   otherCategories: '其他类别',
   quantitySettings: '数量偏好设置',
@@ -370,13 +373,34 @@ export const zhCN = {
   closeModalAndDoNothing: '关闭',
   
   // Reset password
-  resetPassword: '重置密码',
-  resetPasswordConfirmMessage: '我们将发送密码重置说明到您的电子邮件。您想继续吗？',
-  resetPasswordSuccess: '密码重置邮件已发送',
-  resetPasswordSuccessMessage: '请查看您的电子邮件以获取重置密码的说明。',
+  resetPassword: '重设密码',
+  resetPasswordConfirmMessage: '我们将发送密码重设说明到您的电子邮件。您想继续吗？',
+  resetPasswordSuccess: '密码重设邮件已发送',
+  resetPasswordSuccessMessage: '请查看您的电子邮件以获取重设密码的说明。',
   
   // Notification settings
-  notifications: '通知设置',
+  notificationSettings: '通知设置',
   defaultNotifyDaysBefore: '默认到期前通知天数',
-  defaultNotifyDaysBeforeHint: '设置新添加项目的默认到期前通知天数',
+  defaultNotifyDaysBeforeHint: '设置新增项目的默认到期前通知天数',
+  
+  // 添加退出对话框相关的翻译
+  exitPromptTitle: '确认离开 WhatsLeft？',
+  exitPromptDescription: '您确定要离开应用程序吗？',
+  
+  // 新增分类相关翻译
+  dashboardManagement: '主页管理',
+  shopListFeatures: '购物清单功能',
+  insightAndAnalysis: '回顾与分析',
+  
+  // 重新表述标记为已使用/已浪费的问题
+  markItemAsUsedQuestion: '标记物品为"已使用"有什么作用？',
+  markItemAsUsedAnswer: '标记物品为"已使用"会将其从主页面移除，但保留在数据库中进行统计分析。您可以在"回顾"页面查看所有已使用物品的数据，帮助您了解消费模式。',
+  markItemAsWastedQuestion: '标记物品为"已浪费"有什么作用？',
+  markItemAsWastedAnswer: '标记物品为"已浪费"会将其从主页面移除，并计入您的浪费统计数据。此数据会显示在"回顾"页面的浪费分析中，帮助您识别最常浪费的物品类型，从而改善购物和储存习惯。',
+  
+  // 将 Stats 改为 Insight
+  whatInformationInsightPageShow: '"回顾"页面显示哪些信息？',
+  insightPageShowAnswer: '回顾页面显示四个关键指标：追踪的独特物品数量、使用效率百分比、已使用单位和已浪费单位。此外，它还提供类别使用情况、类别效率和最常浪费物品的详细分析。',
+  viewBasicTutorial: '查看基础教程',
+  viewAdvancedTutorial: '查看进阶教程',
 } 

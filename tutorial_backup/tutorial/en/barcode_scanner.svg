@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="600" height="400" fill="#f5f5f5"/>
+  
+  <!-- Title -->
+  <text x="300" y="40" font-family="Arial, sans-serif" font-size="22" font-weight="bold" text-anchor="middle" fill="#333333">Barcode Scanner</text>
+  
+  <!-- Phone outline -->
+  <rect x="200" y="70" width="200" height="300" rx="20" ry="20" fill="#333333"/>
+  <rect x="210" y="85" width="180" height="270" rx="5" ry="5" fill="#ffffff"/>
+  
+  <!-- Camera interface top -->
+  <rect x="210" y="85" width="180" height="40" rx="5" ry="5" fill="#4299e1"/>
+  <text x="300" y="110" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#ffffff">Scan Barcode</text>
+  <circle cx="370" cy="105" r="12" fill="#ffffff" fill-opacity="0.2"/>
+  <path d="M365,105 L375,105 M370,100 L370,110" stroke="#ffffff" stroke-width="2"/>
+  
+  <!-- Scanning interface -->
+  <rect x="220" y="135" width="160" height="160" rx="5" ry="5" fill="#f0f4f8" stroke="#dbe4f0" stroke-width="1"/>
+  
+  <!-- Scanning alignment frame -->
+  <rect x="250" y="165" width="100" height="100" rx="5" ry="5" fill="none" stroke="#4299e1" stroke-width="2" stroke-dasharray="5,3"/>
+  
+  <!-- Scanning line -->
+  <line x1="250" y1="215" x2="350" y2="215" stroke="#e53e3e" stroke-width="2"/>
+  
+  <!-- Scanning alignment corners -->
+  <path d="M250,175 L250,165 L260,165" stroke="#4299e1" stroke-width="3"/>
+  <path d="M340,165 L350,165 L350,175" stroke="#4299e1" stroke-width="3"/>
+  <path d="M250,255 L250,265 L260,265" stroke="#4299e1" stroke-width="3"/>
+  <path d="M340,265 L350,265 L350,255" stroke="#4299e1" stroke-width="3"/>
+  
+  <!-- Barcode icon -->
+  <rect x="260" y="185" width="5" height="60" fill="#333333"/>
+  <rect x="270" y="185" width="2" height="60" fill="#333333"/>
+  <rect x="275" y="185" width="4" height="60" fill="#333333"/>
+  <rect x="282" y="185" width="1" height="60" fill="#333333"/>
+  <rect x="285" y="185" width="3" height="60" fill="#333333"/>
+  <rect x="291" y="185" width="5" height="60" fill="#333333"/>
+  <rect x="300" y="185" width="2" height="60" fill="#333333"/>
+  <rect x="305" y="185" width="1" height="60" fill="#333333"/>
+  <rect x="309" y="185" width="4" height="60" fill="#333333"/>
+  <rect x="315" y="185" width="3" height="60" fill="#333333"/>
+  <rect x="322" y="185" width="2" height="60" fill="#333333"/>
+  <rect x="327" y="185" width="6" height="60" fill="#333333"/>
+  <rect x="335" y="185" width="3" height="60" fill="#333333"/>
+  
+  <!-- Button area -->
+  <rect x="220" y="305" width="160" height="40" rx="5" ry="5" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="300" y="330" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#4299e1">Capture</text>
+  
+  <!-- Left side: Scanning tips -->
+  <rect x="50" y="130" width="120" height="170" rx="10" ry="10" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="110" y="155" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#333333">Scanning Tips</text>
+  
+  <circle cx="70" cy="185" r="5" fill="#4299e1"/>
+  <text x="115" y="190" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666666">Well-lit environment</text>
+  
+  <circle cx="70" cy="215" r="5" fill="#4299e1"/>
+  <text x="115" y="220" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666666">Align barcode in frame</text>
+  
+  <circle cx="70" cy="245" r="5" fill="#4299e1"/>
+  <text x="115" y="250" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666666">Hold steady, don't shake</text>
+  
+  <circle cx="70" cy="275" r="5" fill="#4299e1"/>
+  <text x="115" y="280" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666666">Optimal distance (6-8")</text>
+  
+  <!-- Right side: Scanning benefits -->
+  <rect x="430" y="130" width="120" height="170" rx="10" ry="10" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="490" y="155" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#333333">Benefits</text>
+  
+  <circle cx="450" cy="185" r="5" fill="#38a169"/>
+  <text x="490" y="190" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666666">Quick and accurate entry</text>
+  
+  <circle cx="450" cy="215" r="5" fill="#38a169"/>
+  <text x="490" y="220" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666666">Auto-fetch product info</text>
+  
+  <circle cx="450" cy="245" r="5" fill="#38a169"/>
+  <text x="490" y="250" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666666">Reduce manual errors</text>
+  
+  <circle cx="450" cy="275" r="5" fill="#38a169"/>
+  <text x="490" y="280" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666666">Save time adding items</text>
+  
+  <!-- Connection lines -->
+  <path d="M170,200 C180,200 190,200 200,200" fill="none" stroke="#666666" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <polygon points="195,195 200,200 195,205" fill="#666666"/>
+  
+  <path d="M400,200 C410,200 420,200 430,200" fill="none" stroke="#666666" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <polygon points="425,195 430,200 425,205" fill="#666666"/>
+  
+  <!-- Annotation -->
+  <text x="300" y="380" font-family="Arial, sans-serif" font-size="14" font-style="italic" text-anchor="middle" fill="#666666">Barcode scanning makes adding items quick and easy</text>
+</svg> 

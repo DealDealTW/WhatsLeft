@@ -68,6 +68,8 @@ const Dashboard: React.FC = () => {
     addToShopList,
     dashboardGroupBySubcategory,
     setDashboardGroupBySubcategory,
+    dashboardMultiSelectMode,
+    setDashboardMultiSelectMode,
   } = useApp();
   const [formOpen, setFormOpen] = useState(false);
   const [editItem, setEditItem] = useState<Item | null>(null);
@@ -79,7 +81,6 @@ const Dashboard: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>([]);
   const [subcategorySearchQuery, setSubcategorySearchQuery] = useState<string>('');
-  const [isMultiSelectMode, setIsMultiSelectMode] = useState<boolean>(false);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   
   // 新增狀態：控制後續操作模態框
@@ -427,7 +428,7 @@ const Dashboard: React.FC = () => {
 
   // Handle item click
   const handleItemClick = (item: Item) => {
-    if (isMultiSelectMode) {
+    if (dashboardMultiSelectMode) {
       toggleItemSelection(item.id);
     } else {
       setSelectedItem(item);
@@ -436,8 +437,8 @@ const Dashboard: React.FC = () => {
 
   // Handle item long press
   const handleItemLongPress = (item: Item) => {
-    if (!isMultiSelectMode) {
-      setIsMultiSelectMode(true);
+    if (!dashboardMultiSelectMode) {
+      setDashboardMultiSelectMode(true);
       // Ensure the long-pressed item is selected immediately
       if (!selectedItems.includes(item.id)) {
         setSelectedItems(prev => [...prev, item.id]);
@@ -503,10 +504,16 @@ const Dashboard: React.FC = () => {
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="text-xs text-orange-700">
-                    {subcategoryItemCount} {language === 'en' ? 'items' : '項目'}
+                    {language === 'en' 
+  ? `${subcategoryItemCount} ${subcategoryItemCount === 1 ? 'item' : 'items'}`
+  : `${subcategoryItemCount} 項目`
+}
                   </span>
                   <span className="text-xs text-orange-700">
-                    {subcategoryUnitCount} {language === 'en' ? 'units' : '單位'}
+                    {language === 'en' 
+  ? `${subcategoryUnitCount} ${subcategoryUnitCount === 1 ? 'unit' : 'units'}`
+  : `${subcategoryUnitCount} 單位`
+}
                   </span>
                   {/* Chevron Icon for collapse/expand indication */}
                   {isCollapsed ? 
@@ -528,8 +535,8 @@ const Dashboard: React.FC = () => {
                       viewMode={viewMode}
                       onClick={() => handleItemClick(item)}
                       onLongPress={() => handleItemLongPress(item)}
-                      isSelected={isMultiSelectMode && selectedItems.includes(item.id)}
-                      isMultiSelectMode={isMultiSelectMode}
+                      isSelected={dashboardMultiSelectMode && selectedItems.includes(item.id)}
+                      isMultiSelectMode={dashboardMultiSelectMode}
                     />
                   ))}
                 </div>
@@ -556,7 +563,7 @@ const Dashboard: React.FC = () => {
             onClick={handleItemClick}
             onLongPress={handleItemLongPress}
             isSelected={selectedItems.includes(item.id)}
-            isMultiSelectMode={isMultiSelectMode}
+            isMultiSelectMode={dashboardMultiSelectMode}
           />
         ))}
       </div>
@@ -564,7 +571,7 @@ const Dashboard: React.FC = () => {
   };
 
   // 檢查按鈕是否應該顯示 - 在 ItemForm、教程、後續操作模態框打開或有選中項目時隱藏
-  const isAddButtonVisible = !formOpen && !showTutorial && !postActionModalOpen && !selectedItem && !isBarcodeOpen && !showFilterControls && !isMultiSelectMode && !isScrolling;
+  const isAddButtonVisible = !formOpen && !postActionModalOpen && !selectedItem && !isBarcodeOpen && !showFilterControls && !dashboardMultiSelectMode && !isScrolling;
 
   // 獲取類別圖標
   const getCategoryIcon = (category?: string) => {
@@ -764,13 +771,13 @@ const Dashboard: React.FC = () => {
   // 清除所有選擇的項目
   const clearSelectedItems = () => {
     setSelectedItems([]);
-    setIsMultiSelectMode(false);
+    setDashboardMultiSelectMode(false);
   };
 
   // 切換多選模式
   const toggleMultiSelectMode = () => {
-    setIsMultiSelectMode(!isMultiSelectMode);
-    if (isMultiSelectMode) {
+    setDashboardMultiSelectMode(!dashboardMultiSelectMode);
+    if (dashboardMultiSelectMode) {
       setSelectedItems([]);
     }
   };
@@ -829,11 +836,7 @@ const Dashboard: React.FC = () => {
     const handleScroll = () => {
       setIsScrolling(true);
       
-      // 如果在多選模式且正在滾動，取消多選模式
-      if (isMultiSelectMode) {
-        setIsMultiSelectMode(false);
-        setSelectedItems([]);
-      }
+      // 移除取消多選模式的邏輯，讓多選模式在滾動時保持啟用
       
       // 清除上一個計時器
       if (scrollTimerRef.current) {
@@ -854,7 +857,7 @@ const Dashboard: React.FC = () => {
         clearTimeout(scrollTimerRef.current);
       }
     };
-  }, [isMultiSelectMode]);
+  }, []);
   
   // 監聽滾動事件
   useEffect(() => {
@@ -879,105 +882,87 @@ const Dashboard: React.FC = () => {
     });
   };
 
+  // 添加效果來處理組件卸載時的狀態
+  useEffect(() => {
+    // 組件掛載時的邏輯可以在這裡
+    
+    // 組件卸載時的清理邏輯
+    return () => {
+      // 退出多選模式並清除選擇
+      if (dashboardMultiSelectMode) {
+        setSelectedItems([]);
+        setDashboardMultiSelectMode(false);
+      }
+    };
+  }, [dashboardMultiSelectMode, setDashboardMultiSelectMode]);
+
   return (
     <div className="w-full max-w-[100%] sm:max-w-md mx-auto px-1 sm:px-2 py-3 sm:py-4 pb-24">
       {/* 搜索欄和過濾按鈕 - 始終固定在適當位置，不會覆蓋頂部欄 */}
       <div className="sticky top-[60px] sm:top-[70px] z-30 bg-background/90 backdrop-blur-md pt-1 pb-2 border-b border-gray-100 dark:border-gray-800 mb-3 shadow-sm">
-        {/* 視圖模式和分組切換 */}
+        {/* 視圖模式和分組切換 - 移除視圖選項 */}
         <div className="flex items-center justify-between space-y-2">
           <div className="flex items-center gap-1.5">
-            {isMultiSelectMode ? (
-              <Button 
-                variant="outline"
-                size="sm"
-                className="h-8 px-2.5 border-red-200 bg-red-50 text-red-600 hover:bg-red-100 rounded-full"
-                onClick={clearSelectedItems}
-              >
-                <X className="h-4 w-4 mr-1" />
-                {language === 'en' ? "Cancel" : "取消"}
-              </Button>
-            ) : (
-              <>
-                <div className="flex items-center border border-orange-200 rounded-full p-0.5">
-                  <Button 
-                    variant="ghost"
-                    size="sm"
-                    className={`h-8 w-8 p-0 rounded-full ${viewMode === 'grid' ? "bg-orange-200 text-orange-700 shadow-sm" : "bg-transparent hover:bg-orange-100/50"}`}
-                    onClick={() => setViewMode('grid')}
+            {/* 始終顯示排序按鈕，移除多選模式下的取消按鈕 */}
+            <div className="flex items-center">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <div className="flex items-center h-8 pr-2.5 border border-orange-200 rounded-full bg-white cursor-pointer hover:bg-orange-50">
+                    <div className="flex items-center justify-center h-8 w-8">
+                      <ArrowUpDown className="h-4 w-4 text-orange-600" />
+                    </div>
+                    <div className="text-xs text-orange-600 font-medium pl-0.5">
+                      {sort === 'name' ? (language === 'en' ? "Name" : "名稱") : 
+                      sort === 'expiry' ? (language === 'en' ? "Expiry" : "到期日") : 
+                      sort === 'quantity' ? (language === 'en' ? "Quantity" : "數量") : ""}
+                    </div>
+                  </div>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-48">
+                  <DropdownMenuLabel className="text-xs">{language === 'en' ? "Sort by" : "排序方式"}</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem 
+                    className={`text-xs ${sort === 'name' ? "bg-orange-50 text-orange-600" : ""}`}
+                    onClick={() => setSort('name')}
                   >
-                    <LayoutGrid className="h-4 w-4 text-orange-600" />
-                  </Button>
-                  <Button 
-                    variant="ghost"
-                    size="sm"
-                    className={`h-8 w-8 p-0 rounded-full ${viewMode === 'compact' ? "bg-orange-200 text-orange-700 shadow-sm" : "bg-transparent hover:bg-orange-100/50"}`}
-                    onClick={() => setViewMode('compact')}
+                    <Text className="h-3.5 w-3.5 mr-1.5" />
+                    {t('name')}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    className={`text-xs ${sort === 'expiry' ? "bg-orange-50 text-orange-600" : ""}`}
+                    onClick={() => setSort('expiry')}
                   >
-                    <Rows3Icon className="h-4 w-4 text-orange-600" />
-                  </Button>
-                </div>
-                
-                <div className="flex items-center">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <div className="flex items-center h-8 pr-2.5 border border-orange-200 rounded-full bg-white cursor-pointer hover:bg-orange-50">
-                        <div className="flex items-center justify-center h-8 w-8">
-                          <ArrowUpDown className="h-4 w-4 text-orange-600" />
-                        </div>
-                        <div className="text-xs text-orange-600 font-medium pl-0.5">
-                          {sort === 'name' ? (language === 'en' ? "Name" : "名稱") : 
-                          sort === 'expiry' ? (language === 'en' ? "Expiry" : "到期日") : 
-                          sort === 'quantity' ? (language === 'en' ? "Quantity" : "數量") : ""}
-                        </div>
-                      </div>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="start" className="w-48">
-                      <DropdownMenuLabel className="text-xs">{language === 'en' ? "Sort by" : "排序方式"}</DropdownMenuLabel>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem 
-                        className={`text-xs ${sort === 'name' ? "bg-orange-50 text-orange-600" : ""}`}
-                        onClick={() => setSort('name')}
-                      >
-                        <Text className="h-3.5 w-3.5 mr-1.5" />
-                        {t('name')}
-                      </DropdownMenuItem>
-                      <DropdownMenuItem 
-                        className={`text-xs ${sort === 'expiry' ? "bg-orange-50 text-orange-600" : ""}`}
-                        onClick={() => setSort('expiry')}
-                      >
-                        <CalendarDays className="h-3.5 w-3.5 mr-1.5" />
-                        {t('expiry')}
-                      </DropdownMenuItem>
-                      <DropdownMenuItem 
-                        className={`text-xs ${sort === 'quantity' ? "bg-orange-50 text-orange-600" : ""}`}
-                        onClick={() => setSort('quantity')}
-                      >
-                        <Hash className="h-3.5 w-3.5 mr-1.5" />
-                        {t('quantity')}
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </div>
-              </>
-            )}
+                    <CalendarDays className="h-3.5 w-3.5 mr-1.5" />
+                    {t('expiry')}
+                  </DropdownMenuItem>
+                  <DropdownMenuItem 
+                    className={`text-xs ${sort === 'quantity' ? "bg-orange-50 text-orange-600" : ""}`}
+                    onClick={() => setSort('quantity')}
+                  >
+                    <Hash className="h-3.5 w-3.5 mr-1.5" />
+                    {t('quantity')}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           </div>
           
           <div className="flex items-center gap-2">
-            {/* 添加折疊/展開按鈕到頂部欄 */}
-            {dashboardGroupBySubcategory && sortedItems.length > 0 && (
-              <Button
-                variant="outline"
-                className={`h-9 w-9 p-0 rounded-full border-orange-200 bg-white hover:bg-orange-100/50 flex items-center justify-center`}
-                onClick={Object.keys(getItemsBySubcategory(sortedItems)).length > 0 && Object.keys(getItemsBySubcategory(sortedItems)).every(subcat => collapsedSubcategories.includes(subcat)) ? expandAllSubcategories : collapseAllSubcategories}
-              >
-                {Object.keys(getItemsBySubcategory(sortedItems)).length > 0 && Object.keys(getItemsBySubcategory(sortedItems)).every(subcat => collapsedSubcategories.includes(subcat)) ? (
-                  <ChevronDown className="h-4 w-4 text-orange-600" />
-                ) : (
-                  <ChevronUp className="h-4 w-4 text-orange-600" />
-                )}
-              </Button>
-            )}
+            {/* 添加折疊所有項目按鈕 */}
+            <Button
+              variant="outline"
+              className={`h-9 w-9 p-0 rounded-full border-orange-200 bg-white hover:bg-orange-100/50 flex items-center justify-center`}
+              onClick={dashboardGroupBySubcategory ? (Object.keys(getItemsBySubcategory(sortedItems)).length > 0 && Object.keys(getItemsBySubcategory(sortedItems)).every(subcat => collapsedSubcategories.includes(subcat)) ? expandAllSubcategories : collapseAllSubcategories) : () => {}}
+              title={language === 'en' ? (Object.keys(getItemsBySubcategory(sortedItems)).length > 0 && Object.keys(getItemsBySubcategory(sortedItems)).every(subcat => collapsedSubcategories.includes(subcat)) ? "Expand All" : "Collapse All") : (Object.keys(getItemsBySubcategory(sortedItems)).length > 0 && Object.keys(getItemsBySubcategory(sortedItems)).every(subcat => collapsedSubcategories.includes(subcat)) ? "展開全部" : "摺疊全部")}
+            >
+              {Object.keys(getItemsBySubcategory(sortedItems)).length > 0 && Object.keys(getItemsBySubcategory(sortedItems)).every(subcat => collapsedSubcategories.includes(subcat)) ? (
+                <ChevronDown className="h-4 w-4 text-orange-600" />
+              ) : (
+                <ChevronUp className="h-4 w-4 text-orange-600" />
+              )}
+            </Button>
 
+            {/* 過濾按鈕 */}
             <Button
               variant="outline"
               className={`h-9 w-9 p-0 rounded-full border-orange-200 ${showFilterControls ? "bg-orange-200 text-orange-700 shadow-sm" : "bg-white hover:bg-orange-100/50"} flex items-center justify-center`}
@@ -989,9 +974,10 @@ const Dashboard: React.FC = () => {
               )}
             </Button>
             
+            {/* 多選按鈕 */}
             <Button
               variant="outline"
-              className={`h-9 w-9 p-0 rounded-full border-orange-200 ${isMultiSelectMode ? "bg-orange-200 text-orange-700 shadow-sm" : "bg-white hover:bg-orange-100/50"} flex items-center justify-center`}
+              className={`h-9 w-9 p-0 rounded-full border-orange-200 ${dashboardMultiSelectMode ? "bg-orange-200 text-orange-700 shadow-sm" : "bg-white hover:bg-orange-100/50"} flex items-center justify-center`}
               onClick={toggleMultiSelectMode}
             >
               <ListChecks className="h-4 w-4 text-orange-600" />
@@ -999,7 +985,7 @@ const Dashboard: React.FC = () => {
           </div>
         </div>
         
-        {/* 搜索欄和統計數字 */}
+        {/* 搜索欄和統計數字 - 合併物品和單位計數 */}
         <div className="flex items-center gap-2">
           <div className="relative flex-1 w-full max-w-[90%]">
             <Input
@@ -1024,13 +1010,18 @@ const Dashboard: React.FC = () => {
             )}
           </div>
           
-          <div className="flex gap-2 justify-end">
+          {/* 合併物品和單位計數 */}
+          <div className="flex justify-end">
             <Badge variant="outline" className="h-8 px-2 border-orange-200 bg-white flex items-center gap-1 rounded-full">
-              <span className="text-xs font-medium text-orange-900">{uniqueItemCount} {language === 'en' ? "items" : "項目"}</span>
-            </Badge>
-            
-            <Badge variant="outline" className="h-8 px-2 border-orange-200 bg-white flex items-center gap-1 rounded-full">
-              <span className="text-xs font-medium text-orange-900">{totalItemQuantity} {language === 'en' ? "units" : "單位"}</span>
+              <span className="text-xs font-medium text-orange-900">{language === 'en' 
+  ? `${uniqueItemCount} ${uniqueItemCount === 1 ? 'item' : 'items'}`
+  : `${uniqueItemCount} 項目`}
+</span>
+<span className="text-xs text-orange-700">•</span>
+<span className="text-xs font-medium text-orange-900">{language === 'en' 
+  ? `${totalItemQuantity} ${totalItemQuantity === 1 ? 'unit' : 'units'}`
+  : `${totalItemQuantity} 單位`}
+</span>
             </Badge>
           </div>
         </div>
@@ -1062,50 +1053,7 @@ const Dashboard: React.FC = () => {
         {/* 改進的過濾器面板 */}
         {showFilterControls && (
           <div className="space-y-3 p-3 bg-gray-50/80 dark:bg-gray-900/80 backdrop-blur-sm border border-gray-200 dark:border-gray-800 rounded-xl animate-in fade-in duration-200 shadow-sm overflow-auto max-h-[calc(70vh-5rem)]">
-            {/* 排序選項 - 重新添加排序部分 */}
-            <div>
-              <div className="flex items-center mb-1.5">
-                <ArrowUpDown className="h-3.5 w-3.5 mr-2 text-orange-500" />
-                <span className="text-xs font-medium">{language === 'en' ? "Sort by" : "排序方式"}</span>
-              </div>
-              <div className="flex flex-wrap gap-1.5">
-                <Button 
-                  variant="outline"
-                  size="sm"
-                  className={`h-7 px-2.5 text-xs rounded-full ${sort === 'name' 
-                    ? "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300 border-orange-200 dark:border-orange-800 font-medium" 
-                    : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-orange-50 hover:text-orange-600 hover:border-orange-200"}`}
-                  onClick={() => setSort('name')}
-                >
-                  <Text className="h-3.5 w-3.5 mr-1.5" />
-                  {t('name')}
-                </Button>
-                <Button 
-                  variant="outline"
-                  size="sm"
-                  className={`h-7 px-2.5 text-xs rounded-full ${sort === 'expiry' 
-                    ? "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300 border-orange-200 dark:border-orange-800 font-medium" 
-                    : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-orange-50 hover:text-orange-600 hover:border-orange-200"}`}
-                  onClick={() => setSort('expiry')}
-                >
-                  <CalendarDays className="h-3.5 w-3.5 mr-1.5" />
-                  {t('expiry')}
-                </Button>
-                <Button 
-                  variant="outline"
-                  size="sm"
-                  className={`h-7 px-2.5 text-xs rounded-full ${sort === 'quantity' 
-                    ? "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300 border-orange-200 dark:border-orange-800 font-medium" 
-                    : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-200 dark:border-gray-700 hover:bg-orange-50 hover:text-orange-600 hover:border-orange-200"}`}
-                  onClick={() => setSort('quantity')}
-                >
-                  <Hash className="h-3.5 w-3.5 mr-1.5" />
-                  {t('quantity')}
-                </Button>
-              </div>
-            </div>
-            
-            {/* 視圖和分組選項 - 移除了折疊/展開按鈕，保留分組按鈕 */}
+            {/* 視圖和分組選項 - 移至過濾選單內 */}
             <div>
               <div className="flex items-center justify-between mb-1.5">
                 <div className="flex items-center">
@@ -1113,17 +1061,16 @@ const Dashboard: React.FC = () => {
                   <span className="text-xs font-medium">{language === 'en' ? "View options" : "顯示選項"}</span>
                 </div>
                 
-                <div className="flex gap-1.5">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className={`h-7 px-2.5 text-xs rounded-full border-gray-200 dark:border-gray-700 ${dashboardGroupBySubcategory ? "bg-orange-200 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300 shadow-sm" : "bg-white dark:bg-gray-800 hover:bg-orange-100/50"}`}
-                    onClick={toggleGrouping}
-                  >
-                    <LayoutPanelLeft className="h-3.5 w-3.5 mr-1.5" />
-                    {dashboardGroupBySubcategory ? (language === 'en' ? "Grouped" : "已分組") : (language === 'en' ? "Ungrouped" : "未分組")}
-                  </Button>
-                </div>
+                {/* 分組按鈕移至右側 */}
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className={`h-7 px-2.5 text-xs rounded-full border-gray-200 dark:border-gray-700 ${dashboardGroupBySubcategory ? "bg-orange-200 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300 shadow-sm" : "bg-white dark:bg-gray-800 hover:bg-orange-100/50"}`}
+                  onClick={toggleGrouping}
+                >
+                  <LayoutPanelLeft className="h-3.5 w-3.5 mr-1.5" />
+                  {dashboardGroupBySubcategory ? (language === 'en' ? "Grouped" : "已分組") : (language === 'en' ? "Ungrouped" : "未分組")}
+                </Button>
               </div>
               
               <div className="flex flex-wrap gap-1.5">
@@ -1155,7 +1102,7 @@ const Dashboard: React.FC = () => {
               </div>
             </div>
             
-            {/* 類別過濾器 */}
+            {/* 類別過濾器 - 更改All的圖標 */}
             <div>
               <div className="flex items-center mb-1.5">
                 <Layers className="h-3.5 w-3.5 mr-2 text-orange-400" />
@@ -1168,7 +1115,7 @@ const Dashboard: React.FC = () => {
                   className={`h-7 px-2.5 text-xs rounded-full border-gray-200 dark:border-gray-700 ${filter === 'All' ? "bg-orange-200 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300 border-orange-200 dark:border-orange-800" : "bg-white dark:bg-gray-800 hover:bg-orange-100/50"}`}
                   onClick={() => handleFilterChange('All')}
                 >
-                  <LayoutGrid className="h-3.5 w-3.5 mr-1.5" />
+                  <ListFilter className="h-3.5 w-3.5 mr-1.5" />
                   {t('all')}
                 </Button>
                 <Button 
@@ -1192,7 +1139,7 @@ const Dashboard: React.FC = () => {
               </div>
             </div>
             
-            {/* 緊急過濾器 */}
+            {/* 緊急過濾器 - 更改All的圖標 */}
             <div>
               <div className="flex items-center mb-1.5">
                 <AlertTriangle className="h-3.5 w-3.5 mr-2 text-orange-400" />
@@ -1205,7 +1152,7 @@ const Dashboard: React.FC = () => {
                   className={`h-7 px-2.5 text-xs rounded-full border-gray-200 dark:border-gray-700 ${urgentFilter === 'all' ? "bg-orange-200 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300 border-orange-200 dark:border-orange-800" : "bg-white dark:bg-gray-800 hover:bg-orange-100/50"}`}
                   onClick={() => handleUrgentFilterChange('all')}
                 >
-                  <CheckCircle2 className="h-3.5 w-3.5 mr-1.5" />
+                  <ListFilter className="h-3.5 w-3.5 mr-1.5" />
                   {t('all')}
                 </Button>
                 <Button 
@@ -1454,46 +1401,47 @@ const Dashboard: React.FC = () => {
             </div>
           </div>
         ) : (
-          <div className="rounded-xl bg-orange-100 border border-orange-300 flex flex-col items-center justify-center py-10 text-center px-4 mt-6">
+          <div className="rounded-xl bg-orange-100 border border-orange-300 flex flex-col items-center justify-center py-10 text-center px-4 mt-6 dashboard-empty-state">
             <div className="w-28 h-28 bg-gradient-to-br from-orange-500 to-orange-400 rounded-full flex items-center justify-center mb-5 shadow-md">
               <Archive className="h-14 w-14 text-white" />
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold mb-3 text-orange-700">{t('nothingYet')}</h2>
-            <div className="text-sm text-orange-700/80 mb-6 max-w-md whitespace-pre-line">
-              {t('emptyDashboardMessage')}
-            </div>
-            <div className="w-full max-w-xs">
-              <Button onClick={handleAddItem} size="lg" className="gap-2 w-full bg-orange-500 hover:bg-orange-600">
-                <PlusIcon className="h-5 w-5" />
-                {t('addYourFirst')}
-              </Button>
+            <h2 className="text-xl sm:text-2xl font-bold mb-3 text-orange-700">Let's Get Tracking with WhatsLeft!</h2>
+            <div className="text-sm text-orange-700/80 max-w-md whitespace-pre-line">
+              Ready to get started? Add your first item using the button below - type it, say it, or scan a barcode
             </div>
           </div>
         )
       ) : (
         <div className="space-y-1.5">
           {/* 多選模式提示和操作按鈕 */}
-          {isMultiSelectMode && selectedItems.length > 0 && (
-            <div className="sticky top-[120px] z-20 bg-primary/10 rounded-lg p-2 mb-2 flex items-center justify-between animate-in fade-in">
-              <div className="text-sm font-medium text-primary">
-                {selectedItems.length} {language === 'en' ? 'selected' : '已選擇'}
+          {dashboardMultiSelectMode && selectedItems.length > 0 && (
+            <div className="sticky top-[120px] z-20 bg-white/90 backdrop-blur-md rounded-lg p-2.5 mb-3 flex items-center justify-between animate-in fade-in shadow-sm border border-orange-100">
+              <div className="h-9 px-2.5 flex items-center">
+                <span className="text-xs font-medium text-orange-700">{selectedItems.length} {language === 'en' ? 'selected' : '已選擇'}</span>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-1.5">
                 <Button
-                  variant="outline"
                   size="sm"
                   onClick={() => handleMarkItemsAsUsed(selectedItems)}
-                  className="h-8 text-xs text-green-600 border-green-300 hover:bg-green-50"
+                  className="h-9 px-3 rounded-md bg-gradient-to-br from-primary to-primary-light hover:from-primary-dark hover:to-primary text-white"
+                  disabled={selectedItems.length === 0}
                 >
-                  {language === 'en' ? 'Used' : '已使用'}
+                  <CheckCircle2 className="h-3.5 w-3.5 mr-1.5" />
+                  <span className="text-xs">
+                    {language === 'en' ? 'Used' : '已使用'}
+                  </span>
                 </Button>
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={() => handleMarkItemsAsWasted(selectedItems)}
-                  className="h-8 text-xs text-amber-600 border-amber-300 hover:bg-amber-50"
+                  className="h-9 px-3 rounded-md border-orange-200 text-orange-600 bg-white hover:bg-orange-50"
+                  disabled={selectedItems.length === 0}
                 >
-                  {language === 'en' ? 'Wasted' : '已浪費'}
+                  <XCircle className="h-3.5 w-3.5 mr-1.5" />
+                  <span className="text-xs">
+                    {language === 'en' ? 'Wasted' : '已浪費'}
+                  </span>
                 </Button>
                 <Button
                   variant="outline"
@@ -1503,16 +1451,16 @@ const Dashboard: React.FC = () => {
                     selectedItems.forEach(id => deleteItem(id));
                     clearSelectedItems();
                   }}
-                  className="h-8 text-xs text-red-600 border-red-300 hover:bg-red-50"
+                  className="h-9 w-9 p-0 rounded-md border-red-200 text-red-600 bg-white hover:bg-red-50"
+                  disabled={selectedItems.length === 0}
                 >
-                  {language === 'en' ? 'Delete' : '刪除'}
+                  <Trash2 className="h-4 w-4" />
                 </Button>
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={clearSelectedItems}
-                  className="h-8 w-8 p-0 flex items-center justify-center border-primary/20 text-primary hover:bg-primary/10 rounded-full"
-                  title={language === 'en' ? 'Cancel' : '取消'}
+                  className="h-9 w-9 p-0 rounded-md border-gray-200 text-gray-500 bg-white hover:bg-gray-50"
                 >
                   <X className="h-4 w-4" />
                 </Button>
@@ -1526,10 +1474,10 @@ const Dashboard: React.FC = () => {
       
       {/* 使用修改後的浮動按鈕組件 */}
       {isAddButtonVisible && (
-        <div className="fixed bottom-[125px] left-1/2 transform -translate-x-1/2 z-[51] transition-opacity duration-300">
+        <div className="fixed bottom-[125px] left-1/2 transform -translate-x-1/2 z-[110] transition-opacity duration-300">
           <Button
             size="icon"
-            className="h-16 w-16 rounded-full shadow-xl bg-gradient-to-br from-primary to-primary-light hover:from-primary-dark hover:to-primary active:scale-95 transition-all duration-200 flex items-center justify-center animate-pulse-slow"
+            className="h-16 w-16 rounded-full shadow-xl bg-gradient-to-br from-primary to-primary-light hover:from-primary-dark hover:to-primary active:scale-95 transition-all duration-200 flex items-center justify-center animate-pulse-slow add-item-button"
             aria-label={t('addItem')}
             onClick={handleAddItem}
           >

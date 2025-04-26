@@ -217,7 +217,7 @@ export const en = {
   viewTutorial: 'View Tutorial',
   emptyDashboardMessage: 'You\'ll never have to guess WhatsLeft again.\n\nAdd your first item with the button below — type it, say it, or snap a photo.',
   frequentlyAskedQuestions: 'Frequently Asked Questions',
-  basicUsage: 'Basic Usage',
+  basicUsage: 'Basic Features',
   whatIsPurpose: 'What is the purpose of this app?',
   purposeAnswer: 'WhatsLeft helps you track expiry dates for food and household items to reduce waste. Add items with their expiry dates, and get notifications before they expire.',
   howToAddItem: 'How do I add a new item?',
@@ -244,7 +244,7 @@ export const en = {
   expiryColorAnswer: 'Green means safe to use (not expiring soon); Yellow means expiring soon (within 3-4 days); Red means expired or expiring today/tomorrow.',
   viewsAndFilters: 'Views and Filters',
   availableViews: 'What views are available?',
-  viewsAnswer: 'There are two views: Grid View (default) and List View. Switch between them using the view toggle in the top bar.',
+  viewsAnswer: 'There are two main views: Grid View (default) and List View. Switch between them using the view toggle in the top bar. Premium users also have access to Photo View.',
   privacyPolicyTitle: 'Privacy Policy',
   privacyPolicyContent: 'At WhatsLeft, we take your privacy seriously. This policy describes what personal information we collect and how we use it.\n\n**Information We Collect**\n\nWe collect the following types of information:\n- Account information (email if you choose to register)\n- App usage data to improve our service\n- Item information you enter (names, expiry dates, etc.)\n- Device information for troubleshooting\n\n**How We Use Information**\n\nWe use your information to:\n- Provide and improve the WhatsLeft service\n- Send notifications about expiring items (only with your permission)\n- Troubleshoot issues and optimize performance\n- Communicate with you about your account or the app\n\n**Data Storage**\n\nYour data is primarily stored locally on your device. If you enable cloud backup, your data is encrypted and stored securely in the cloud. Family sharing features require data to be shared with specific users you authorize.\n\n**Third-Party Services**\n\nWe use limited third-party services for analytics and crash reporting. These services receive anonymized data only.\n\n**Your Rights**\n\nYou can:\n- Access all your data within the app\n- Export your data at any time\n- Delete your account and all associated data\n- Opt out of analytics\n\n**Updates to This Policy**\n\nWe may update this privacy policy from time to time. We will notify you of any changes by posting the new policy in the app.',
   termsOfServiceTitle: 'Terms of Service',
@@ -380,11 +380,97 @@ export const en = {
   // Reset password
   resetPassword: 'Reset Password',
   resetPasswordConfirmMessage: 'We will send password reset instructions to your email. Would you like to continue?',
-  resetPasswordSuccess: 'Password reset email sent',
-  resetPasswordSuccessMessage: 'Check your email for instructions to reset your password.',
+  resetPasswordSuccess: 'Password Reset Email Sent',
+  resetPasswordSuccessMessage: 'Please check your email for instructions to reset your password.',
   
   // Notification settings
-  notifications: 'Notifications',
-  defaultNotifyDaysBefore: 'Default Notify Days Before',
-  defaultNotifyDaysBeforeHint: 'Set the default number of days before expiry to notify you for newly added items',
-} 
+  notificationSettings: 'Notification Settings',
+  defaultNotifyDaysBefore: 'Default Days Before Expiry for Notifications',
+  defaultNotifyDaysBeforeHint: 'Set the default number of days before expiry for notifications on new items',
+  
+  // Exit dialog translations
+  exitPromptTitle: 'Confirm Exit',
+  exitPromptDescription: 'Are you sure you want to exit the app?',
+  
+  // New categories
+  dashboardManagement: 'Dashboard Management',
+  shopListFeatures: 'ShopList Features',
+  insightAndAnalysis: 'Insight and Analysis',
+  
+  // Renamed questions
+  markItemAsUsedQuestion: 'What happens when I mark an item as "Used"?',
+  markItemAsUsedAnswer: 'When you mark an item as "Used", it is removed from the Dashboard but kept in the database for statistical analysis. You can view data on all used items in the "Insight" page, which helps you understand your consumption patterns.',
+  markItemAsWastedQuestion: 'What happens when I mark an item as "Wasted"?',
+  markItemAsWastedAnswer: 'When you mark an item as "Wasted", it is removed from the Dashboard and counted in your waste statistics. This data appears in the waste analysis on the "Insight" page, helping you identify the types of items you waste most often, so you can improve your shopping and storage habits.',
+  
+  // Insight page related
+  whatInformationInsightPageShow: 'What information does the "Insight" page show?',
+  insightPageShowAnswer: 'The Insight page displays four key metrics: the number of unique items tracked, usage efficiency percentage, units used, and units wasted. Additionally, it provides detailed analysis of category usage, category efficiency, and most frequently wasted items.',
+  
+  // Advanced features
+  advancedFeatures: 'Advanced Features',
+  cameraQuestion: 'How does the barcode scanning feature work?',
+  cameraAnswer: 'The barcode scanning feature allows you to quickly add items by scanning product barcodes. When adding an item, select the barcode icon and point your phone at the product barcode. If the product is in the database, relevant information will be automatically filled in; otherwise, you\'ll need to enter it manually.',
+  voiceInputQuestion: 'How does voice input work?',
+  voiceInputAnswer: 'Voice input lets you add items by speaking, which is especially useful for adding multiple items at once. Select the microphone icon, then clearly say the item name and quantity (e.g., "two cartons of milk"), and the system will attempt to recognize and fill in the relevant information.',
+  autoSubcategoryQuestion: 'How does automatic subcategory selection work?',
+  autoSubcategoryAnswer: 'When you enter an item name, WhatsLeft attempts to identify the product type and automatically select the appropriate subcategory (such as "Dairy", "Meat", "Cleaning Supplies", etc.). You can enable or disable this feature in settings.',
+  familySizeAdjustQuestion: 'What is the family size auto-adjustment feature?',
+  familySizeAdjustAnswer: 'This feature automatically adjusts recommended purchase quantities based on your set number of family members. For example, a family of four typically consumes more meat, vegetables, etc. than a single-person household. This setting mainly affects the shopping list feature, making it easier for you to shop for the entire family.',
+  batchSelectionModeQuestion: 'How do I use batch selection mode?',
+  batchSelectionModeAnswer: 'On the dashboard, tap the "Select" button in the top-right corner to enable batch selection mode. After selecting the items you want to manage, action buttons appear at the bottom: mark as used, mark as wasted, or delete. This is useful for managing multiple items at once.',
+  
+  // Dashboard management
+  dashboardColorsQuestion: 'What do the colors on the dashboard mean?',
+  dashboardColorsAnswer: 'The colors indicate item urgency based on expiry date: Green means safe (not expiring soon), Yellow means expiring soon (within 3-4 days), and Red means expired or expiring today/tomorrow. This helps you prioritize what to use first.',
+  dashboardNotificationIconQuestion: 'What is the notification icon in the top right corner?',
+  dashboardNotificationIconAnswer: 'The bell icon in the top right corner indicates items needing attention. Tapping it filters the dashboard to show only items that are expiring soon or have already expired, helping you quickly see what needs immediate use.',
+  
+  // Views and filters
+  howToFilter: 'How do I filter my items?',
+  filterAnswer: 'Tap the filter button in the top-right corner of the dashboard, then select the category to display (All, Food, or Household) and urgency level (All, Expiring Soon, or Expired). You can also select specific subcategories to further filter items.',
+  howToSort: 'How do I sort items?',
+  sortAnswer: 'Tap the sort button in the top-right corner of the dashboard, then choose a sorting method: by name (alphabetical order), by expiry date (earliest expiring first), or by quantity (highest to lowest).',
+  howToGroupItemsBySubcategory: 'How do I group items by subcategory?',
+  groupItemsBySubcategoryAnswer: 'On the dashboard, tap the filter button in the top-right corner, then select the "Group by Subcategory" option. This will group items by subcategories (such as "Dairy", "Meat", etc.), making it easier to manage large inventories.',
+  canSearchForItems: 'Can I search for items?',
+  searchForItemsAnswer: 'Yes, tap the search icon or search bar at the top of the dashboard and enter an item name or subcategory keyword. Search results will display in real-time, matching both item names and subcategories.',
+  
+  // Insight and analysis
+  howToViewStatsDifferentPeriods: 'How do I view statistics for different time periods?',
+  viewStatsDifferentPeriodsAnswer: 'At the top of the Insight page, tap the timeframe dropdown menu to select: This Month, Last Month, Last 3 Months, or Last 6 Months. All statistics will update according to the selected time period.',
+  howIsUsageEfficiencyCalculated: 'How is "Usage Efficiency" calculated?',
+  usageEfficiencyCalculatedAnswer: 'Usage Efficiency = (Units Used ÷ Total Units Tracked) × 100%. Total Units Tracked is the sum of Units Used and Units Wasted. This metric measures the proportion of items you effectively use (rather than waste).',
+  howToSeeWastedItems: 'How do I see my most frequently wasted items?',
+  seeWastedItemsAnswer: 'On the Insight page, scroll down to the "Wasted Items" card, which lists items you\'ve marked as wasted, sorted by quantity. Tap "Show more" to see the complete list. This helps identify items you should buy less of or manage better.',
+  
+  // ShopList features
+  howToAddItemsToShoppingList: 'How do I add items to my shopping list?',
+  addItemsToShoppingListAnswer: 'There are three ways: 1) On the "ShopList" page, tap the + button and enter item details; 2) When marking an item as used on the dashboard, select the "Add to ShopList" option; 3) In the item detail view on the dashboard, tap the "Add to ShopList" button.',
+  howToManageMultipleShoppingListItems: 'How do I manage multiple shopping list items at once?',
+  manageMultipleShoppingListItemsAnswer: 'On the ShopList page, tap the "Select" button in the top-right corner to enter selection mode. After selecting the items you want to manage, you can move multiple items to main inventory or delete them all at once.',
+  whatHappensWhenCheckOffItems: 'What happens when I check off items in the shopping list?',
+  checkOffItemsAnswer: 'Checking off an item in the shopping list indicates you\'ve purchased it. Checked items remain in the list but display in a different style. You can use the "Clear Completed" button at the bottom to remove all checked items at once.',
+  howDoesFamilySizeSettingAffect: 'How does the family size setting affect my shopping list?',
+  familySizeSettingAffectAnswer: 'When adding items to the shopping list, the app automatically adjusts suggested purchase quantities based on your family size setting. For example, categories like "Meat", "Seafood", and "Fruits & Vegetables" increase proportionally with family size. Premium users can customize multipliers for each subcategory.',
+  howToMoveShoppingListItems: 'How do I move shopping list items to my main inventory?',
+  moveShoppingListItemsAnswer: 'In the shopping list, tap the "Move to Inventory" button next to an item, or use batch selection mode to move multiple items at once. When moving, you can set details like expiry date.',
+  
+  // Settings and preferences
+  settingsAndPreferences: 'Settings and Preferences',
+  changeDateFormatQuestion: 'How do I change the date format?',
+  changeDateFormatAnswer: 'In the "Settings" page under the "Preferences" card, tap the "Date Format" dropdown menu to select your preferred format (DD/MM/YYYY or MM/DD/YYYY).',
+  changeLanguageQuestion: 'How do I change the app language?',
+  changeLanguageAnswer: 'In the "Settings" page under the "Preferences" card, tap the "Language" dropdown menu to select your language (currently supports English, Traditional Chinese, and Simplified Chinese).',
+  darkModeQuestion: 'Can I enable dark mode?',
+  darkModeAnswer: 'In the "Settings" page under the "Preferences" card, tap the toggle next to "Appearance" to enable or disable dark mode. You can also select "Follow System" to let the app automatically switch based on your device settings.',
+  
+  // Troubleshooting
+  troubleshooting: 'Troubleshooting',
+  shareItemListQuestion: 'Can I share my inventory list with others?',
+  shareItemListAnswer: 'Currently, the app does not support direct list sharing. However, you can indirectly share your inventory information using the data export feature. We plan to add list sharing and family sharing features in future versions.',
+  voiceInputTroubleshootQuestion: 'What if voice input doesn\'t recognize my item?',
+  voiceInputTroubleshootAnswer: 'If voice input isn\'t working correctly, try these steps: 1) Tap the microphone button again to restart the listening process. 2) Speak clearly and slightly slower. 3) Ensure the app has microphone permissions in your device settings. 4) Check your internet connection, as voice recognition requires it. 5) If it consistently fails for an item, try phrasing it differently or use manual input.',
+  viewBasicTutorial: 'View Basic Tutorial',
+  viewAdvancedTutorial: 'View Advanced Tutorial',
+}

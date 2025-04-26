@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="600" height="400" fill="#f5f5f5"/>
+  
+  <!-- Title -->
+  <text x="300" y="30" font-family="Arial, sans-serif" font-size="22" font-weight="bold" text-anchor="middle" fill="#333333">Multiple Input Modes</text>
+  
+  <!-- Section 1: Voice Mode -->
+  <rect x="30" y="50" width="170" height="320" rx="10" ry="10" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="115" y="75" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#333333">Voice Input Mode</text>
+  
+  <!-- Voice phone illustration -->
+  <rect x="55" y="90" width="120" height="180" rx="10" ry="10" fill="#333333"/>
+  <rect x="60" y="100" width="110" height="160" rx="5" ry="5" fill="#ffffff"/>
+  
+  <!-- Voice interface -->
+  <circle cx="115" cy="170" r="40" fill="#f0f4f8" stroke="#4299e1" stroke-width="2"/>
+  <circle cx="115" cy="170" r="30" fill="#ebf8ff"/>
+  
+  <!-- Voice visualization -->
+  <path d="M85,170 Q95,150 105,170 Q115,190 125,170 Q135,150 145,170" fill="none" stroke="#4299e1" stroke-width="2"/>
+  
+  <!-- Microphone icon -->
+  <rect x="110" cy="155" width="10" height="20" rx="5" ry="5" fill="#4299e1"/>
+  <circle cx="115" cy="155" r="10" fill="#4299e1"/>
+  
+  <!-- Voice features -->
+  <circle cx="50" cy="290" r="5" fill="#4299e1"/>
+  <text x="115" y="290" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666666">Quickly add items with voice</text>
+  
+  <circle cx="50" cy="310" r="5" fill="#4299e1"/>
+  <text x="115" y="310" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666666">No typing required</text>
+  
+  <circle cx="50" cy="330" r="5" fill="#4299e1"/>
+  <text x="115" y="330" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666666">Auto-categorization</text>
+  
+  <circle cx="50" cy="350" r="5" fill="#4299e1"/>
+  <text x="115" y="350" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666666">Perfect for multiple items</text>
+  
+  <!-- Section 2: Single Item Mode -->
+  <rect x="215" y="50" width="170" height="320" rx="10" ry="10" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="300" y="75" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#333333">Single Item Mode</text>
+  
+  <!-- Single item phone illustration -->
+  <rect x="240" y="90" width="120" height="180" rx="10" ry="10" fill="#333333"/>
+  <rect x="245" y="100" width="110" height="160" rx="5" ry="5" fill="#ffffff"/>
+  
+  <!-- Single item form -->
+  <rect x="255" y="120" width="90" height="20" rx="5" ry="5" fill="#f0f4f8"/>
+  <text x="265" y="135" font-family="Arial, sans-serif" font-size="10" text-anchor="start" fill="#666666">Item name</text>
+  
+  <rect x="255" y="150" width="90" height="20" rx="5" ry="5" fill="#f0f4f8"/>
+  <text x="265" y="165" font-family="Arial, sans-serif" font-size="10" text-anchor="start" fill="#666666">Category</text>
+  
+  <rect x="255" y="180" width="90" height="20" rx="5" ry="5" fill="#f0f4f8"/>
+  <text x="265" y="195" font-family="Arial, sans-serif" font-size="10" text-anchor="start" fill="#666666">Expiry date</text>
+  
+  <rect x="270" y="210" width="60" height="25" rx="5" ry="5" fill="#4299e1"/>
+  <text x="300" y="227" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#ffffff">Add</text>
+  
+  <!-- Single item features -->
+  <circle cx="235" cy="290" r="5" fill="#4299e1"/>
+  <text x="300" y="290" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666666">Precise control over details</text>
+  
+  <circle cx="235" cy="310" r="5" fill="#4299e1"/>
+  <text x="300" y="310" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666666">Return to list after adding</text>
+  
+  <circle cx="235" cy="330" r="5" fill="#4299e1"/>
+  <text x="300" y="330" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666666">Perfect for detailed records</text>
+  
+  <circle cx="235" cy="350" r="5" fill="#4299e1"/>
+  <text x="300" y="350" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666666">Add custom attributes</text>
+  
+  <!-- Section 3: Batch Mode -->
+  <rect x="400" y="50" width="170" height="320" rx="10" ry="10" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="485" y="75" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#333333">Batch Mode</text>
+  
+  <!-- Batch mode phone illustration -->
+  <rect x="425" y="90" width="120" height="180" rx="10" ry="10" fill="#333333"/>
+  <rect x="430" y="100" width="110" height="160" rx="5" ry="5" fill="#ffffff"/>
+  
+  <!-- Batch form -->
+  <rect x="440" y="120" width="90" height="20" rx="5" ry="5" fill="#f0f4f8"/>
+  <text x="450" y="135" font-family="Arial, sans-serif" font-size="10" text-anchor="start" fill="#666666">Milk</text>
+  
+  <rect x="440" y="150" width="90" height="20" rx="5" ry="5" fill="#f0f4f8"/>
+  <text x="450" y="165" font-family="Arial, sans-serif" font-size="10" text-anchor="start" fill="#666666">Bread</text>
+  
+  <rect x="440" y="180" width="90" height="20" rx="5" ry="5" fill="#f0f4f8"/>
+  <text x="450" y="195" font-family="Arial, sans-serif" font-size="10" text-anchor="start" fill="#666666">Eggs</text>
+  
+  <text x="520" y="195" font-family="Arial, sans-serif" font-size="16" text-anchor="end" fill="#666666">+</text>
+  
+  <rect x="455" y="210" width="60" height="25" rx="5" ry="5" fill="#4299e1"/>
+  <text x="485" y="227" font-family="Arial, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" fill="#ffffff">Add All</text>
+  
+  <!-- Batch features -->
+  <circle cx="420" cy="290" r="5" fill="#4299e1"/>
+  <text x="485" y="290" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666666">Enter multiple items at once</text>
+  
+  <circle cx="420" cy="310" r="5" fill="#4299e1"/>
+  <text x="485" y="310" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666666">Ideal after grocery shopping</text>
+  
+  <circle cx="420" cy="330" r="5" fill="#4299e1"/>
+  <text x="485" y="330" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666666">Auto-apply default expiry</text>
+  
+  <circle cx="420" cy="350" r="5" fill="#4299e1"/>
+  <text x="485" y="350" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666666">Batch category assignment</text>
+  
+  <!-- Connecting arrows -->
+  <path d="M200,200 L215,200" fill="none" stroke="#666666" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <polygon points="210,195 215,200 210,205" fill="#666666"/>
+  
+  <path d="M385,200 L400,200" fill="none" stroke="#666666" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <polygon points="395,195 400,200 395,205" fill="#666666"/>
+  
+  <!-- Bottom annotation -->
+  <text x="300" y="385" font-family="Arial, sans-serif" font-size="14" font-style="italic" text-anchor="middle" fill="#666666">Choose the input mode that works best for you to save time and increase efficiency</text>
+</svg> 

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f9f9f9" rx="10" ry="10" />
+
+  <!-- Main Card Area -->
+  <rect x="50" y="20" width="700" height="400" rx="10" ry="10" fill="white" stroke="#e2e2e2" stroke-width="1" />
+
+  <!-- Efficiency Overview Title -->
+  <text x="80" y="60" font-family="Arial" font-size="24" font-weight="bold" fill="#C05621">% Efficiency Overview</text>
+  
+  <!-- Overall Efficiency Card -->
+  <rect x="80" y="90" width="640" height="150" rx="10" ry="10" fill="#FFF8F2" stroke="#FFE5D4" stroke-width="1" />
+  <text x="400" y="130" font-family="Arial" font-size="20" text-anchor="middle" fill="#DD6B20">Overall Efficiency</text>
+  <text x="400" y="180" font-family="Arial" font-size="48" font-weight="bold" text-anchor="middle" fill="#F59E0B">69%</text>
+  
+  <!-- Used Count -->
+  <circle cx="250" cy="220" r="15" fill="none" stroke="#48BB78" stroke-width="2" />
+  <path d="M245,220 L250,225 L255,215" stroke="#48BB78" stroke-width="2" fill="none" />
+  <text x="270" y="225" font-family="Arial" font-size="16" fill="#48BB78">Used</text>
+  <text x="320" y="225" font-family="Arial" font-size="20" font-weight="bold" fill="#333333">48</text>
+  
+  <!-- Wasted Count -->
+  <circle cx="500" cy="220" r="15" fill="none" stroke="#E53E3E" stroke-width="2" />
+  <path d="M495,215 L505,225 M495,225 L505,215" stroke="#E53E3E" stroke-width="2" />
+  <text x="520" y="225" font-family="Arial" font-size="16" fill="#E53E3E">Wasted</text>
+  <text x="570" y="225" font-family="Arial" font-size="20" font-weight="bold" fill="#333333">22</text>
+
+  <!-- Category Breakdown Title -->
+  <text x="80" y="280" font-family="Arial" font-size="18" font-weight="bold" fill="#333333">Category Breakdown</text>
+  <text x="290" y="280" font-family="Arial" font-size="14" fill="#DD6B20">(Units)</text>
+  <line x1="80" y1="290" x2="320" y2="290" stroke="#f0f0f0" stroke-width="1" />
+  
+  <!-- Category Breakdown Card -->
+  <rect x="80" y="300" width="640" height="180" rx="10" ry="10" fill="white" stroke="#e2e2e2" stroke-width="1" />
+  <text x="100" y="330" font-family="Arial" font-size="20" font-weight="bold" fill="#333333">Summary by Category</text>
+
+  <!-- Food Category -->
+  <rect x="100" y="350" width="600" height="50" rx="10" ry="10" fill="#FFF8F2" stroke="#FFE5D4" stroke-width="1" />
+  <text x="120" y="375" font-family="Arial" font-size="16" fill="#DD6B20">Food</text>
+  <rect x="600" y="360" width="80" height="30" rx="15" ry="15" fill="#F59E0B" />
+  <text x="640" y="380" font-family="Arial" font-size="14" fill="white" text-anchor="middle">74%</text>
+  <circle cx="170" cy="385" r="8" fill="none" stroke="#48BB78" stroke-width="1.5" />
+  <path d="M167,385 L170,388 L173,382" stroke="#48BB78" stroke-width="1.5" fill="none" />
+  <text x="185" y="390" font-family="Arial" font-size="14" fill="#666666">Used</text>
+  <text x="250" y="390" font-family="Arial" font-size="16" font-weight="bold" fill="#333333">43</text>
+  <circle cx="400" cy="385" r="8" fill="none" stroke="#E53E3E" stroke-width="1.5" />
+  <path d="M397,382 L403,388 M397,388 L403,382" stroke="#E53E3E" stroke-width="1.5" />
+  <text x="415" y="390" font-family="Arial" font-size="14" fill="#666666">Wasted</text>
+  <text x="480" y="390" font-family="Arial" font-size="16" font-weight="bold" fill="#333333">15</text>
+
+  <!-- Household Category -->
+  <rect x="100" y="410" width="600" height="50" rx="10" ry="10" fill="white" stroke="#e2e2e2" stroke-width="1" />
+  <text x="120" y="435" font-family="Arial" font-size="16" fill="#DD6B20">Household</text>
+  <rect x="600" y="420" width="80" height="30" rx="15" ry="15" fill="#48BB78" />
+  <text x="640" y="440" font-family="Arial" font-size="14" fill="white" text-anchor="middle">100%</text>
+  <circle cx="170" cy="445" r="8" fill="none" stroke="#48BB78" stroke-width="1.5" />
+  <path d="M167,445 L170,448 L173,442" stroke="#48BB78" stroke-width="1.5" fill="none" />
+  <text x="185" y="450" font-family="Arial" font-size="14" fill="#666666">Used</text>
+  <text x="250" y="450" font-family="Arial" font-size="16" font-weight="bold" fill="#333333">1</text>
+  <circle cx="400" cy="445" r="8" fill="none" stroke="#E53E3E" stroke-width="1.5" />
+  <path d="M397,442 L403,448 M397,448 L403,442" stroke="#E53E3E" stroke-width="1.5" />
+  <text x="415" y="450" font-family="Arial" font-size="14" fill="#666666">Wasted</text>
+  <text x="480" y="450" font-family="Arial" font-size="16" font-weight="bold" fill="#333333">0</text>
+
+  <!-- Wasted Items Section -->
+  <rect x="50" y="440" width="700" height="200" rx="10" ry="10" fill="#FFF5F5" stroke="#FED7D7" stroke-width="1" />
+  <text x="80" y="470" font-family="Arial" font-size="20" font-weight="bold" fill="#C53030">Wasted Items</text>
+  <text x="250" y="470" font-family="Arial" font-size="14" fill="#E53E3E">(Units)</text>
+  <rect x="600" y="455" width="120" height="30" rx="15" ry="15" fill="white" stroke="#FED7D7" stroke-width="1" />
+  <text x="640" y="475" font-family="Arial" font-size="14" fill="#C53030">Show All</text>
+
+  <!-- Wasted Food Items -->
+  <rect x="80" y="490" width="640" height="40" rx="5" ry="5" fill="#FFF5F5" />
+  <text x="110" y="515" font-family="Arial" font-size="16" fill="#DD6B20">Food</text>
+  <text x="600" y="515" font-family="Arial" font-size="14" fill="#333">Total:</text>
+  <rect x="650" y="500" width="50" height="25" rx="12.5" ry="12.5" fill="#E53E3E" />
+  <text x="675" y="518" font-family="Arial" font-size="14" fill="white" text-anchor="middle">22</text>
+
+  <!-- Specific Wasted Items -->
+  <text x="100" y="550" font-family="Arial" font-size="16" fill="#333333">Beef</text>
+  <rect x="650" y="535" width="50" height="25" rx="12.5" ry="12.5" fill="#E53E3E" />
+  <text x="675" y="553" font-family="Arial" font-size="14" fill="white" text-anchor="middle">10</text>
+  
+  <text x="100" y="580" font-family="Arial" font-size="16" fill="#333333">Eggs</text>
+  <rect x="650" y="565" width="50" height="25" rx="12.5" ry="12.5" fill="#E53E3E" />
+  <text x="675" y="583" font-family="Arial" font-size="14" fill="white" text-anchor="middle">3</text>
+  
+  <text x="100" y="610" font-family="Arial" font-size="16" fill="#333333">Asdasdasd</text>
+  <rect x="650" y="595" width="50" height="25" rx="12.5" ry="12.5" fill="#E53E3E" />
+  <text x="675" y="613" font-family="Arial" font-size="14" fill="white" text-anchor="middle">2</text>
+
+  <!-- Highlight Markers -->
+  <!-- Overall Efficiency Highlight -->
+  <rect x="70" y="80" width="660" height="170" rx="10" ry="10" fill="none" stroke="#DD6B20" stroke-width="3" stroke-dasharray="5,5" />
+  <text x="760" y="170" font-family="Arial" font-size="16" font-weight="bold" fill="#DD6B20">Overall Usage/Waste</text>
+  <line x1="750" y1="170" x2="730" y2="170" stroke="#DD6B20" stroke-width="2" />
+  
+  <!-- Category Breakdown Highlight -->
+  <rect x="70" y="290" width="660" height="200" rx="10" ry="10" fill="none" stroke="#DD6B20" stroke-width="3" stroke-dasharray="5,5" />
+  <text x="760" y="390" font-family="Arial" font-size="16" font-weight="bold" fill="#DD6B20">Analyze by Category</text>
+  <line x1="750" y1="390" x2="730" y2="390" stroke="#DD6B20" stroke-width="2" />
+  
+  <!-- Wasted Items List Highlight -->
+  <rect x="40" y="430" width="720" height="220" rx="10" ry="10" fill="none" stroke="#C53030" stroke-width="3" stroke-dasharray="5,5" />
+  <text x="780" y="550" font-family="Arial" font-size="16" font-weight="bold" fill="#C53030">See Specific Wasted Items</text>
+  <line x1="770" y1="550" x2="760" y2="550" stroke="#C53030" stroke-width="2" />
+</svg> 

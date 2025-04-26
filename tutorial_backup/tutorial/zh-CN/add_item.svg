@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+  <!-- 背景 -->
+  <rect width="600" height="400" fill="#f8f9fa" rx="20" ry="20" />
+  
+  <!-- 標題 -->
+  <text x="300" y="50" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="#111827">添加和管理项目</text>
+  
+  <!-- 模擬手機界面 -->
+  <rect x="120" y="80" width="360" height="280" fill="white" stroke="#e5e7eb" stroke-width="2" rx="15" ry="15" />
+  
+  <!-- 頂部導航欄 -->
+  <rect x="120" y="80" width="360" height="50" fill="#FF6200" rx="15" ry="15" />
+  <rect x="120" y="110" width="360" height="20" fill="#FF6200" />
+  <text x="150" y="110" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white">添加项目</text>
+  
+  <!-- 表單項目 -->
+  <rect x="150" y="140" width="300" height="35" fill="white" stroke="#d1d5db" stroke-width="1" rx="8" ry="8" />
+  <text x="170" y="163" font-family="Arial, sans-serif" font-size="14" fill="#111827">项目名称: 牛奶</text>
+  
+  <rect x="150" y="185" width="300" height="35" fill="white" stroke="#d1d5db" stroke-width="1" rx="8" ry="8" />
+  <text x="170" y="207" font-family="Arial, sans-serif" font-size="14" fill="#111827">类别: 饮品</text>
+  
+  <rect x="150" y="230" width="145" height="35" fill="white" stroke="#d1d5db" stroke-width="1" rx="8" ry="8" />
+  <text x="170" y="252" font-family="Arial, sans-serif" font-size="14" fill="#111827">数量: 1</text>
+  
+  <rect x="305" y="230" width="145" height="35" fill="white" stroke="#d1d5db" stroke-width="1" rx="8" ry="8" />
+  <text x="325" y="252" font-family="Arial, sans-serif" font-size="14" fill="#111827">单位: 瓶</text>
+  
+  <rect x="150" y="275" width="300" height="35" fill="white" stroke="#d1d5db" stroke-width="1" rx="8" ry="8" />
+  <text x="170" y="297" font-family="Arial, sans-serif" font-size="14" fill="#111827">过期日期: 2023-12-30</text>
+  
+  <!-- 按鈕 -->
+  <rect x="150" y="320" width="145" height="40" fill="#f3f4f6" stroke="#d1d5db" stroke-width="1" rx="8" ry="8" />
+  <text x="222" y="345" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#4b5563">取消</text>
+  
+  <rect x="305" y="320" width="145" height="40" fill="#FF6200" rx="8" ry="8" />
+  <text x="377" y="345" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="white">保存到仪表板</text>
+  
+  <!-- 說明文字 -->
+  <text x="300" y="380" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#4b5563">添加项目并设置详细信息，如类别、数量和过期日期</text>
+</svg> 

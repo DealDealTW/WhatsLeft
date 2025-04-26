@@ -5,11 +5,12 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
-import { ShoppingBag, Apple, CalendarIcon, Bell, PencilIcon, Trash2Icon, InfoIcon, CheckCircle, RotateCw, AlertTriangle, Tag, Timer, Package, BellRing, X, ShoppingCart, Home, Layers, Hash, Minus, Plus, XCircle, Siren, AlertCircle as MildAlertCircle, Sparkles, Utensils, Users } from 'lucide-react';
+import { ShoppingBag, Apple, CalendarIcon, Bell, PencilIcon, Trash2Icon, InfoIcon, CheckCircle, RotateCw, AlertTriangle, Tag, Timer, Package, BellRing, X, ShoppingCart, Home, Layers, Hash, Minus, Plus, XCircle, Siren, AlertCircle as MildAlertCircle, Sparkles, Utensils, Users, PlusCircle, BookmarkPlus, Check } from 'lucide-react';
 import { format, parseISO, differenceInDays, addDays } from 'date-fns';
 import { useApp, formatDateWithUserPreference } from '@/contexts/AppContext';
 import { Item, calculateDaysUntilExpiry, ItemCategory } from '@/contexts/AppContext';
@@ -33,6 +34,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { CategoryConfig, detectCategoryAndSubcategoryByName } from '@/utils/categoryConfig';
 import { Label } from "@/components/ui/label";
+import { toast } from "@/components/ui/use-toast";
 
 // 定義本地常數，以匹配 ItemForm.tsx 中的定義
 const DEFAULT_AUTO_SCALE_SUBCATEGORIES_EN = ['Meat', 'Seafood', 'Fruits & Vegetables'];
@@ -354,7 +356,7 @@ const ItemModal: React.FC<ItemModalProps> = ({ onReAdd }) => {
     });
   };
 
-  const handleReAddToInventory = () => {
+  const handleReAddItem = () => {
     const itemToUse = itemSnapshotForZeroOptions || currentItem;
     if (itemToUse) {
       const itemToReAdd = { ...itemToUse };
@@ -364,7 +366,7 @@ const ItemModal: React.FC<ItemModalProps> = ({ onReAdd }) => {
       setSelectedItem(null);
     }
   };
-  
+
   const handleAddToShopList = () => {
     const itemToUse = itemSnapshotForZeroOptions || currentItem;
     if (!itemToUse) return;
@@ -375,6 +377,14 @@ const ItemModal: React.FC<ItemModalProps> = ({ onReAdd }) => {
       category: itemToUse.category,
       subcategory: itemToUse.subcategory,
       originItemId: itemToUse.id
+    });
+    
+    toast({
+      title: language === 'en' ? 'Added to Shopping List' : '已加入購物清單',
+      description: language === 'en' 
+        ? `${itemToUse.name} has been added to your shopping list.` 
+        : `${itemToUse.name} 已添加到您的購物清單。`,
+      variant: 'success',
     });
     
     deleteItem(itemToUse.id);
@@ -399,6 +409,21 @@ const ItemModal: React.FC<ItemModalProps> = ({ onReAdd }) => {
     }
   };
   
+  const getExpiredDesc = () => {
+    const daysUntil = calculateDaysUntilExpiry(currentItem.expiryDate);
+    if (daysUntil < 0) {
+      return language === 'en' ? 'Expired' : '已過期';
+    } else if (daysUntil === 0) {
+      return language === 'en' ? 'Expires today' : '今天到期';
+    } else if (daysUntil === 1) {
+      return language === 'en' ? 'Expires tomorrow' : '明天到期';
+    } else {
+      return language === 'en' 
+        ? `Expires in ${daysUntil} days` 
+        : `${daysUntil}天後到期`;
+    }
+  };
+
   return (
     <Dialog 
       open={!!currentItem}
@@ -409,10 +434,10 @@ const ItemModal: React.FC<ItemModalProps> = ({ onReAdd }) => {
         }
       }}
     >
-      <DialogContent className="sm:max-w-md dialog-content-no-close-button max-h-[90vh] w-[95vw] rounded-lg shadow-lg border border-orange-200 dark:border-orange-800/40 p-0 overflow-hidden">
+      <DialogContent className="sm:max-w-md dialog-content-no-close-button max-h-[90vh] w-[95vw] rounded-lg shadow-[0_2px_8px_rgba(0,0,0,0.05)] border border-orange-200 dark:border-orange-800/40 p-0 overflow-hidden">
         {/* Header */}
         <div className={cn(
-          "bg-gradient-to-r from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/10 px-4 pt-4 pb-3 border-b border-orange-200/50 dark:border-orange-800/20 shadow-sm",
+          "bg-gradient-to-r from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/10 px-4 pt-4 pb-3 border-b border-orange-200/50 dark:border-orange-800/20 shadow-[0_2px_8px_rgba(0,0,0,0.05)]",
            isUsed && "opacity-70"
          )}>
           <div className="flex justify-between items-center mb-1">
@@ -424,7 +449,7 @@ const ItemModal: React.FC<ItemModalProps> = ({ onReAdd }) => {
                 <Input
                   value={editedItem.name || ''}
                   onChange={(e) => handleEditInputChange('name', e.target.value)}
-                  className="h-8 text-lg font-bold border-b border-primary focus:border-primary focus:ring-0 bg-transparent p-0 m-0"
+                  className="h-9 text-lg font-bold border-b border-primary focus:border-primary focus:ring-0 bg-transparent p-0 m-0 w-40 truncate"
                   placeholder={t('itemName')}
                 />
               ) : (
@@ -463,14 +488,14 @@ const ItemModal: React.FC<ItemModalProps> = ({ onReAdd }) => {
         <div className={cn("px-3 py-2 space-y-2 overflow-y-auto max-h-[60vh]", (isUsed && !isEditing) && "opacity-70")}>
           {/* Item Image */} 
           {currentItem.image && (
-            <div className="mb-2 rounded-lg overflow-hidden border shadow-sm aspect-video">
+            <div className="mb-2 rounded-lg overflow-hidden border shadow-[0_2px_8px_rgba(0,0,0,0.05)] aspect-video">
               <img src={currentItem.image} alt={currentItem.name} className="w-full h-full object-cover" />
             </div>
           )}
 
           {/* Quantity adjuster */}
           {activeAdjusterType && (
-            <div className="bg-white dark:bg-slate-900 shadow-sm rounded-lg border border-gray-200 dark:border-gray-800 p-3 mb-2">
+            <div className="bg-white dark:bg-slate-900 shadow-[0_2px_8px_rgba(0,0,0,0.05)] rounded-lg border border-gray-200 dark:border-gray-800 p-3 mb-2">
               <div className="flex flex-col">
                 <div className="flex justify-between items-center mb-1">
                   <div className="text-sm font-semibold">
@@ -535,7 +560,7 @@ const ItemModal: React.FC<ItemModalProps> = ({ onReAdd }) => {
           
           {/* Zero quantity options - 統一單項目和多項目的設計 */}
           {justReachedZero && (
-            <div className="bg-white dark:bg-slate-900 shadow-sm rounded-lg border border-orange-200 dark:border-orange-800 p-0 mb-2 overflow-hidden">
+            <div className="bg-white dark:bg-slate-900 shadow-[0_2px_8px_rgba(0,0,0,0.05)] rounded-lg border border-orange-200 dark:border-orange-800 p-0 mb-2 overflow-hidden">
               <div className="px-4 pt-4 pb-3 border-b bg-gradient-to-r from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/10">
                 <div className="text-center">
                   <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-orange-50 mb-2">
@@ -558,7 +583,7 @@ const ItemModal: React.FC<ItemModalProps> = ({ onReAdd }) => {
                 <Button 
                   variant="outline"
                   className="w-full flex items-center justify-center px-4 py-2 h-10 rounded-md border-orange-200 text-orange-700 bg-orange-50/80 hover:bg-orange-100 hover:border-orange-300 active:scale-[0.98] transition-all"
-                  onClick={handleReAddToInventory}
+                  onClick={handleReAddItem}
                 >
                   <RotateCw className="h-4 w-4 mr-2" />
                   {language === 'en' ? 'Re-add to Dashboard' : '重新添加到儀表板'}
@@ -570,7 +595,7 @@ const ItemModal: React.FC<ItemModalProps> = ({ onReAdd }) => {
                   onClick={handleAddToShopList}
                 >
                   <ShoppingCart className="h-4 w-4 mr-2" />
-                  {language === 'en' ? 'Add to Shop List' : '添加到購物清單'}
+                  {language === 'en' ? 'Add to Shop List' : '加入購物清單'}
                 </Button>
                 
                 <Button
@@ -590,7 +615,7 @@ const ItemModal: React.FC<ItemModalProps> = ({ onReAdd }) => {
               // Edit form
               <div className="space-y-3 p-1">
                 {/* Quantity */}
-                <div className="bg-white dark:bg-slate-900 shadow-sm rounded-lg p-2 border border-gray-100 dark:border-gray-800 mb-1.5">
+                <div className="bg-white dark:bg-slate-900 shadow-[0_2px_8px_rgba(0,0,0,0.05)] rounded-lg p-2 border border-gray-100 dark:border-gray-800 mb-1.5">
                   <div className="flex items-center justify-between">
                     <Label className="text-sm font-medium flex items-center text-slate-700 dark:text-slate-300">
                       <Hash className="h-4 w-4 mr-1.5 text-orange-500" />
@@ -696,21 +721,18 @@ const ItemModal: React.FC<ItemModalProps> = ({ onReAdd }) => {
                           </span>
                         </>
                       )}
-                      <div className="ml-1 rounded-full border border-orange-200 w-3.5 h-3.5 flex items-center justify-center cursor-help">
-                        <span className="text-[8px] text-orange-500">i</span>
-                      </div>
                     </div>
                   </div>
                 </div>
 
                 {/* 新的類別和子類別設計 */}
-                <div className="flex flex-wrap gap-3 mb-3 bg-white dark:bg-slate-900 shadow-sm rounded-lg p-3 border border-gray-100 dark:border-gray-800 items-start"> 
-                  <div className="flex-shrink-0 w-[90px] min-w-[90px]"> 
-                    <Label htmlFor="category-select" className="text-sm font-medium mb-2 block flex items-center text-slate-700 dark:text-slate-300"> 
+                <div className="flex flex-wrap gap-3 mb-3 bg-white dark:bg-slate-900 shadow-[0_2px_8px_rgba(0,0,0,0.05)] rounded-lg p-3 border border-gray-100 dark:border-gray-800 items-start"> 
+                  <div className="flex-shrink-0 w-[100px] min-w-[100px]"> 
+                    <Label htmlFor="category" className="text-sm font-medium mb-1.5 block flex items-center text-slate-700 dark:text-slate-300"> 
                       <Layers className="h-[1.1rem] w-[1.1rem] mr-1.5 text-orange-500 flex-shrink-0" /> 
                       {t('category')}
                     </Label>
-                    <div className="flex justify-start gap-1.5 mt-1 bg-orange-50/50 dark:bg-orange-900/10 p-1 rounded-lg"> 
+                    <div className="flex justify-start gap-1.5 mt-1">
                       <Button
                         type="button"
                         onClick={() => {
@@ -719,9 +741,11 @@ const ItemModal: React.FC<ItemModalProps> = ({ onReAdd }) => {
                             handleEditInputChange('subcategory', '');
                           }
                         }}
-                        className={`px-1 h-7 text-xs ${editedItem.category === 'Food' ? 'bg-white text-orange-700 shadow-sm' : 'bg-transparent text-slate-600'} hover:bg-white/80 focus:outline-none rounded-md border border-transparent focus-visible:ring-2 focus-visible:ring-orange-500`}
+                        className={`w-10 h-10 p-0 ${editedItem.category === 'Food' 
+                          ? 'border-2 border-orange-500 text-orange-500 bg-transparent'
+                          : 'bg-transparent border border-gray-300 text-gray-400'}`}
                       >
-                        <Apple className="h-[0.9rem] w-[0.9rem]" />
+                        <Utensils className="h-4 w-4" />
                       </Button>
                       <Button
                         type="button"
@@ -731,16 +755,18 @@ const ItemModal: React.FC<ItemModalProps> = ({ onReAdd }) => {
                             handleEditInputChange('subcategory', '');
                           }
                         }}
-                        className={`px-1 h-7 text-xs ${editedItem.category === 'Household' ? 'bg-white text-orange-700 shadow-sm' : 'bg-transparent text-slate-600'} hover:bg-white/80 focus:outline-none rounded-md border border-transparent focus-visible:ring-2 focus-visible:ring-orange-500`}
+                        className={`w-10 h-10 p-0 ${editedItem.category === 'Household' 
+                          ? 'border-2 border-orange-500 text-orange-500 bg-transparent'
+                          : 'bg-transparent border border-gray-300 text-gray-400'}`}
                       >
-                        <Home className="h-[0.9rem] w-[0.9rem]" />
+                        <Home className="h-4 w-4" />
                       </Button>
                     </div>
                   </div>
 
                   {/* 子類別選擇 */}
                   <div className="flex-1 self-stretch"> 
-                    <Label htmlFor="subcategory-select" className="text-sm font-medium mb-2 block flex items-center text-slate-700 dark:text-slate-300">
+                    <Label htmlFor="subcategory-select" className="text-sm font-medium mb-1.5 block flex items-center text-slate-700 dark:text-slate-300">
                       <Tag className="h-4 w-4 mr-1.5 text-orange-500 flex-shrink-0" /> 
                       {t('subcategory')}
                     </Label>
@@ -749,7 +775,7 @@ const ItemModal: React.FC<ItemModalProps> = ({ onReAdd }) => {
                       onValueChange={(value) => handleEditInputChange('subcategory', value)}
                       disabled={!editedItem.category || !categorySubcategories[editedItem.category as ItemCategory]?.length}
                     >
-                      <SelectTrigger id="subcategory-select" className="h-8" disabled={!editedItem.category || !categorySubcategories[editedItem.category as ItemCategory]?.length}>
+                      <SelectTrigger id="subcategory-select" className="h-10" disabled={!editedItem.category || !categorySubcategories[editedItem.category as ItemCategory]?.length}>
                         <SelectValue placeholder={t('selectSubcategory')} />
                       </SelectTrigger>
                       <SelectContent className="border-orange-200 max-h-[30vh]">
@@ -795,7 +821,7 @@ const ItemModal: React.FC<ItemModalProps> = ({ onReAdd }) => {
                           type="text"
                           pattern="[0-9]*"
                           inputMode="numeric"
-                          className="h-9 w-[3.5rem] text-center border-orange-200 focus:border-orange-500 focus:ring-orange-500"
+                          className="h-10 w-[3.5rem] text-center border-orange-200 focus:border-orange-500 focus:ring-orange-500"
                           maxLength={3}
                         />
                         <span className="ml-1 text-xs text-muted-foreground whitespace-nowrap min-w-[30px]">
@@ -939,7 +965,7 @@ const ItemModal: React.FC<ItemModalProps> = ({ onReAdd }) => {
             ) : (
               // Static display
               <div className="space-y-2">
-                <div className="bg-white dark:bg-slate-900 shadow-sm rounded-lg border border-gray-100 dark:border-gray-800 p-2">
+                <div className="bg-white dark:bg-slate-900 shadow-[0_2px_8px_rgba(0,0,0,0.05)] rounded-lg border border-gray-100 dark:border-gray-800 p-2">
                   <div className="flex items-center gap-2">
                     <Hash className="h-4 w-4 text-orange-500" />
                     <div className="text-sm font-medium">{t('quantity')}: {currentItem.quantity}</div>
@@ -947,7 +973,7 @@ const ItemModal: React.FC<ItemModalProps> = ({ onReAdd }) => {
                 </div>
                  
                 {currentItem.subcategory && (
-                  <div className="bg-white dark:bg-slate-900 shadow-sm rounded-lg border border-gray-100 dark:border-gray-800 p-2">
+                  <div className="bg-white dark:bg-slate-900 shadow-[0_2px_8px_rgba(0,0,0,0.05)] rounded-lg border border-gray-100 dark:border-gray-800 p-2">
                     <div className="flex items-center gap-2">
                       <Tag className="h-4 w-4 text-orange-500" />
                       <div className="text-sm font-medium">{currentItem.subcategory}</div>
@@ -955,25 +981,16 @@ const ItemModal: React.FC<ItemModalProps> = ({ onReAdd }) => {
                   </div>
                 )}
 
-                <div className="bg-white dark:bg-slate-900 shadow-sm rounded-lg border border-gray-100 dark:border-gray-800 p-2">
+                <div className="bg-white dark:bg-slate-900 shadow-[0_2px_8px_rgba(0,0,0,0.05)] rounded-lg border border-gray-100 dark:border-gray-800 p-2">
                   <div className="flex items-center gap-2">
                     <Timer className={cn("h-4 w-4", statusInfo.colorClass)} />
                     <div className="text-sm font-medium">
-                      {daysRemaining < 0 
-                        ? `${t('expired')} ${formatDateWithUserPreference(format(expiryDate, 'yyyy-MM-dd'), settings.dateFormat)}`
-                        : `Expires on ${formatDateWithUserPreference(format(expiryDate, 'yyyy-MM-dd'), settings.dateFormat)}`}
+                      {getExpiredDesc()}
                     </div>
-                    <span className="text-xs text-muted-foreground ml-auto">
-                      {daysRemaining < 0 
-                        ? `(${Math.abs(daysRemaining)} ${t('days')} ${language === 'en' ? 'ago' : '前'})`
-                        : daysRemaining === 0 
-                          ? `(${t('today')})`
-                          : `(${daysRemaining} ${t('days')} ${language === 'en' ? 'left' : '後'})`}
-                    </span>
                   </div>
                 </div>
   
-                <div className="bg-white dark:bg-slate-900 shadow-sm rounded-lg border border-gray-100 dark:border-gray-800 p-2">
+                <div className="bg-white dark:bg-slate-900 shadow-[0_2px_8px_rgba(0,0,0,0.05)] rounded-lg border border-gray-100 dark:border-gray-800 p-2">
                   <div className="flex items-center gap-2">
                     <BellRing className="h-4 w-4 text-orange-500" />
                     <div className="text-sm font-medium">
@@ -1004,7 +1021,7 @@ const ItemModal: React.FC<ItemModalProps> = ({ onReAdd }) => {
                   onClick={handleSaveChanges}
                   className="h-9 px-4 bg-primary text-primary-foreground hover:bg-primary/90"
                 >
-                  {t('saveChanges')}
+                  {language === 'en' ? 'Save Changes' : t('saveChanges')}
                 </Button>
               </>
             ) : (
@@ -1013,45 +1030,45 @@ const ItemModal: React.FC<ItemModalProps> = ({ onReAdd }) => {
                   <Button 
                     variant="outline"
                     size="sm"
-                    className="h-9 w-9 p-0 rounded-full hover:bg-orange-50 dark:hover:bg-orange-900/20 min-w-[44px] min-h-[44px] flex items-center justify-center"
+                    className="h-10 w-10 p-0 flex items-center justify-center border-orange-200 hover:bg-orange-50 dark:hover:bg-orange-900/20 text-orange-600 rounded-md"
                     onClick={handleStartEdit}
                     disabled={isUsed}
                     title={t('editItem')}
                   >
-                    <PencilIcon className="h-4 w-4 text-orange-600" />
+                    <PencilIcon className="h-4 w-4" />
                   </Button>
                   <Button 
                     size="sm"
-                    className="h-9 px-2.5 flex items-center gap-1 bg-gradient-to-br from-primary to-primary-light hover:from-primary-dark hover:to-primary active:scale-98 shadow-sm hover:shadow rounded-md"
+                    className="h-10 px-3 flex items-center gap-1.5 bg-gradient-to-br from-primary to-primary-light hover:from-primary-dark hover:to-primary active:scale-98 shadow-[0_2px_8px_rgba(0,0,0,0.05)] hover:shadow-[0_2px_8px_rgba(0,0,0,0.08)] rounded-md"
                     onClick={handleMarkAsUsedClick}
                     disabled={isUsed}
                     title={t('used')}
                   >
                     <CheckCircle className="h-4 w-4 flex-shrink-0" /> 
-                    <span className="text-xs">{t('used')}</span> 
+                    <span>{t('used')}</span> 
                   </Button>
                 </div>
 
                 <div className="flex-grow"></div>
                 
-                <div className="flex gap-4">
+                <div className="flex gap-2">
                   <Button
                     variant="outline"
                     size="sm"
-                    className="h-9 px-2.5 flex items-center gap-1 text-red-500 border-red-200 bg-red-50 hover:bg-red-100 rounded-md"
+                    className="h-10 px-3 flex items-center gap-1.5 text-red-500 border-red-200 bg-red-50 hover:bg-red-100 rounded-md"
                     onClick={handleMarkAsWastedClick}
                     disabled={isUsed}
                     title={t('wasted')}
                   >
                     <XCircle className="h-4 w-4 flex-shrink-0" />
-                    <span className="text-xs">{t('wasted')}</span> 
+                    <span>{t('wasted')}</span> 
                   </Button>
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
                       <Button 
                         variant="destructive"
                         size="sm"
-                        className="h-9 w-9 p-0 rounded-full min-w-[44px] min-h-[44px] flex items-center justify-center"
+                        className="h-10 w-10 p-0 flex items-center justify-center rounded-md"
                         disabled={isUsed}
                         title={t('delete')}
                       >

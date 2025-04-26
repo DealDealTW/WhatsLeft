@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f9f9f9" rx="10" ry="10" />
+
+  <!-- Main Content Area -->
+  <g transform="translate(100, 50)">
+    <!-- Title -->
+    <text x="0" y="40" font-family="Arial" font-size="32" font-weight="bold" fill="#FF6B2B">ShopList</text>
+    <line x1="0" y1="55" x2="50" y2="55" stroke="#FF6B2B" stroke-width="2" />
+    
+    <!-- Add Item Button -->
+    <rect x="0" y="80" width="150" height="50" rx="25" ry="25" fill="white" stroke="#FF6B2B" stroke-width="2" />
+    <circle cx="30" cy="105" r="10" fill="none" stroke="#FF6B2B" stroke-width="2" />
+    <path d="M30,100 L30,110 M25,105 L35,105" stroke="#FF6B2B" stroke-width="2" />
+    <text x="50" y="110" font-family="Arial" font-size="18" font-weight="bold" fill="#FF6B2B">Add Item</text>
+    
+    <!-- Search Bar -->
+    <rect x="0" y="150" width="450" height="50" rx="25" ry="25" fill="white" stroke="#e2e2e2" stroke-width="1.5" />
+    <circle cx="35" cy="175" r="10" fill="none" stroke="#888888" stroke-width="1.5" />
+    <line x1="42" y1="182" x2="50" y2="190" stroke="#888888" stroke-width="1.5" />
+    <text x="65" y="180" font-family="Arial" font-size="16" fill="#888888">Search items...</text>
+    
+    <!-- Top Button Group -->
+    <rect x="480" y="80" width="50" height="50" rx="10" ry="10" fill="#FFF8F2" stroke="#FFE5D4" stroke-width="1" />
+    <!-- Icon: Folder -->
+    <rect x="490" y="90" width="30" height="25" rx="3" ry="3" fill="none" stroke="#FF6B2B" stroke-width="1.5" />
+    <rect x="495" y="95" width="20" height="15" rx="2" ry="2" fill="#FF6B2B" opacity="0.3" />
+    
+    <rect x="540" y="80" width="50" height="50" rx="10" ry="10" fill="#FFF8F2" stroke="#FFE5D4" stroke-width="1" />
+    <!-- Icon: List -->
+    <line x1="555" y1="95" x2="575" y2="95" stroke="#FF6B2B" stroke-width="1.5" />
+    <line x1="555" y1="105" x2="575" y2="105" stroke="#FF6B2B" stroke-width="1.5" />
+    <line x1="555" y1="115" x2="575" y2="115" stroke="#FF6B2B" stroke-width="1.5" />
+    
+    <!-- Item Count -->
+    <rect x="470" y="150" width="130" height="50" rx="25" ry="25" fill="white" stroke="#e2e2e2" stroke-width="1.5" />
+    <text x="490" y="180" font-family="Arial" font-size="16" fill="#333333">2 items • 2 units</text>
+
+    <!-- Meat Category Header -->
+    <rect x="0" y="220" width="600" height="50" rx="10" ry="10" fill="#FFF8F2" stroke="#FFE5D4" stroke-width="1" />
+    <text x="60" y="250" font-family="Arial" font-size="18" font-weight="bold" fill="#DD6B20">Meat</text>
+    <!-- Fork and Knife Icon -->
+    <line x1="25" y1="240" x2="25" y2="260" stroke="#DD6B20" stroke-width="1.5" />
+    <path d="M25,240 C20,240 20,235 25,235 C30,235 30,240 25,240" fill="none" stroke="#DD6B20" stroke-width="1.5" />
+    <line x1="35" y1="240" x2="35" y2="260" stroke="#DD6B20" stroke-width="1.5" />
+    <path d="M35,235 C37,240 37,245 35,250" fill="none" stroke="#DD6B20" stroke-width="1.5" />
+
+    <text x="480" y="250" font-family="Arial" font-size="14" fill="#666666">2 items</text>
+    <text x="540" y="250" font-family="Arial" font-size="14" fill="#666666">2 units</text>
+    <!-- Down Arrow Icon -->
+    <path d="M580,245 L585,250 L590,245" fill="none" stroke="#666666" stroke-width="1.5" />
+    
+    <!-- Item Card Area -->
+    <g transform="translate(0, 290)">
+      <!-- Chicken Card -->
+      <rect x="0" y="0" width="290" height="150" rx="10" ry="10" fill="white" stroke="#FFE5D4" stroke-width="1.5" />
+      <text x="20" y="30" font-family="Arial" font-size="20" font-weight="bold" fill="#333333">Chicken</text>
+      <!-- Quantity Controls -->
+      <rect x="20" y="50" width="100" height="40" rx="20" ry="20" fill="white" stroke="#FFE5D4" stroke-width="1.5" />
+      <text x="65" y="75" font-family="Arial" font-size="18" font-weight="bold" fill="#333333">1</text>
+      <text x="35" y="75" font-family="Arial" font-size="24" font-weight="bold" fill="#FF6B2B">−</text>
+      <text x="100" y="75" font-family="Arial" font-size="24" font-weight="bold" fill="#FF6B2B">+</text>
+      <!-- Move to Dashboard Button -->
+      <rect x="230" y="10" width="50" height="50" rx="10" ry="10" fill="#FFF8F2" stroke="#FFE5D4" stroke-width="1" />
+      <!-- Icon: Folder with Arrow -->
+      <rect x="240" y="20" width="30" height="25" rx="3" ry="3" fill="none" stroke="#FF6B2B" stroke-width="1.5" />
+      <path d="M255,25 L255,35 L265,30 Z" fill="#FF6B2B" />
+      <!-- Delete Button -->
+      <rect x="230" y="70" width="50" height="50" rx="10" ry="10" fill="#FFF5F5" stroke="#FED7D7" stroke-width="1" />
+      <!-- Icon: Trash -->
+      <rect x="243" y="83" width="24" height="24" rx="3" ry="3" fill="none" stroke="#E53E3E" stroke-width="1.5" />
+      <line x1="243" y1="88" x2="267" y2="88" stroke="#E53E3E" stroke-width="1.5" />
+      <line x1="250" y1="83" x2="250" y2="107" stroke="#E53E3E" stroke-width="1.5" />
+      <line x1="260" y1="83" x2="260" y2="107" stroke="#E53E3E" stroke-width="1.5" />
+      
+      <!-- Beef Card -->
+      <rect x="310" y="0" width="290" height="150" rx="10" ry="10" fill="white" stroke="#FFE5D4" stroke-width="1.5" />
+      <text x="330" y="30" font-family="Arial" font-size="20" font-weight="bold" fill="#333333">Beef</text>
+      <!-- Quantity Controls -->
+      <rect x="330" y="50" width="100" height="40" rx="20" ry="20" fill="white" stroke="#FFE5D4" stroke-width="1.5" />
+      <text x="375" y="75" font-family="Arial" font-size="18" font-weight="bold" fill="#333333">1</text>
+      <text x="345" y="75" font-family="Arial" font-size="24" font-weight="bold" fill="#FF6B2B">−</text>
+      <text x="410" y="75" font-family="Arial" font-size="24" font-weight="bold" fill="#FF6B2B">+</text>
+      <!-- Move to Dashboard Button -->
+      <rect x="540" y="10" width="50" height="50" rx="10" ry="10" fill="#FFF8F2" stroke="#FFE5D4" stroke-width="1" />
+      <!-- Icon: Folder with Arrow -->
+      <rect x="550" y="20" width="30" height="25" rx="3" ry="3" fill="none" stroke="#FF6B2B" stroke-width="1.5" />
+      <path d="M565,25 L565,35 L575,30 Z" fill="#FF6B2B" />
+      <!-- Delete Button -->
+      <rect x="540" y="70" width="50" height="50" rx="10" ry="10" fill="#FFF5F5" stroke="#FED7D7" stroke-width="1" />
+       <!-- Icon: Trash -->
+      <rect x="553" y="83" width="24" height="24" rx="3" ry="3" fill="none" stroke="#E53E3E" stroke-width="1.5" />
+      <line x1="553" y1="88" x2="577" y2="88" stroke="#E53E3E" stroke-width="1.5" />
+      <line x1="560" y1="83" x2="560" y2="107" stroke="#E53E3E" stroke-width="1.5" />
+      <line x1="570" y1="83" x2="570" y2="107" stroke="#E53E3E" stroke-width="1.5" />
+    </g>
+  </g>
+  
+  <!-- Highlight Markers -->
+  <!-- Add Item Button Highlight -->
+  <rect x="90" y="130" width="170" height="60" rx="10" ry="10" fill="none" stroke="#FF6B2B" stroke-width="3" stroke-dasharray="5,5" />
+  <text x="270" y="160" font-family="Arial" font-size="16" font-weight="bold" fill="#FF6B2B">Organize ShopList</text>
+  <line x1="260" y1="160" x2="170" y2="135" stroke="#FF6B2B" stroke-width="2" />
+
+  <!-- Item List Highlight -->
+  <rect x="100" y="280" width="600" height="170" rx="10" ry="10" fill="none" stroke="#FF6B2B" stroke-width="3" stroke-dasharray="5,5" />
+  <text x="730" y="370" font-family="Arial" font-size="16" font-weight="bold" fill="#FF6B2B">Items in ShopList</text>
+  <line x1="720" y1="370" x2="700" y2="370" stroke="#FF6B2B" stroke-width="2" />
+  
+  <!-- Move to Dashboard Button Highlight -->
+  <rect x="320" y="300" width="70" height="70" rx="10" ry="10" fill="none" stroke="#FF6B2B" stroke-width="3" stroke-dasharray="5,5" />
+  <rect x="630" y="300" width="70" height="70" rx="10" ry="10" fill="none" stroke="#FF6B2B" stroke-width="3" stroke-dasharray="5,5" />
+  <text x="450" y="280" font-family="Arial" font-size="16" font-weight="bold" fill="#FF6B2B">Move to Dashboard after Shopping</text>
+  <line x1="440" y1="280" x2="355" y2="300" stroke="#FF6B2B" stroke-width="2" />
+  <line x1="440" y1="280" x2="665" y2="300" stroke="#FF6B2B" stroke-width="2" />
+</svg> 

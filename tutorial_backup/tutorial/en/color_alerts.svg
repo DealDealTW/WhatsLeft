@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="600" height="400" fill="#f9f9f9"/>
+  
+  <!-- Title -->
+  <text x="300" y="40" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#333333" text-anchor="middle">Item Status at a Glance</text>
+  
+  <!-- Green Card (Safe) -->
+  <rect x="50" y="70" width="150" height="220" rx="12" ry="12" fill="white" stroke="#e0e0e0" stroke-width="2"/>
+  <rect x="50" y="70" width="150" height="10" rx="8" ry="8" fill="#4CAF50"/> <!-- Green status bar -->
+  <text x="125" y="120" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#333333" text-anchor="middle">Cereal</text>
+  <text x="125" y="145" font-family="Arial, sans-serif" font-size="14" fill="#666666" text-anchor="middle">Food</text>
+  <text x="125" y="170" font-family="Arial, sans-serif" font-size="14" fill="#666666" text-anchor="middle">Expires: May 25</text>
+  <text x="125" y="195" font-family="Arial, sans-serif" font-size="14" fill="#4CAF50" font-weight="bold" text-anchor="middle">18 days left</text>
+  
+  <!-- Orange Annotation Circle for Green -->
+  <circle cx="125" cy="240" r="20" fill="#ff8c00" fill-opacity="0.8"/>
+  <text x="125" y="245" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">1</text>
+  <text x="125" y="280" font-family="Arial, sans-serif" font-size="14" fill="#333333" text-anchor="middle">Safe to use</text>
+  
+  <!-- Yellow Card (Expiring Soon) -->
+  <rect x="225" y="70" width="150" height="220" rx="12" ry="12" fill="white" stroke="#e0e0e0" stroke-width="2"/>
+  <rect x="225" y="70" width="150" height="10" rx="8" ry="8" fill="#FFC107"/> <!-- Yellow status bar -->
+  <text x="300" y="120" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#333333" text-anchor="middle">Yogurt</text>
+  <text x="300" y="145" font-family="Arial, sans-serif" font-size="14" fill="#666666" text-anchor="middle">Food</text>
+  <text x="300" y="170" font-family="Arial, sans-serif" font-size="14" fill="#666666" text-anchor="middle">Expires: May 8</text>
+  <text x="300" y="195" font-family="Arial, sans-serif" font-size="14" fill="#FFC107" font-weight="bold" text-anchor="middle">3 days left</text>
+  
+  <!-- Orange Annotation Circle for Yellow -->
+  <circle cx="300" cy="240" r="20" fill="#ff8c00" fill-opacity="0.8"/>
+  <text x="300" y="245" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">2</text>
+  <text x="300" y="280" font-family="Arial, sans-serif" font-size="14" fill="#333333" text-anchor="middle">Expiring soon</text>
+  
+  <!-- Red Card (Expired) -->
+  <rect x="400" y="70" width="150" height="220" rx="12" ry="12" fill="white" stroke="#e0e0e0" stroke-width="2"/>
+  <rect x="400" y="70" width="150" height="10" rx="8" ry="8" fill="#F44336"/> <!-- Red status bar -->
+  <text x="475" y="120" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#333333" text-anchor="middle">Bread</text>
+  <text x="475" y="145" font-family="Arial, sans-serif" font-size="14" fill="#666666" text-anchor="middle">Food</text>
+  <text x="475" y="170" font-family="Arial, sans-serif" font-size="14" fill="#666666" text-anchor="middle">Expired: May 4</text>
+  <text x="475" y="195" font-family="Arial, sans-serif" font-size="14" fill="#F44336" font-weight="bold" text-anchor="middle">Expired!</text>
+  
+  <!-- Orange Annotation Circle for Red -->
+  <circle cx="475" cy="240" r="20" fill="#ff8c00" fill-opacity="0.8"/>
+  <text x="475" y="245" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">3</text>
+  <text x="475" y="280" font-family="Arial, sans-serif" font-size="14" fill="#333333" text-anchor="middle">Expired</text>
+  
+  <!-- Legend -->
+  <text x="300" y="330" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#333333" text-anchor="middle">Item Color Status Guide</text>
+  <rect x="140" y="350" width="20" height="20" fill="#4CAF50"/>
+  <text x="170" y="365" font-family="Arial, sans-serif" font-size="14" fill="#333333">Safe</text>
+  <rect x="240" y="350" width="20" height="20" fill="#FFC107"/>
+  <text x="270" y="365" font-family="Arial, sans-serif" font-size="14" fill="#333333">Expiring Soon</text>
+  <rect x="370" y="350" width="20" height="20" fill="#F44336"/>
+  <text x="400" y="365" font-family="Arial, sans-serif" font-size="14" fill="#333333">Expired</text>
+</svg> 

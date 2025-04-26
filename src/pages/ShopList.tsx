@@ -92,6 +92,8 @@ const ShopList: React.FC = () => {
     categorySubcategories,
     shopListGroupBySubcategory,
     setShopListGroupBySubcategory,
+    shoplistMultiSelectMode,
+    setShopListMultiSelectMode,
   } = useApp();
   
   const t = useTranslation(language);
@@ -102,7 +104,6 @@ const ShopList: React.FC = () => {
   const [showFamilySizeHint, setShowFamilySizeHint] = useState(settings.autoAdjustFamilySize ?? false);
   const [finalCalculatedQuantity, setFinalCalculatedQuantity] = useState('1');
   const [isAddingItem, setIsAddingItem] = useState(false);
-  const [isSelectionMode, setIsSelectionMode] = useState(false);
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [isItemFormOpen, setIsItemFormOpen] = useState(false);
   const [adjustedItemIds, setAdjustedItemIds] = useState<string[]>([]);
@@ -208,17 +209,17 @@ const ShopList: React.FC = () => {
     clearLongPressTimer(itemId);
     setIsLongPressTriggeredMap(prev => ({ ...prev, [itemId]: false }));
     
-    if (!isSelectionMode) {
+    if (!shoplistMultiSelectMode) {
       console.log(`Starting long press timer for item: ${itemId}`);
       longPressTimers.current[itemId] = setTimeout(() => {
         console.log(`Long press timer FIRED for item: ${itemId}. Entering selection mode.`);
         setIsLongPressTriggeredMap(prev => ({ ...prev, [itemId]: true })); 
-        setIsSelectionMode(true);
+        setShopListMultiSelectMode(true);
         setSelectedItems(prev => prev.includes(itemId) ? prev : [...prev, itemId]);
         delete longPressTimers.current[itemId];
       }, 500);
     }
-  }, [clearLongPressTimer, isSelectionMode]);
+  }, [clearLongPressTimer, shoplistMultiSelectMode, setShopListMultiSelectMode]);
 
   const handlePointerDown = (itemId: string) => {
     console.log('Pointer down on item:', itemId);
@@ -238,7 +239,7 @@ const ShopList: React.FC = () => {
     const wasLongPressTriggered = isLongPressTriggeredMap[item.id];
     setIsLongPressTriggeredMap(prev => ({ ...prev, [item.id]: false }));
 
-    if (isSelectionMode) {
+    if (shoplistMultiSelectMode) {
       if (!wasLongPressTriggered) {
         toggleItemSelection(item.id);
       }
@@ -268,6 +269,7 @@ const ShopList: React.FC = () => {
     setNewItemQuantity(1);
     setNewItemSubcategory('');
     setFinalCalculatedQuantity('1');
+    setIsAddingItem(false);
   };
   
   const handleToggleAddItem = () => {
@@ -289,7 +291,7 @@ const ShopList: React.FC = () => {
   };
   
   const handleToggleSelectionMode = () => {
-    setIsSelectionMode(!isSelectionMode);
+    setShopListMultiSelectMode(!shoplistMultiSelectMode);
     setSelectedItems([]);
   };
 
@@ -300,7 +302,7 @@ const ShopList: React.FC = () => {
   const handleMoveSelectedItems = () => {
     moveMultipleShopItemsToDashboard(selectedItems);
     setSelectedItems([]);
-    setIsSelectionMode(false);
+    setShopListMultiSelectMode(false);
   };
   
   const handleSelectAll = () => {
@@ -319,7 +321,7 @@ const ShopList: React.FC = () => {
     if (selectedItems.length > 0) {
       selectedItems.forEach(id => removeFromShopList(id));
       setSelectedItems([]);
-      setIsSelectionMode(false);
+      setShopListMultiSelectMode(false);
     }
   };
 
@@ -468,7 +470,7 @@ const ShopList: React.FC = () => {
   const totalShopItems = shopItems.length;
   const checkedItemsCount = shopItems.filter(item => item.checked).length;
   
-  const isAddButtonVisible = !showTutorial && !isSelectionMode && !isItemFormOpen;
+  const isAddButtonVisible = !showTutorial && !shoplistMultiSelectMode && !isItemFormOpen;
   
   const getCategoryIcon = (category?: string) => {
     if (category === 'Food') {
@@ -511,10 +513,10 @@ const ShopList: React.FC = () => {
     <div
       key={item.id}
       className={cn(
-        "group relative flex flex-col p-3 bg-white hover:bg-orange-50/50 rounded-lg shadow-sm mb-1.5 transition-all duration-200 border border-orange-200 hover:border-orange-300",
-        "opacity-100 w-full",
+        "group relative flex flex-col p-2.5 bg-white rounded-lg shadow-sm mb-2 transition-all duration-200 border border-orange-200",
+        "hover:border-orange-300 hover:shadow",
         "dark:bg-gray-800 dark:hover:bg-gray-750 dark:border-orange-900/30 dark:hover:border-orange-700/50",
-        isSelectionMode && selectedItems.includes(item.id) ? "border-2 border-orange-500 dark:border-orange-500" : ""
+        shoplistMultiSelectMode && selectedItems.includes(item.id) ? "border-orange-500 dark:border-orange-500 bg-orange-50/50" : ""
       )}
       onClick={(e) => {
         e.stopPropagation();
@@ -522,24 +524,24 @@ const ShopList: React.FC = () => {
         setIsLongPressTriggeredMap(prev => ({ ...prev, [item.id]: false }));
 
         if (!longPressCompleted) {
-          if (isSelectionMode) {
-            console.log(`Click detected for ${item.id}. isSelectionMode: ${isSelectionMode}. Toggling selection.`);
+          if (shoplistMultiSelectMode) {
+            console.log(`Click detected for ${item.id}. shoplistMultiSelectMode: ${shoplistMultiSelectMode}. Toggling selection.`);
             toggleItemSelection(item.id);
           } else {
-            console.log(`Click detected for ${item.id}. isSelectionMode: ${isSelectionMode}. Doing nothing.`);
+            console.log(`Click detected for ${item.id}. shoplistMultiSelectMode: ${shoplistMultiSelectMode}. Doing nothing.`);
           }
         } else {
           console.log(`Click event ignored for ${item.id} because long press completed.`);
         }
       }}
       onMouseDown={(e) => {
-        if (!isSelectionMode) {
+        if (!shoplistMultiSelectMode) {
           console.log(`Mouse Down detected for ${item.id}. Starting timer.`);
           startLongPressTimer(item.id);
         }
       }}
       onTouchStart={(e) => {
-        if (!isSelectionMode) {
+        if (!shoplistMultiSelectMode) {
           console.log(`Touch Start detected for ${item.id}. Starting timer.`);
           startLongPressTimer(item.id);
         }
@@ -561,37 +563,52 @@ const ShopList: React.FC = () => {
         clearLongPressTimer(item.id);
       }}
     >
-      {isSelectionMode && (
-        <div className={`absolute inset-0 z-10 flex items-center justify-center transition-all duration-200 ${selectedItems.includes(item.id) ? "bg-primary/20 dark:bg-primary/30" : "bg-black/5 dark:bg-black/10"}`}>
+      {shoplistMultiSelectMode && (
+        <div className={`absolute inset-0 z-10 flex items-center justify-center transition-all duration-200 ${selectedItems.includes(item.id) ? "bg-primary/10" : "bg-black/5"}`}>
           <div className={`h-6 w-6 rounded-full flex items-center justify-center border-2 transition-all duration-200 ${selectedItems.includes(item.id) 
             ? "bg-primary border-primary text-primary-foreground scale-100"
-            : "bg-background/70 backdrop-blur-sm border-gray-400 dark:border-gray-600 scale-90"}`}>
+            : "bg-background/70 backdrop-blur-sm border-gray-400 scale-90"}`}>
             {selectedItems.includes(item.id) && <Check className="h-4 w-4" />}
           </div>
         </div>
       )}
-      <div className="flex items-start justify-between mb-2 relative">
+      
+      <div className="flex items-center justify-between">
         <div className="flex-1 min-w-0 pr-2">
-          <span className={cn(
-            "font-medium text-sm text-foreground break-words block",
-            "dark:text-gray-100",
-            item.checked && "line-through text-muted-foreground dark:text-gray-400"
+          <h3 className={cn(
+            "font-medium text-sm text-foreground leading-tight break-words",
+            item.checked && "line-through text-muted-foreground opacity-60"
           )}>
             {item.name}
-          </span>
+          </h3>
         </div>
+        
+        {!shoplistMultiSelectMode && (
+          <Button
+            variant="ghost" 
+            size="sm"
+            className="h-7 w-7 p-0 rounded-[0.5rem] bg-gradient-to-br from-primary to-primary-light hover:from-primary-dark hover:to-primary text-white flex items-center justify-center"
+            onClick={(e) => {
+              e.stopPropagation();
+              moveShopItemToDashboard(item.id);
+            }}
+            title={language === 'en' ? 'Add to Dashboard' : '添加到主頁'}
+          >
+            <ShoppingBag className="h-3.5 w-3.5" />
+          </Button>
+        )}
       </div>
       
-      <div className="flex items-center justify-between mt-1 relative">
-        <div className="flex items-center">
-          <div className="flex items-center bg-orange-50 dark:bg-gray-700/60 rounded-full overflow-hidden border border-orange-200 dark:border-gray-600">
+      {!shoplistMultiSelectMode && (
+        <div className="flex items-center justify-between mt-2">
+          <div className="flex items-center bg-white border rounded-md overflow-hidden border-orange-200 w-[50%]">
             <Button 
               variant="ghost" 
               size="sm" 
-              className="h-7 w-7 p-0 rounded-full hover:bg-orange-50 dark:hover:bg-orange-900/20 focus-visible:ring-1 focus-visible:ring-orange-300 flex-shrink-0 text-orange-600 transition-colors" 
-              disabled={isSelectionMode}
+              className="h-6 w-6 p-0 rounded-none focus:ring-0 border-none flex-shrink-0" 
+              disabled={parseInt(item.quantity) <= 1 || shoplistMultiSelectMode}
               onClick={(e) => {
-                if (isSelectionMode) return;
+                if (shoplistMultiSelectMode) return;
                 e.stopPropagation();
                 const currentQuantity = parseInt(item.quantity) || 1;
                 if (currentQuantity > 1) {
@@ -599,72 +616,70 @@ const ShopList: React.FC = () => {
                 }
               }}
             >
-              <Minus className="h-3.5 w-3.5" />
+              <Minus className="h-3 w-3 text-orange-500" />
             </Button>
-            <div className="px-2 font-medium text-orange-700 dark:text-orange-200">
+            
+            <div className="flex-1 text-center font-medium border-x border-orange-200 text-slate-700 min-w-[1.5rem]">
               {item.quantity}
             </div>
+            
             <Button 
               variant="ghost" 
               size="sm" 
-              className="h-7 w-7 p-0 rounded-full hover:bg-orange-50 dark:hover:bg-orange-900/20 focus-visible:ring-1 focus-visible:ring-orange-300 flex-shrink-0 text-orange-600 transition-colors" 
-              disabled={isSelectionMode}
+              className="h-6 w-6 p-0 rounded-none focus:ring-0 border-none flex-shrink-0" 
+              disabled={shoplistMultiSelectMode}
               onClick={(e) => {
-                if (isSelectionMode) return;
+                if (shoplistMultiSelectMode) return;
                 e.stopPropagation();
                 const currentQuantity = parseInt(item.quantity) || 1;
                 updateShopItem(item.id, { quantity: (currentQuantity + 1).toString() });
               }}
             >
-              <Plus className="h-3.5 w-3.5" />
+              <Plus className="h-3 w-3 text-orange-500" />
             </Button>
           </div>
-        </div>
-
-        <div className="flex items-center gap-1">
-          <Button
+          
+          <Button 
             variant="ghost" 
             size="sm" 
-            disabled={isSelectionMode}
+            className="h-7 w-7 p-0 rounded-[0.5rem] hover:bg-red-50 text-red-500 border border-red-200" 
             onClick={(e) => {
-              if (isSelectionMode) return;
-              e.stopPropagation();
-              moveShopItemToDashboard(item.id);
-            }}
-            className="h-7 w-7 p-0 rounded-full text-muted-foreground hover:text-orange-600 hover:bg-orange-50 dark:hover:text-orange-400 dark:hover:bg-orange-900/20 transition-colors"
-            title={language === 'en' ? 'Add to Dashboard' : '添加到主頁'}
-          >
-            <ArrowUpRight className="h-3.5 w-3.5" />
-          </Button>
-          <Button
-            variant="ghost" 
-            size="sm" 
-            disabled={isSelectionMode}
-            onClick={(e) => {
-              if (isSelectionMode) return;
               e.stopPropagation();
               removeFromShopList(item.id);
             }}
-            className="h-7 w-7 p-0 rounded-full text-muted-foreground hover:text-red-500 hover:bg-red-50/80 dark:hover:text-red-400 dark:hover:bg-red-900/20 transition-colors"
             title={language === 'en' ? 'Delete' : '刪除'}
           >
             <Trash2 className="h-3.5 w-3.5" />
           </Button>
         </div>
-      </div>
+      )}
     </div>
   );
+  
+  // 添加效果來處理組件卸載時的狀態
+  useEffect(() => {
+    // 組件掛載時的邏輯可以在這裡
+    
+    // 組件卸載時的清理邏輯
+    return () => {
+      // 退出多選模式並清除選擇
+      if (shoplistMultiSelectMode) {
+        setSelectedItems([]);
+        setShopListMultiSelectMode(false);
+      }
+    };
+  }, [shoplistMultiSelectMode, setShopListMultiSelectMode]);
   
   return (
     <div className="w-full max-w-[100%] sm:max-w-md mx-auto px-1 sm:px-2 py-3 sm:py-4 pb-20 flex flex-col">
       <div className="sticky top-[60px] sm:top-[70px] z-30 bg-background/90 backdrop-blur-md pt-1 pb-2 border-b border-gray-100 dark:border-gray-800 mb-3 shadow-sm">
         <div className="flex items-center justify-between space-y-2">
           <div className="flex items-center gap-1.5">
-            {isSelectionMode ? (
+            {shoplistMultiSelectMode ? (
               <Button 
                 variant="outline"
                 size="sm"
-                className="h-8 px-2.5 border-red-200 bg-red-50 text-red-600 hover:bg-red-100 rounded-full"
+                className="h-9 px-2.5 border-red-200 bg-red-50 text-red-600 hover:bg-red-100 rounded-md"
                 onClick={handleToggleSelectionMode}
               >
                 <X className="h-4 w-4 mr-1" />
@@ -696,7 +711,7 @@ const ShopList: React.FC = () => {
           </div>
           
           <div className="flex items-center gap-2">
-            {!isSelectionMode && (
+            {!shoplistMultiSelectMode && (
               <Button
                 variant="outline"
                 className={`h-9 w-9 p-0 rounded-full border-orange-200 ${shopListGroupBySubcategory ? "bg-orange-200 text-orange-700 shadow-sm" : "bg-white hover:bg-orange-100/50"} flex items-center justify-center`}
@@ -706,10 +721,10 @@ const ShopList: React.FC = () => {
               </Button>
             )}
             
-            {!isSelectionMode && (
+            {!shoplistMultiSelectMode && (
               <Button
                 variant="outline"
-                className={`h-9 w-9 p-0 rounded-full border-orange-200 ${isSelectionMode ? "bg-orange-200 text-orange-700 shadow-sm" : "bg-white hover:bg-orange-100/50"} flex items-center justify-center`}
+                className={`h-9 w-9 p-0 rounded-full border-orange-200 ${shoplistMultiSelectMode ? "bg-orange-200 text-orange-700 shadow-sm" : "bg-white hover:bg-orange-100/50"} flex items-center justify-center`}
                 onClick={handleToggleSelectionMode}
               >
                 <ListChecks className="h-4 w-4 text-orange-600" />
@@ -719,7 +734,7 @@ const ShopList: React.FC = () => {
         </div>
         
         {/* 搜索欄和統計數字 */}
-        {!isSelectionMode ? (
+        {!shoplistMultiSelectMode ? (
           <div className="flex items-center gap-2 mt-2">
             <div className="relative flex-1 w-full max-w-[90%]">
               <Input
@@ -744,54 +759,57 @@ const ShopList: React.FC = () => {
               )}
             </div>
             
-            <div className="flex gap-2 justify-end">
+            <div className="flex justify-end">
               <Badge variant="outline" className="h-8 px-2 border-orange-200 bg-white flex items-center gap-1 rounded-full">
-                <span className="text-xs font-medium text-orange-900">{sortedShopItems.length} {language === 'en' ? "items" : "項目"}</span>
-              </Badge>
-              
-              <Badge variant="outline" className="h-8 px-2 border-orange-200 bg-white flex items-center gap-1 rounded-full">
-                <span className="text-xs font-medium text-orange-900">{sortedShopItems.reduce((total, item) => total + (parseInt(item.quantity) || 1), 0)} {language === 'en' ? "units" : "單位"}</span>
+                <span className="text-xs font-medium text-orange-900">{language === 'en' 
+  ? `${sortedShopItems.length} ${sortedShopItems.length === 1 ? 'item' : 'items'}`
+  : `${sortedShopItems.length} 項目`
+}</span>
+                <span className="text-xs text-orange-700">•</span>
+                <span className="text-xs font-medium text-orange-900">{language === 'en' 
+  ? (() => { const unitCount = sortedShopItems.reduce((total, item) => total + (parseInt(item.quantity) || 1), 0); return `${unitCount} ${unitCount === 1 ? 'unit' : 'units'}`; })()
+  : `${sortedShopItems.reduce((total, item) => total + (parseInt(item.quantity) || 1), 0)} 單位`
+}</span>
               </Badge>
             </div>
           </div>
         ) : (
-          <div className="flex items-center justify-between gap-2 mt-2">
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={handleMoveSelectedItems}
-              className="h-9 px-2.5 rounded-full border-orange-200 flex items-center justify-center bg-white hover:bg-orange-50 hover:text-orange-600 active:bg-orange-100"
-            >
-              <ArrowUpRight className="h-4 w-4 mr-1 text-orange-600" />
-              <span className="text-xs text-orange-900">
-                {language === 'en' ? "Add to Dashboard" : "添加到主頁"}
-              </span>
-            </Button>
-            <Button 
-              variant="outline" 
-              size="sm"
-              onClick={handleSelectAllToggle}
-              className="h-9 px-2.5 rounded-full border-orange-200 flex items-center justify-center bg-white hover:bg-orange-50 hover:text-orange-600 active:bg-orange-100"
-              disabled={sortedShopItems.length === 0}
-            >
-              {allItemsSelected ? 
-                <Check className="h-4 w-4 mr-1 text-orange-600" /> : 
-                <CheckSquare className="h-4 w-4 mr-1 text-orange-600" />
-              }
-              <span className="text-xs text-orange-900">
-                {allItemsSelected 
-                  ? (language === 'en' ? "Deselect All" : "取消全選") 
-                  : (language === 'en' ? "Select All" : "全選")}
-              </span>
-            </Button>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={handleRemoveSelectedItems}
-              className="h-9 w-9 p-0 rounded-full border-orange-200 bg-white hover:bg-red-50 hover:text-red-600 hover:border-red-200 active:bg-red-100"
-            >
-              <Trash2 className="h-4 w-4 text-red-500" />
-            </Button>
+          <div className="sticky top-[110px] z-20 bg-white/90 backdrop-blur-md rounded-lg p-2.5 mb-3 flex items-center justify-between animate-in fade-in shadow-sm border border-orange-100">
+            <div className="h-9 px-2.5 flex items-center">
+              <span className="text-xs font-medium text-orange-700">{selectedItems.length} {language === 'en' ? 'selected' : '已選擇'}</span>
+            </div>
+            
+            <div className="flex gap-1.5">
+              <Button 
+                size="sm" 
+                onClick={handleMoveSelectedItems}
+                className="h-9 px-3 rounded-md bg-gradient-to-br from-primary to-primary-light hover:from-primary-dark hover:to-primary text-white"
+                disabled={selectedItems.length === 0}
+              >
+                <span className="text-xs">
+                  {language === 'en' ? "Add to Dashboard" : "添加到主頁"}
+                </span>
+              </Button>
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={handleSelectAllToggle}
+                className="h-9 w-9 p-0 rounded-md border-orange-200 text-orange-600 bg-white hover:bg-orange-50"
+                disabled={sortedShopItems.length === 0}
+                title={allItemsSelected ? (language === 'en' ? "Deselect All" : "取消全選") : (language === 'en' ? "Select All" : "全選")}
+              >
+                {allItemsSelected ? <CheckSquare className="h-4 w-4" /> : <Square className="h-4 w-4" />}
+              </Button>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={handleRemoveSelectedItems}
+                className="h-9 w-9 p-0 rounded-md border-red-200 text-red-600 bg-white hover:bg-red-50"
+                disabled={selectedItems.length === 0}
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
         )}
       </div>
@@ -1025,7 +1043,7 @@ const ShopList: React.FC = () => {
                 disabled={!newItemName.trim()}
               >
                 <Save className="h-4 w-4 mr-1.5" />
-                Save to List
+                Save
               </Button>
               <Button
                 onClick={handleAddItem}
@@ -1053,19 +1071,25 @@ const ShopList: React.FC = () => {
                       <div className="flex items-center justify-between px-3 py-2 bg-orange-50 rounded-md mb-2 border border-orange-100 sticky top-0 z-10 dark:bg-gray-800/90 dark:border-orange-900/30">
                         <div className="flex items-center">
                           {category === 'Food' ? 
-                            <Utensils className="h-4 w-4 mr-2 text-orange-600 dark:text-orange-400" /> : 
-                            <Home className="h-4 w-4 mr-2 text-orange-600 dark:text-orange-400" />
+                            <Utensils className="h-4 w-4 mr-2 text-orange-900" /> : 
+                            <Home className="h-4 w-4 mr-2 text-orange-900" />
                           }
-                          <span className="text-sm font-medium text-orange-900 dark:text-orange-200">{subcategoryName}</span>
+                          <span className="text-sm font-medium text-orange-900">{subcategoryName}</span>
                         </div>
                         <div className="flex items-center gap-3">
-                          <span className="text-xs text-[#c44714] dark:text-orange-300">
-                            {groupData.items.length} {language === 'en' ? 'items' : '項目'}
+                          <span className="text-xs text-orange-700">
+                            {language === 'en' 
+  ? `${groupData.items.length} ${groupData.items.length === 1 ? 'item' : 'items'}`
+  : `${groupData.items.length} 項目`
+}
                           </span>
-                          <span className="text-xs text-[#c44714] dark:text-orange-300">
-                            {groupData.totalQuantity} {language === 'en' ? 'units' : '單位'}
+                          <span className="text-xs text-orange-700">
+                            {language === 'en' 
+  ? `${groupData.totalQuantity} ${groupData.totalQuantity === 1 ? 'unit' : 'units'}`
+  : `${groupData.totalQuantity} 單位`
+}
                           </span>
-                          <ChevronDown className="h-4 w-4 text-orange-400 opacity-50 dark:text-orange-300" />
+                          <ChevronDown className="h-4 w-4 text-orange-400 opacity-50" />
                         </div>
                       </div>
                       <div className="grid grid-cols-2 gap-2">

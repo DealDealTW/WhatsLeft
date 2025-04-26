@@ -62,7 +62,7 @@ const Notifications: React.FC = () => {
         badgeClass: 'border-red-500 text-red-600 bg-red-100 dark:text-red-400 dark:border-red-600 dark:bg-red-900/20',
         textColorClass: 'text-red-600',
         textColorValue: '#DC2626',
-        text: `${t('expiring')} ${t('today')}`,
+        text: `${t('today')}到期`,
         isNotifyTriggered: false
       };
     } else if (daysUntil === 1) {
@@ -70,7 +70,7 @@ const Notifications: React.FC = () => {
         badgeClass: 'border-red-500 text-red-600 bg-red-100 dark:text-red-400 dark:border-red-600 dark:bg-red-900/20',
         textColorClass: 'text-red-600',
         textColorValue: '#DC2626',
-        text: `${t('expiring')} ${t('tomorrow')}`,
+        text: `${t('tomorrow')}到期`,
         isNotifyTriggered: false
       };
     } else if (daysUntil <= 4) {
@@ -79,7 +79,7 @@ const Notifications: React.FC = () => {
         textColorClass: 'text-yellow-500',
         textColorValue: '#F59E0B',
         text: (language === 'zh-TW' || language === 'zh-CN') 
-          ? `即將在${daysUntil}天過期` 
+          ? `${daysUntil}天後到期` 
           : `${t('expiring')} ${t('in')} ${daysUntil} ${t('days')}`,
         isNotifyTriggered: false
       };
@@ -89,7 +89,7 @@ const Notifications: React.FC = () => {
         textColorClass: 'text-primary',
         textColorValue: 'var(--primary)',
         text: (language === 'zh-TW' || language === 'zh-CN') 
-          ? `即將在${daysUntil}天過期` 
+          ? `${daysUntil}天後到期` 
           : `${t('expiring')} ${t('in')} ${daysUntil} ${t('days')}`,
         isNotifyTriggered: true
       };
@@ -99,7 +99,7 @@ const Notifications: React.FC = () => {
         textColorClass: 'text-green-800',
         textColorValue: '#166534',
         text: (language === 'zh-TW' || language === 'zh-CN') 
-          ? `即將在${daysUntil}天過期` 
+          ? `${daysUntil}天後到期` 
           : `${t('expiring')} ${t('in')} ${daysUntil} ${t('days')}`,
         isNotifyTriggered: false
       };
@@ -179,9 +179,6 @@ const Notifications: React.FC = () => {
                       <span>
                         {formatDateWithUserPreference(item.expiryDate, settings.dateFormat)}
                       </span>
-                      {status.isNotifyTriggered && (
-                        <AlertCircle className="h-3 w-3 text-primary" />
-                      )}
                     </div>
                     <Badge className={`text-xs ${status.badgeClass} border px-1.5 py-0.5`}> 
                       {status.text}
@@ -196,8 +193,8 @@ const Notifications: React.FC = () => {
                 onClick={handleShowAllClick}
               >
                 {language === 'en' 
-                  ? `View ${attentionItems.length - 4} more notification${attentionItems.length - 4 > 1 ? 's' : ''}` 
-                  : `查看更多 ${attentionItems.length - 4} 個通知`}
+                  ? `View ${attentionItems.length - 4} more` 
+                  : `查看更多 ${attentionItems.length - 4} 個`}
               </button>
             )}
           </div>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="600" height="400" fill="#f5f5f5"/>
+  
+  <!-- Title -->
+  <text x="300" y="40" font-family="Arial, sans-serif" font-size="22" font-weight="bold" text-anchor="middle" fill="#333333">Add Your First Item</text>
+  
+  <!-- Phone screen -->
+  <rect x="220" y="70" width="240" height="400" rx="20" ry="20" fill="#333333"/>
+  <rect x="230" y="90" width="220" height="360" rx="5" ry="5" fill="#ffffff"/>
+  
+  <!-- App interface top -->
+  <rect x="230" y="90" width="220" height="50" rx="5" ry="5" fill="#4299e1"/>
+  <text x="340" y="120" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#ffffff">WhatsLeft</text>
+  
+  <!-- Main content -->
+  <rect x="245" y="155" width="190" height="60" rx="5" ry="5" fill="#f0f4f8" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="340" y="175" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666666">No items added yet</text>
+  <text x="340" y="195" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666666">Tap the + button below to start</text>
+  
+  <!-- Bottom navbar -->
+  <rect x="230" y="400" width="220" height="50" rx="5" ry="5" fill="#f8fafc"/>
+  <line x1="230" y1="400" x2="450" y2="400" stroke="#e2e8f0" stroke-width="1"/>
+  
+  <!-- Icon: Home -->
+  <circle cx="270" cy="425" r="15" fill="#f8fafc"/>
+  <path d="M265,425 L275,425 M270,420 L270,430" stroke="#94a3b8" stroke-width="1.5"/>
+  
+  <!-- Icon: Add (highlighted) -->
+  <circle cx="340" cy="425" r="18" fill="#4299e1"/>
+  <path d="M330,425 L350,425 M340,415 L340,435" stroke="#ffffff" stroke-width="2"/>
+  
+  <!-- Icon: Settings -->
+  <circle cx="410" cy="425" r="15" fill="#f8fafc"/>
+  <path d="M405,425 L415,425 M410,420 L410,430" stroke="#94a3b8" stroke-width="1.5"/>
+  
+  <!-- Arrow indication -->
+  <path d="M140,320 C160,340 180,350 220,350" fill="none" stroke="#666666" stroke-width="2" stroke-dasharray="5,3"/>
+  <polygon points="215,345 220,350 215,355" fill="#666666"/>
+  
+  <!-- Explanation text -->
+  <rect x="60" y="280" width="160" height="80" rx="10" ry="10" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="140" y="305" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#333333">Tap the + Button</text>
+  <text x="140" y="325" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666666">to add your first item</text>
+  <text x="140" y="345" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666666">Quick and easy!</text>
+  
+  <!-- Multiple input methods -->
+  <rect x="480" y="130" width="100" height="220" rx="10" ry="10" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="530" y="155" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#333333">Input Methods</text>
+  
+  <!-- Typing -->
+  <circle cx="500" cy="185" r="12" fill="#4299e1"/>
+  <text x="500" y="190" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#ffffff">T</text>
+  <text x="530" y="190" font-family="Arial, sans-serif" font-size="12" text-anchor="start" fill="#666666">Type</text>
+  
+  <!-- Voice input -->
+  <circle cx="500" cy="225" r="12" fill="#805ad5"/>
+  <path d="M500,220 L500,230 M496,218 Q500,215 504,218 L504,226 Q504,229 500,229 Q496,229 496,226 Z" fill="none" stroke="#ffffff" stroke-width="1" stroke-linecap="round"/>
+  <text x="530" y="230" font-family="Arial, sans-serif" font-size="12" text-anchor="start" fill="#666666">Voice</text>
+  
+  <!-- Barcode scanning -->
+  <circle cx="500" cy="265" r="12" fill="#38a169"/>
+  <rect x="495" y="260" width="10" height="10" fill="none" stroke="#ffffff" stroke-width="1"/>
+  <line x1="496" y1="262" x2="504" y2="262" stroke="#ffffff" stroke-width="1"/>
+  <line x1="496" y1="264" x2="504" y2="264" stroke="#ffffff" stroke-width="1"/>
+  <line x1="496" y1="266" x2="504" y2="266" stroke="#ffffff" stroke-width="1"/>
+  <line x1="496" y1="268" x2="504" y2="268" stroke="#ffffff" stroke-width="1"/>
+  <text x="530" y="270" font-family="Arial, sans-serif" font-size="12" text-anchor="start" fill="#666666">Scan</text>
+  
+  <!-- Quick input -->
+  <circle cx="500" cy="305" r="12" fill="#dd6b20"/>
+  <text x="500" y="310" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#ffffff">Q</text>
+  <text x="530" y="310" font-family="Arial, sans-serif" font-size="12" text-anchor="start" fill="#666666">Quick</text>
+  
+  <!-- Connecting arrow -->
+  <path d="M460,240 C470,240 475,240 480,240" fill="none" stroke="#666666" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <polygon points="475,235 480,240 475,245" fill="#666666"/>
+  
+  <!-- Annotation -->
+  <text x="300" y="380" font-family="Arial, sans-serif" font-size="14" font-style="italic" text-anchor="middle" fill="#666666">Start tracking items and effortlessly manage household goods</text>
+</svg> 

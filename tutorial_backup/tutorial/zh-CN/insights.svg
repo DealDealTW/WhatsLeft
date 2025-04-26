@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+  <!-- 背景 -->
+  <rect width="600" height="400" fill="#f8f9fa" rx="20" ry="20" />
+  
+  <!-- 標題 -->
+  <text x="300" y="50" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="#111827">数据与浪费追踪</text>
+  
+  <!-- 模擬手機界面 -->
+  <rect x="120" y="80" width="360" height="280" fill="white" stroke="#e5e7eb" stroke-width="2" rx="15" ry="15" />
+  
+  <!-- 頂部導航欄 -->
+  <rect x="120" y="80" width="360" height="50" fill="#FF6200" rx="15" ry="15" />
+  <rect x="120" y="110" width="360" height="20" fill="#FF6200" />
+  <text x="150" y="110" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white">统计报表</text>
+  
+  <!-- 週期選擇器 -->
+  <rect x="150" y="140" width="300" height="35" fill="white" stroke="#e5e7eb" stroke-width="1" rx="8" ry="8" />
+  <text x="170" y="163" font-family="Arial, sans-serif" font-size="14" fill="#4b5563">时间段:</text>
+  <text x="230" y="163" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#111827">本月</text>
+  <text x="430" y="163" font-family="Arial, sans-serif" font-size="14" fill="#6b7280">▼</text>
+  
+  <!-- 圖表 -->
+  <rect x="150" y="185" width="300" height="120" fill="white" stroke="#e5e7eb" stroke-width="1" rx="8" ry="8" />
+  <text x="170" y="205" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#111827">浪费趋势</text>
+  
+  <!-- 简化的饼图 -->
+  <circle cx="225" cy="245" r="40" fill="#f3f4f6" />
+  <path d="M 225 245 L 225 205 A 40 40 0 0 1 265 245 Z" fill="#FF6200" />
+  <path d="M 225 245 L 265 245 A 40 40 0 0 1 225 285 Z" fill="#fde68a" />
+  
+  <!-- 柱状图 -->
+  <rect x="295" y="220" width="15" height="60" fill="#fde68a" rx="2" ry="2" />
+  <rect x="320" y="240" width="15" height="40" fill="#fde68a" rx="2" ry="2" />
+  <rect x="345" y="210" width="15" height="70" fill="#FF6200" rx="2" ry="2" />
+  <rect x="370" y="250" width="15" height="30" fill="#fde68a" rx="2" ry="2" />
+  <line x1="295" y1="280" x2="385" y2="280" stroke="#d1d5db" stroke-width="1" />
+  
+  <!-- 統計數據 -->
+  <rect x="150" y="315" width="145" height="50" fill="white" stroke="#e5e7eb" stroke-width="1" rx="8" ry="8" />
+  <text x="170" y="335" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#111827">已节省</text>
+  <text x="170" y="355" font-family="Arial, sans-serif" font-size="14" fill="#4b5563">¥157.25</text>
+  
+  <rect x="305" y="315" width="145" height="50" fill="white" stroke="#e5e7eb" stroke-width="1" rx="8" ry="8" />
+  <text x="325" y="335" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#111827">减少浪费</text>
+  <text x="325" y="355" font-family="Arial, sans-serif" font-size="14" fill="#4b5563">75%</text>
+  
+  <!-- 說明文字 -->
+  <text x="300" y="380" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#4b5563">查看您的食品浪费数据与趋势，了解节省情况</text>
+</svg> 

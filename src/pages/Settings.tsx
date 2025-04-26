@@ -67,6 +67,7 @@ import {
   Calculator,
   Wrench,
   RefreshCw,
+  ChevronRight,
 } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useApp, DateFormatOption, ViewModeOption, ItemCategory } from '@/contexts/AppContext';
@@ -98,6 +99,8 @@ import {
   AlertDialogCancel,
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
+import AppTutorial, { TutorialMode } from '@/components/AppTutorial';
+import { useNavigate } from 'react-router-dom';
 
 // Define Segment type
 type SettingsSegment = 'accountPreferences' | 'about';
@@ -122,10 +125,12 @@ const Settings: React.FC = () => {
     deleteAccount,
     resetPassword
   } = useApp();
-  // Remove: console.log('[Settings] useApp hook called, logout:', typeof logout);
   const t = useTranslation(language);
+  const navigate = useNavigate();
   
   const [activeSegment, setActiveSegment] = useState<SettingsSegment>('accountPreferences');
+  const [showTutorialModal, setShowTutorialModal] = useState(false);
+  const [tutorialMode, setTutorialMode] = useState<TutorialMode | null>(null);
   const [showFAQ, setShowFAQ] = useState<boolean>(false);
   const [showPrivacyPolicy, setShowPrivacyPolicy] = useState<boolean>(false);
   const [showTermsOfService, setShowTermsOfService] = useState<boolean>(false);
@@ -197,7 +202,6 @@ const Settings: React.FC = () => {
   
   const handleLogout = async () => {
     setAuthError(null);
-    // Remove: console.log('[Settings] handleLogout called');
     await logout();
   };
 
@@ -680,56 +684,6 @@ const Settings: React.FC = () => {
             <Card className="rounded-lg border border-gray-100 shadow-sm">
               <CardHeader className="p-4 pb-3 bg-gradient-to-r from-orange-50 to-orange-100 rounded-t-lg border-b">
                 <div className="flex items-center gap-2">
-                  <Bell className="h-4 w-4 text-orange-500" />
-                  <CardTitle className="text-sm font-semibold">{t('notifications' as TranslationKey) || "Notifications"}</CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent className="p-4 space-y-4">
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 mb-1">
-                    <Timer className="h-4 w-4 text-orange-500" />
-                    <Label htmlFor="default-notify-days" className="font-medium text-sm">
-                      {t('defaultNotifyDaysBefore' as TranslationKey) || "Default Notify Days Before"}
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger>
-                            <HelpCircle className="h-3 w-3 text-orange-400 ml-1 inline" />
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p className="text-xs max-w-72">
-                              {language === 'en' 
-                                ? 'Set the default number of days before expiry to notify you for newly added items' 
-                                : '設置新添加項目預設的到期前通知天數'}
-                            </p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
-                    </Label>
-                  </div>
-                  <Select 
-                    value={settings.defaultNotifyDaysBefore?.toString() || "3"} 
-                    onValueChange={(value) => updateSettings({ defaultNotifyDaysBefore: parseInt(value) })}
-                  >
-                    <SelectTrigger id="default-notify-days" className="border-orange-200 focus:ring-orange-200 focus:border-orange-200 focus:ring-opacity-30">
-                      <SelectValue placeholder={settings.defaultNotifyDaysBefore?.toString() || "3"} />
-                    </SelectTrigger>
-                    <SelectContent className="border-orange-200">
-                      <SelectItem value="1">1 {language === 'en' ? 'day' : '天'}</SelectItem>
-                      <SelectItem value="2">2 {language === 'en' ? 'days' : '天'}</SelectItem>
-                      <SelectItem value="3">3 {language === 'en' ? 'days' : '天'}</SelectItem>
-                      <SelectItem value="5">5 {language === 'en' ? 'days' : '天'}</SelectItem>
-                      <SelectItem value="7">7 {language === 'en' ? 'days' : '天'}</SelectItem>
-                      <SelectItem value="10">10 {language === 'en' ? 'days' : '天'}</SelectItem>
-                      <SelectItem value="14">14 {language === 'en' ? 'days' : '天'}</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="rounded-lg border border-gray-100 shadow-sm">
-              <CardHeader className="p-4 pb-3 bg-gradient-to-r from-orange-50 to-orange-100 rounded-t-lg border-b">
-                <div className="flex items-center gap-2">
                   <Calculator className="h-4 w-4 text-orange-500" />
                   <CardTitle className="text-sm font-semibold">{t('quantitySettings' as TranslationKey)}</CardTitle>
                 </div>
@@ -933,10 +887,10 @@ const Settings: React.FC = () => {
                   <Button 
                     variant="ghost"
                     className="w-full justify-start text-left gap-2 h-9 px-3 text-sm hover:bg-orange-50"
-                    onClick={() => { setShowTutorial(true); }}
+                    onClick={() => { setTutorialMode('unified'); setShowTutorialModal(true); }}
                   >
                     <BookOpen className="h-4 w-4 text-orange-500" />
-                    {t('viewTutorial' as TranslationKey)}
+                    {t('viewTutorial' as TranslationKey) || '查看使用教學'}
                   </Button>
                   
                   <Button 
@@ -1097,7 +1051,15 @@ const Settings: React.FC = () => {
 
        <div className="mt-4">
          {renderContent()}
-       </div>
+      </div>
+      {/* AppTutorial modal for Basic/Advanced mode */}
+      {showTutorialModal && (
+        <AppTutorial
+          isOpen={showTutorialModal}
+          onClose={() => setShowTutorialModal(false)}
+          mode={tutorialMode as TutorialMode || 'unified'}
+        />
+      )}
     </div>
   );
 };

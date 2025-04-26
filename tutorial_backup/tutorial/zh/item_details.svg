@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景 -->
+  <rect width="600" height="400" fill="#f5f5f5"/>
+  
+  <!-- 標題 -->
+  <text x="300" y="40" font-family="Arial, sans-serif" font-size="22" font-weight="bold" text-anchor="middle" fill="#333333">填寫物品資訊</text>
+  
+  <!-- 表單卡片 -->
+  <rect x="100" y="70" width="400" height="290" rx="10" ry="10" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+  
+  <!-- 表單標題 -->
+  <text x="300" y="100" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#333333">新增物品</text>
+  
+  <!-- 物品名稱欄位 -->
+  <text x="130" y="130" font-family="Arial, sans-serif" font-size="14" fill="#666666">物品名稱</text>
+  <rect x="130" y="140" width="340" height="40" rx="5" ry="5" fill="#f9f9f9" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="145" y="165" font-family="Arial, sans-serif" font-size="14" fill="#333333">牛奶</text>
+  
+  <!-- 類別欄位 -->
+  <text x="130" y="200" font-family="Arial, sans-serif" font-size="14" fill="#666666">類別</text>
+  <rect x="130" y="210" width="160" height="40" rx="5" ry="5" fill="#f9f9f9" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="145" y="235" font-family="Arial, sans-serif" font-size="14" fill="#333333">食品</text>
+  
+  <!-- 子類別欄位 -->
+  <text x="310" y="200" font-family="Arial, sans-serif" font-size="14" fill="#666666">子類別</text>
+  <rect x="310" y="210" width="160" height="40" rx="5" ry="5" fill="#f9f9f9" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="325" y="235" font-family="Arial, sans-serif" font-size="14" fill="#333333">乳製品</text>
+  
+  <!-- 到期日期欄位 -->
+  <text x="130" y="270" font-family="Arial, sans-serif" font-size="14" fill="#666666">到期日期</text>
+  <rect x="130" y="280" width="160" height="40" rx="5" ry="5" fill="#f9f9f9" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="145" y="305" font-family="Arial, sans-serif" font-size="14" fill="#333333">2023-06-07</text>
+  
+  <!-- 數量欄位 -->
+  <text x="310" y="270" font-family="Arial, sans-serif" font-size="14" fill="#666666">數量</text>
+  <rect x="310" y="280" width="160" height="40" rx="5" ry="5" fill="#f9f9f9" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="325" y="305" font-family="Arial, sans-serif" font-size="14" fill="#333333">1 瓶</text>
+  
+  <!-- 儲存按鈕 -->
+  <rect x="280" y="340" width="120" height="40" rx="20" ry="20" fill="#FF9800" stroke="none"/>
+  <text x="340" y="365" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#ffffff" text-anchor="middle">儲存</text>
+  
+  <!-- 高亮元素 - 必填欄位 -->
+  <circle cx="160" y="130" r="6" fill="#FF5722"/>
+  <circle cx="160" y="200" r="6" fill="#FF5722"/>
+  <circle cx="160" y="270" r="6" fill="#FF5722"/>
+  
+  <!-- 注釋 -->
+  <text x="300" y="395" font-family="Arial, sans-serif" font-size="14" font-style="italic" text-anchor="middle" fill="#666666">輸入基本資訊以有效追蹤物品</text>
+</svg> 

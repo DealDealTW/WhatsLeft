@@ -1,0 +1,118 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+  <!-- 背景 -->
+  <rect width="600" height="800" fill="#f8f9fa" rx="20" ry="20" />
+  
+  <!-- 頂部標題欄 -->
+  <rect x="0" y="0" width="600" height="60" fill="#FF6200" rx="20" ry="20" />
+  <text x="30" y="40" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white">Search & Filters</text>
+  
+  <!-- 返回按鈕 -->
+  <rect x="20" y="15" width="30" height="30" rx="15" ry="15" fill="white" opacity="0.8" />
+  <polyline points="30,20 25,30 30,40" fill="none" stroke="#FF6200" stroke-width="2" />
+  
+  <!-- 搜索欄 -->
+  <rect x="20" y="80" width="560" height="50" fill="white" rx="10" ry="10" />
+  <circle cx="50" cy="105" r="12" fill="none" stroke="#666" stroke-width="2" />
+  <line x1="58" y1="113" x2="68" y2="123" stroke="#666" stroke-width="2" />
+  <text x="80" y="110" font-family="Arial, sans-serif" font-size="16" fill="#aaa">Search items, categories, lists...</text>
+  
+  <!-- 篩選選項 -->
+  <rect x="20" y="150" width="560" height="50" fill="white" rx="10" ry="10" />
+  <text x="40" y="180" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#333">Filters</text>
+  
+  <!-- 篩選類別 -->
+  <rect x="20" y="220" width="560" height="200" fill="white" rx="15" ry="15" />
+  <text x="40" y="250" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#333">Categories</text>
+  
+  <!-- 類別選項 -->
+  <rect x="40" y="270" width="120" height="40" fill="#ffedd5" rx="20" ry="20" />
+  <text x="100" y="295" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#FF6200">All</text>
+  
+  <rect x="170" y="270" width="120" height="40" fill="#dcfce7" rx="20" ry="20" />
+  <text x="230" y="295" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#16a34a">Fruits</text>
+  
+  <rect x="300" y="270" width="120" height="40" fill="#fef9c3" rx="20" ry="20" />
+  <text x="360" y="295" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#ca8a04">Grains</text>
+  
+  <rect x="430" y="270" width="120" height="40" fill="#f1f5f9" rx="20" ry="20" />
+  <text x="490" y="295" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#64748b">Meat</text>
+  
+  <rect x="40" y="320" width="120" height="40" fill="#ffedd5" rx="20" ry="20" />
+  <text x="100" y="345" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#FF6200">Dairy</text>
+  
+  <rect x="170" y="320" width="120" height="40" fill="#fce7f3" rx="20" ry="20" />
+  <text x="230" y="345" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#be185d">Snacks</text>
+  
+  <rect x="300" y="320" width="120" height="40" fill="#e0f2fe" rx="20" ry="20" />
+  <text x="360" y="345" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#0ea5e9">Beverages</text>
+  
+  <rect x="430" y="320" width="120" height="40" fill="#f3e8ff" rx="20" ry="20" />
+  <text x="490" y="345" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#7e22ce">Others</text>
+  
+  <!-- 篩選狀態 -->
+  <rect x="20" y="440" width="560" height="200" fill="white" rx="15" ry="15" />
+  <text x="40" y="470" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#333">Status</text>
+  
+  <!-- 狀態選項 -->
+  <rect x="40" y="490" width="120" height="40" fill="#ffedd5" rx="20" ry="20" />
+  <text x="100" y="515" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#FF6200">All</text>
+  
+  <rect x="170" y="490" width="120" height="40" fill="#ffe4e6" rx="20" ry="20" />
+  <text x="230" y="515" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#e11d48">Expiring Soon</text>
+  
+  <rect x="300" y="490" width="120" height="40" fill="#dcfce7" rx="20" ry="20" />
+  <text x="360" y="515" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#16a34a">Fresh</text>
+  
+  <rect x="430" y="490" width="120" height="40" fill="#f1f5f9" rx="20" ry="20" />
+  <text x="490" y="515" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#64748b">Low Stock</text>
+  
+  <!-- 視圖切換 -->
+  <rect x="20" y="660" width="560" height="70" fill="white" rx="15" ry="15" />
+  <text x="40" y="690" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#333">View</text>
+  
+  <!-- 視圖按鈕 -->
+  <rect x="120" y="675" width="120" height="40" fill="#ffedd5" rx="20" ry="20" />
+  <text x="180" y="700" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#FF6200">List</text>
+  
+  <rect x="250" y="675" width="120" height="40" fill="white" rx="20" ry="20" stroke="#ddd" stroke-width="1" />
+  <text x="310" y="700" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#666">Grid</text>
+  
+  <rect x="380" y="675" width="120" height="40" fill="white" rx="20" ry="20" stroke="#ddd" stroke-width="1" />
+  <text x="440" y="700" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#666">Calendar</text>
+  
+  <!-- 底部導航欄 -->
+  <rect x="0" y="750" width="600" height="50" fill="white" />
+  <line x1="0" y1="750" x2="600" y2="750" stroke="#ddd" stroke-width="1" />
+  
+  <!-- 導航按鈕 - 主頁 -->
+  <rect x="0" y="750" width="120" height="50" fill="white" />
+  <rect x="40" y="760" width="40" height="30" fill="none" />
+  <path d="M40,775 L60,760 L80,775 L75,775 L75,790 L45,790 L45,775 Z" fill="#666" />
+  <text x="60" y="795" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#666">Home</text>
+  
+  <!-- 導航按鈕 - 搜索 (激活) -->
+  <rect x="120" y="750" width="120" height="50" fill="white" />
+  <circle cx="180" cy="770" r="12" fill="none" stroke="#FF6200" stroke-width="2" />
+  <line x1="188" y1="778" x2="198" y2="788" stroke="#FF6200" stroke-width="2" />
+  <text x="180" y="795" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#FF6200">Search</text>
+  
+  <!-- 導航按鈕 - 添加 -->
+  <rect x="240" y="740" width="120" height="60" fill="white" />
+  <circle cx="300" cy="760" r="20" fill="#FF6200" />
+  <text x="300" y="768" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="white">+</text>
+  <text x="300" y="795" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#FF6200">Add</text>
+  
+  <!-- 導航按鈕 - 購物清單 -->
+  <rect x="360" y="750" width="120" height="50" fill="white" />
+  <rect x="380" y="760" width="30" height="25" fill="none" stroke="#666" stroke-width="2" />
+  <line x1="380" y1="765" x2="410" y2="765" stroke="#666" stroke-width="2" />
+  <line x1="380" y1="773" x2="400" y2="773" stroke="#666" stroke-width="1" />
+  <line x1="380" y1="780" x2="405" y2="780" stroke="#666" stroke-width="1" />
+  <text x="420" y="795" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#666">Lists</text>
+  
+  <!-- 導航按鈕 - 設置 -->
+  <rect x="480" y="750" width="120" height="50" fill="white" />
+  <circle cx="540" cy="770" r="12" fill="none" stroke="#666" stroke-width="2" />
+  <path d="M540,762 L540,778 M532,770 L548,770" stroke="#666" stroke-width="2" />
+  <text x="540" y="795" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#666">Settings</text>
+</svg> 

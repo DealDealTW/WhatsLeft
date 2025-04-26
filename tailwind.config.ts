@@ -114,6 +114,11 @@ export default {
 					'0%': { boxShadow: '0 0 0 0 rgba(249, 115, 22, 0.4)' },
 					'70%': { boxShadow: '0 0 0 10px rgba(249, 115, 22, 0)' },
 					'100%': { boxShadow: '0 0 0 0 rgba(249, 115, 22, 0)' }
+				},
+				scanline: {
+					'0%': { top: '0%', opacity: '1' },
+					'50%': { top: '98%', opacity: '0.5' },
+					'100%': { top: '0%', opacity: '1' }
 				}
 			},
 			animation: {
@@ -121,7 +126,8 @@ export default {
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				fadeIn: 'fadeIn 0.3s ease-out',
 				slideUp: 'slideUp 0.3s ease-out',
-				'pulse-slow': 'pulse-slow 2s infinite'
+				'pulse-slow': 'pulse-slow 2s infinite',
+				scanline: 'scanline 2s ease-in-out infinite'
 			}
 		}
 	},

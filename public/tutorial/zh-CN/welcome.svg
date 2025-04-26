@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f9f9f9" rx="10" ry="10" />
+  
+  <!-- App Screenshot Outline -->
+  <rect x="150" y="50" width="500" height="500" rx="20" ry="20" fill="white" stroke="#ddd" stroke-width="2" />
+  
+  <!-- App Header -->
+  <rect x="150" y="50" width="500" height="60" rx="20" ry="20" fill="#f5f5f5" />
+  <text x="190" y="90" font-family="Arial" font-size="24" font-weight="bold" fill="#FF6B2B">WhatsLeft</text>
+  <circle cx="600" cy="80" r="18" fill="white" stroke="#FF6B2B" stroke-width="2" />
+  <circle cx="600" cy="70" r="10" fill="#FF6B2B" />
+  <text x="597" y="73" font-family="Arial" font-size="12" font-weight="bold" fill="white">2</text>
+  
+  <!-- Search Bar -->
+  <rect x="190" y="130" width="420" height="40" rx="20" ry="20" fill="white" stroke="#ddd" stroke-width="1" />
+  <text x="230" y="155" font-family="Arial" font-size="14" fill="#888">Search items...</text>
+  <circle cx="215" cy="150" r="8" fill="white" stroke="#888" stroke-width="1.5" />
+  
+  <!-- Item Cards -->
+  <!-- Apple Card -->
+  <rect x="190" y="190" width="180" height="90" rx="10" ry="10" fill="#E2F4EA" stroke="#ddd" stroke-width="1" />
+  <text x="210" y="220" font-family="Arial" font-size="16" font-weight="bold" fill="#4C8C6F">Apple</text>
+  <text x="350" y="220" font-family="Arial" font-size="14" fill="#4C8C6F">×4</text>
+  <text x="210" y="250" font-family="Arial" font-size="12" fill="#777">01/05/2025</text>
+  <rect x="300" y="235" width="70" height="25" rx="12.5" ry="12.5" fill="#E2F4EA" stroke="#4C8C6F" stroke-width="1" />
+  <text x="315" y="252" font-family="Arial" font-size="12" fill="#4C8C6F">7 days</text>
+  
+  <!-- Chicken Card -->
+  <rect x="190" y="290" width="180" height="90" rx="10" ry="10" fill="#FFEBEB" stroke="#ddd" stroke-width="1" />
+  <text x="210" y="320" font-family="Arial" font-size="16" font-weight="bold" fill="#D45B5B">Chicken</text>
+  <text x="350" y="320" font-family="Arial" font-size="14" fill="#D45B5B">×1</text>
+  <text x="210" y="350" font-family="Arial" font-size="12" fill="#777">25/04/2025</text>
+  <rect x="300" y="335" width="70" height="25" rx="12.5" ry="12.5" fill="#FFEBEB" stroke="#D45B5B" stroke-width="1" />
+  <text x="305" y="352" font-family="Arial" font-size="12" fill="#D45B5B">Tomorrow</text>
+  
+  <!-- Beef Card -->
+  <rect x="380" y="190" width="180" height="90" rx="10" ry="10" fill="#E2F4EA" stroke="#ddd" stroke-width="1" />
+  <text x="400" y="220" font-family="Arial" font-size="16" font-weight="bold" fill="#4C8C6F">Beef</text>
+  <text x="540" y="220" font-family="Arial" font-size="14" fill="#4C8C6F">×3</text>
+  
+  <!-- Add Button -->
+  <circle cx="400" cy="460" r="30" fill="#FF6B2B" />
+  <text x="395" y="467" font-family="Arial" font-size="24" font-weight="bold" fill="white">+</text>
+  
+  <!-- Bottom Navigation -->
+  <rect x="150" y="510" width="500" height="40" rx="0" ry="0" fill="white" stroke="#ddd" stroke-width="1" />
+  <line x1="150" y1="510" x2="650" y2="510" stroke="#ddd" stroke-width="1" />
+  
+  <!-- NavBar Items -->
+  <text x="200" y="535" font-family="Arial" font-size="12" fill="#FF6B2B" font-weight="bold">Dashboard</text>
+  <text x="325" y="535" font-family="Arial" font-size="12" fill="#888">Insight</text>
+  <text x="450" y="535" font-family="Arial" font-size="12" fill="#888">Shoplist</text>
+  <text x="575" y="535" font-family="Arial" font-size="12" fill="#888">Settings</text>
+  <line x1="250" y1="545" x2="150" y2="545" stroke="#FF6B2B" stroke-width="2" />
+  
+  <!-- Annotation Highlights -->
+  <!-- Dashboard View Highlight -->
+  <rect x="160" y="180" width="430" height="210" rx="5" ry="5" fill="none" stroke="#FF6B2B" stroke-width="2" stroke-dasharray="5,5" />
+  <text x="600" y="230" font-family="Arial" font-size="18" font-weight="bold" fill="#FF6B2B">Track all your items</text>
+  <line x1="590" y1="230" x2="550" y2="250" stroke="#FF6B2B" stroke-width="2" />
+  
+  <!-- Color Coding Highlight -->
+  <text x="600" y="300" font-family="Arial" font-size="18" font-weight="bold" fill="#FF6B2B">Color-coded by expiry</text>
+  <line x1="590" y1="300" x2="550" y2="320" stroke="#FF6B2B" stroke-width="2" />
+  
+  <!-- Add Item Highlight -->
+  <circle cx="400" cy="460" r="40" fill="none" stroke="#FF6B2B" stroke-width="2" stroke-dasharray="5,5" />
+  <text x="460" y="440" font-family="Arial" font-size="18" font-weight="bold" fill="#FF6B2B">Add items quickly</text>
+  <line x1="450" y1="450" x2="420" y2="460" stroke="#FF6B2B" stroke-width="2" />
+</svg> 

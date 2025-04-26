@@ -10,9 +10,10 @@ import Stats from "./pages/Stats";
 import Settings from "./pages/Settings";
 import ShopList from "./pages/ShopList";
 import NotFound from "./pages/NotFound";
+import FAQ from "./pages/FAQ";
 import TopBar from "./components/TopBar";
 import BottomNav from "./components/BottomNav";
-import AppTutorial from "./components/AppTutorial";
+import InteractiveTutorial from "./components/InteractiveTutorial";
 import MockAdBanner from '@/components/MockAdBanner';
 import { AuthProvider } from './contexts/AuthContext';
 import AuthCallback from './pages/AuthCallback';
@@ -20,12 +21,32 @@ import { Capacitor } from '@capacitor/core';
 import { App as CapacitorApp } from '@capacitor/app';
 import { toast } from "@/components/ui/use-toast";
 import ResetPasswordPage from './pages/ResetPasswordPage';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import { useTranslation } from "@/utils/translations";
+import { Button } from "@/components/ui/button";
 
 const queryClient = new QueryClient();
 
 // 監聽路由變化的組件
 const RouteChangeHandler = () => {
-  const { setSelectedItem, language } = useApp();
+  const { 
+    setSelectedItem, 
+    language, 
+    isProfileModalOpen, 
+    setIsProfileModalOpen, 
+    isFilterModalOpen, 
+    setIsFilterModalOpen, 
+    isSortModalOpen, 
+    setIsSortModalOpen, 
+    isItemModalOpen, 
+    setIsItemModalOpen, 
+    dashboardMultiSelectMode, 
+    setDashboardMultiSelectMode, 
+    shoplistMultiSelectMode, 
+    setShopListMultiSelectMode, 
+    showExitPrompt, 
+    setShowExitPrompt 
+  } = useApp();
   const location = useLocation();
   const navigate = useNavigate();
   const doubleBackRef = useRef(false);
@@ -42,57 +63,46 @@ const RouteChangeHandler = () => {
     const handleBackButton = async () => {
       console.log('[全局返回鍵] 路徑:', location.pathname);
       
-      // 檢查是否有打開的模態框（可以通過document.body的類或特定元素來檢測）
-      const hasOpenModal = document.body.classList.contains('overflow-hidden') || 
-                           document.querySelector('[role="dialog"]') !== null;
+      // 檢查是否有打開的模態框
+      if (isProfileModalOpen) {
+        setIsProfileModalOpen(false);
+        return;
+      }
       
-      // 檢查是否處於多選模式 - 通過DOM或特定的全局狀態
-      const isInMultiSelectMode = document.body.classList.contains('multi-select-mode') || 
-                                document.querySelector('.multi-select-active') !== null;
+      if (isFilterModalOpen) {
+        setIsFilterModalOpen(false);
+        return;
+      }
       
-      if (hasOpenModal || isInMultiSelectMode) {
-        // 1. 如果模態框/表單打開或處於多選模式：關閉它們
-        console.log('[全局返回鍵] 模態框或多選模式活動，處理關閉邏輯');
-        
-        if (hasOpenModal) {
-          // 觸發Escape鍵事件以關閉模態框/表單
-          document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
-        }
-        
-        if (isInMultiSelectMode) {
-          // 退出多選模式 - 通過自定義事件
-          document.dispatchEvent(new CustomEvent('exit-multi-select'));
-        }
-        
-        return true; // 阻止默認行為
-      } else if (location.pathname !== '/') {
-        // 2. 無模態框/表單，非Dashboard：導航回Dashboard
-        console.log('[全局返回鍵] 非Dashboard頁面，返回Dashboard');
-        navigate('/');
-        return true; // 阻止默認行為
+      if (isSortModalOpen) {
+        setIsSortModalOpen(false);
+        return;
+      }
+      
+      if (isItemModalOpen) {
+        setIsItemModalOpen(false);
+        return;
+      }
+      
+      // 檢查多選模式（不管在哪個頁面）
+      if (dashboardMultiSelectMode) {
+        // 如果多選模式開啟，則退出多選模式
+        setDashboardMultiSelectMode(false);
+        return;
+      }
+      
+      if (shoplistMultiSelectMode) {
+        // 如果購物清單多選模式開啟，則退出多選模式
+        setShopListMultiSelectMode(false);
+        return;
+      }
+
+      // 如果在任何頁面，但不在首頁，則返回到首頁或前一頁
+      if (location.pathname !== '/dashboard') {
+        navigate(-1);
       } else {
-        // 3. Dashboard頁面且無模態框/表單/非多選模式：顯示退出提示
-        if (doubleBackRef.current) {
-          // 已經按過一次返回，確認退出
-          console.log('[全局返回鍵] 第二次按下返回，退出應用');
-          return false; // 允許默認行為（退出應用）
-        } else {
-          console.log('[全局返回鍵] Dashboard頁面，顯示退出警告');
-          toast({
-            title: language === 'en' ? 'Exit App?' : '退出應用？',
-            description: language === 'en' ? 'Press back again to exit' : '再次按返回鍵退出',
-            variant: "default",
-            duration: 2000
-          });
-          
-          // 雙擊退出邏輯
-          doubleBackRef.current = true;
-          setTimeout(() => {
-            doubleBackRef.current = false;
-          }, 2000);
-          
-          return true; // 阻止默認行為（不退出應用，等待第二次按下）
-        }
+        // 如果在首頁，則顯示退出提示
+        setShowExitPrompt(true);
       }
     };
 
@@ -114,13 +124,15 @@ const RouteChangeHandler = () => {
         backHandlerRef.current.remove();
       }
     };
-  }, [location.pathname, navigate, language]);
+  }, [location.pathname, navigate, language, isProfileModalOpen, setIsProfileModalOpen, isFilterModalOpen, setIsFilterModalOpen, isSortModalOpen, setIsSortModalOpen, isItemModalOpen, setIsItemModalOpen, dashboardMultiSelectMode, setDashboardMultiSelectMode, shoplistMultiSelectMode, setShopListMultiSelectMode, showExitPrompt, setShowExitPrompt]);
 
   return null;
 };
 
-const AppContent = () => {
-  const { showTutorial, setShowTutorial } = useApp();
+const AppRoutesContent = () => {
+  const { showTutorial, setShowTutorial, showExitPrompt, setShowExitPrompt, language, isItemModalOpen } = useApp();
+  const t = useTranslation(language);
+  const location = useLocation();
 
   // 首次加載時檢查是否需要顯示教學
   useEffect(() => {
@@ -130,25 +142,68 @@ const AppContent = () => {
     }
   }, [setShowTutorial]);
 
+  // 決定是否顯示教學 - 僅在首頁且沒有模態框打開時顯示
+  const shouldShowTutorial = showTutorial && location.pathname === '/' && !isItemModalOpen;
+
+  // 退出提示對話框
+  const ExitPromptDialog = () => {
+    const handleExit = () => {
+      setShowExitPrompt(false);
+      // 在 Capacitor 平台上，關閉應用
+      if (Capacitor.isNativePlatform()) {
+        CapacitorApp.exitApp();
+      }
+    };
+    
+    return (
+      <Dialog open={showExitPrompt} onOpenChange={setShowExitPrompt}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>{t('exitPromptTitle')}</DialogTitle>
+            <DialogDescription>
+              {t('exitPromptDescription')}
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowExitPrompt(false)}>
+              {t('cancel')}
+            </Button>
+            <Button variant="destructive" onClick={handleExit}>
+              {t('logout')}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    );
+  };
+
+  return (
+    <div className="flex flex-col min-h-screen">
+      <TopBar />
+      <main className="flex-1 pb-36">
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/stats" element={<Stats />} />
+          <Route path="/shoplist" element={<ShopList />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/auth/callback" element={<AuthCallback />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
+      <BottomNav />
+      <RouteWrapper />
+      <InteractiveTutorial isOpen={shouldShowTutorial} onClose={() => setShowTutorial(false)} />
+      <ExitPromptDialog />
+    </div>
+  );
+};
+
+const AppContent = () => {
   return (
     <BrowserRouter>
-      <div className="flex flex-col min-h-screen">
-        <TopBar />
-        <main className="flex-1 pb-36">
-          <Routes>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/stats" element={<Stats />} />
-            <Route path="/shoplist" element={<ShopList />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/auth/callback" element={<AuthCallback />} />
-            <Route path="/reset-password" element={<ResetPasswordPage />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </main>
-        <BottomNav />
-        <RouteWrapper />
-        <AppTutorial isOpen={showTutorial} onClose={() => setShowTutorial(false)} />
-      </div>
+      <AppRoutesContent />
     </BrowserRouter>
   );
 };

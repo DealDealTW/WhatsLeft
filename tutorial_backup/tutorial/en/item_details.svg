@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="600" height="400" fill="#f9f9f9"/>
+  
+  <!-- Form Card -->
+  <rect x="100" y="30" width="400" height="340" rx="12" ry="12" fill="white" stroke="#e0e0e0" stroke-width="2"/>
+  
+  <!-- Form Header -->
+  <text x="150" y="70" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#333333">Add New Item</text>
+  
+  <!-- Name Field -->
+  <rect x="130" y="90" width="340" height="50" rx="8" ry="8" fill="#f5f5f5" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="145" y="115" font-family="Arial, sans-serif" font-size="14" fill="#888888">Item Name</text>
+  <text x="145" y="135" font-family="Arial, sans-serif" font-size="16" fill="#333333">Milk</text>
+  
+  <!-- Orange Circle with 1 -->
+  <circle cx="110" cy="115" r="18" fill="#ff8c00" fill-opacity="0.8"/>
+  <text x="110" y="120" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">1</text>
+  
+  <!-- Category Field -->
+  <rect x="130" y="160" width="340" height="50" rx="8" ry="8" fill="#f5f5f5" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="145" y="185" font-family="Arial, sans-serif" font-size="14" fill="#888888">Category</text>
+  <text x="145" y="205" font-family="Arial, sans-serif" font-size="16" fill="#333333">Food</text>
+  <path d="M450 185 l-10 -8 l-10 8 l10 8 z" fill="#888888"/>
+  
+  <!-- Orange Circle with 2 -->
+  <circle cx="110" cy="185" r="18" fill="#ff8c00" fill-opacity="0.8"/>
+  <text x="110" y="190" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">2</text>
+  
+  <!-- Expiry Date Field -->
+  <rect x="130" y="230" width="340" height="50" rx="8" ry="8" fill="#f5f5f5" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="145" y="255" font-family="Arial, sans-serif" font-size="14" fill="#888888">Expiry Date</text>
+  <text x="145" y="275" font-family="Arial, sans-serif" font-size="16" fill="#333333">May 10, 2024</text>
+  <text x="450" y="270" font-family="Arial, sans-serif" font-size="18" fill="#888888">📅</text>
+  
+  <!-- Orange Circle with 3 -->
+  <circle cx="110" cy="255" r="18" fill="#ff8c00" fill-opacity="0.8"/>
+  <text x="110" y="260" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">3</text>
+  
+  <!-- Save Button -->
+  <rect x="300" y="310" width="170" height="40" rx="20" ry="20" fill="#ff8c00"/>
+  <text x="385" y="335" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="white" text-anchor="middle">Save Item</text>
+  
+  <!-- Orange Circle around Save Button -->
+  <ellipse cx="385" cy="330" rx="90" ry="25" stroke="#ff8c00" stroke-width="2" stroke-dasharray="5,5" fill="none"/>
+</svg> 

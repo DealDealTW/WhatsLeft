@@ -12,6 +12,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { useTranslation } from '@/utils/translations';
 import { v4 as uuidv4 } from 'uuid';
 import { format } from 'date-fns';
+import { cn } from '@/lib/utils';
 
 // 版本標記
 const VERSION = "Native-Google-Speech v8.0 - 2025-04-10";
@@ -452,18 +453,36 @@ const SpeechInput: React.FC = () => {
             </p>
           </div>
           
-          <Button
-            variant={listening ? "destructive" : "default"}
-            size="lg"
-            className="rounded-full w-16 h-16 flex items-center justify-center mb-2"
-            onClick={listening ? handleStopListening : handleStartListening}
-          >
-            {listening ? <MicOff className="h-8 w-8" /> : <Mic className="h-8 w-8" />}
-          </Button>
+          <div className={cn(
+            "relative",
+            listening && "before:absolute before:inset-0 before:rounded-full before:bg-orange-500/20 before:animate-ping before:scale-150"
+          )}>
+            <Button
+              variant={listening ? "destructive" : "default"}
+              size="lg"
+              className={cn(
+                "rounded-full w-16 h-16 flex items-center justify-center mb-2",
+                listening && "animate-pulse-slow shadow-[0_0_15px_rgba(249,115,22,0.5)]"
+              )}
+              onClick={listening ? handleStopListening : handleStartListening}
+            >
+              {listening ? <MicOff className="h-8 w-8" /> : <Mic className="h-8 w-8" />}
+            </Button>
+            
+            {listening && (
+              <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 w-32 text-center">
+                <div className="flex justify-center items-center space-x-1">
+                  <span className="h-2 w-2 bg-orange-500 rounded-full animate-[pulse_0.8s_ease-in-out_infinite]"></span>
+                  <span className="h-2 w-2 bg-orange-500 rounded-full animate-[pulse_0.8s_ease-in-out_0.2s_infinite]"></span>
+                  <span className="h-2 w-2 bg-orange-500 rounded-full animate-[pulse_0.8s_ease-in-out_0.4s_infinite]"></span>
+                </div>
+              </div>
+            )}
+          </div>
           
           {processingText && (
-            <div className="mt-2 p-2 bg-muted rounded w-full">
-              <p className="text-sm font-medium">{language === 'en' ? "Recognized Text" : "已識別文本"}:</p>
+            <div className="mt-6 p-3 bg-muted rounded-lg w-full border border-orange-200/50">
+              <p className="text-sm font-medium text-orange-700 mb-1">{language === 'en' ? "Recognized Text" : "已識別文本"}:</p>
               <p className="text-sm">{processingText}</p>
             </div>
           )}

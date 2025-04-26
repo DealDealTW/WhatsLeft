@@ -44,6 +44,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 // 批量項目的介面定義
 interface VoicedItem {
@@ -68,6 +69,29 @@ interface ItemFormProps {
 const capitalizeFirstLetter = (string: string): string => {
   if (!string) return string;
   return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
+// 添加一個用於首次使用教學提示的組件
+const FeatureTooltip = ({ children, title, description, isVisible, onDismiss }) => {
+  if (!isVisible) return null;
+  
+  return (
+    <div className="absolute z-10 bg-orange-50 border border-orange-200 rounded-lg shadow-lg p-3 w-64 animate-in fade-in slide-in-from-top-5 duration-300">
+      <div className="flex justify-between items-start mb-2">
+        <h3 className="text-sm font-medium text-orange-700">{title}</h3>
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          className="h-6 w-6 p-0 -mt-1 -mr-1 hover:bg-orange-100" 
+          onClick={onDismiss}
+        >
+          <X className="h-3 w-3" />
+        </Button>
+      </div>
+      <p className="text-xs text-orange-600 mb-2">{description}</p>
+      {children}
+    </div>
+  );
 };
 
 export default function ItemForm({ open, onOpenChange, editItem, reAddItem, initialMode, isShopListMode = false }: ItemFormProps) {
@@ -98,28 +122,23 @@ export default function ItemForm({ open, onOpenChange, editItem, reAddItem, init
   const itemNameRef = useRef<HTMLInputElement>(null); // 添加對輸入框的引用
   
   // 本地狀態
-  const [itemName, setItemName] = useState(editItem ? editItem.name : (reAddItem ? reAddItem.name : ""));
-  const [quantity, setQuantity] = useState<number>(editItem ? (parseInt(editItem.quantity) || 1) : (reAddItem ? 1 : 1));
-  const [category, setCategory] = useState<ItemCategory>(editItem ? editItem.category : (reAddItem ? reAddItem.category : "Food"));
-  const [subcategory, setSubcategory] = useState(editItem ? editItem.subcategory : (reAddItem ? reAddItem.subcategory : ''));
-  const [daysUntilExpiry, setDaysUntilExpiry] = useState(editItem ? editItem.daysUntilExpiry : (reAddItem ? reAddItem.daysUntilExpiry : 7));
-  const [expiryDate, setExpiryDate] = useState<Date>(editItem ? parseISO(editItem.expiryDate) : (reAddItem ? parseISO(reAddItem.expiryDate) : addDays(new Date(), 7)));
-  const [notifyDaysBefore, setNotifyDaysBefore] = useState<number>(() => {
-    if (editItem) {
-      return editItem.notifyDaysBefore || settings.defaultNotifyDaysBefore;
-    } else if (reAddItem) {
-      return reAddItem.notifyDaysBefore || settings.defaultNotifyDaysBefore;
-    } else {
-      // 為新項目使用全局設置中的默認值
-      return settings.defaultNotifyDaysBefore;
-    }
-  });
-  const [image, setImage] = useState<string | null>(editItem ? editItem.image : null);
+  const [itemName, setItemName] = useState('');
+  const [quantity, setQuantity] = useState(1);
+  const [category, setCategory] = useState<ItemCategory>('Food');
+  const [subcategory, setSubcategory] = useState<string>('');
+  const [daysUntilExpiry, setDaysUntilExpiry] = useState<number>(7);
+  const [expiryDate, setExpiryDate] = useState(addDays(new Date(), 7));
+  const [notifyDaysBefore, setNotifyDaysBefore] = useState<number>(3);
+  const [image, setImage] = useState<string | null>(null);
   const [isVoiceMode, setIsVoiceMode] = useState(false);
   const [isBarcodeMode, setIsBarcodeMode] = useState(false);
   const [isManualMode, setIsManualMode] = useState(true);
+  const [barcodeResult, setBarcodeResult] = useState<string | null>(null);
+  const [barcodeFormat, setBarcodeFormat] = useState<string | null>(null);
   const [listening, setListening] = useState(false);
   const [showFamilySizeHint, setShowFamilySizeHint] = useState<boolean>(settings.autoAdjustFamilySize ?? false);
+  // 新增一個狀態來追蹤輸入框的聚焦狀態
+  const [inputFocused, setInputFocused] = useState(false);
   const [finalCalculatedQuantity, setFinalCalculatedQuantity] = useState<string>(quantity.toString());
   
   // 添加展開狀態控制
@@ -227,6 +246,34 @@ export default function ItemForm({ open, onOpenChange, editItem, reAddItem, init
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [itemName, language]);
   
+  // 新增：處理對話框開啟時的焦點管理
+  useEffect(() => {
+    if (open) {
+      // 使用 setTimeout 確保 DOM 已經更新
+      setTimeout(() => {
+        // 移除當前焦點，防止自動聚焦到表單字段
+        if (document.activeElement instanceof HTMLElement) {
+          document.activeElement.blur();
+        }
+        
+        // 確保對話框本身不會獲得焦點
+        const dialogElement = document.querySelector('[role="dialog"]');
+        if (dialogElement && dialogElement instanceof HTMLElement) {
+          dialogElement.setAttribute('tabindex', '-1');
+        }
+        
+        // 確保虛擬鍵盤不會在移動設備上顯示
+        // 防止自動聚焦和顯示鍵盤的組合策略:
+        // 1. Dialog 設置 autoFocus={false}
+        // 2. Dialog 使用 onOpenAutoFocus 阻止自動聚焦
+        // 3. 輸入字段設置為 readOnly 直到用戶點擊
+        // 4. 使用此 useEffect 清除任何可能的焦點
+        
+        console.log('[ItemForm] Dialog opened - cleared focus');
+      }, 50);
+    }
+  }, [open]);
+  
   // 對話框關閉處理
   const handleOpenChange = (openState: boolean) => {
     console.log(`[handleOpenChange] Triggered with openState: ${openState}`);
@@ -297,7 +344,11 @@ export default function ItemForm({ open, onOpenChange, editItem, reAddItem, init
   };
   
   // 確認清除所有項目 (現在使用相同的確認邏輯)
-  const confirmClearAll = confirmCloseAndDiscard;
+  const confirmClearAll = () => {
+    console.log('[confirmClearAll] User confirmed clearing all items.');
+    setShowClearConfirm(false);
+    setVoicedItemsList([]); // This should clear the list
+  };
 
   // 停止語音識別的輔助函數
   const stopSpeechRecognition = async () => {
@@ -709,7 +760,8 @@ export default function ItemForm({ open, onOpenChange, editItem, reAddItem, init
       let quantityAdjusted = false;
       let shouldAutoScale = false; // 新增：判斷是否應該自動調整
 
-      if (item.subcategory && effectiveFamilySize > 1 && originalQuantity >= 1) {
+      // 檢查全局自動調整設置 - 如果關閉則不進行任何調整
+      if (settings.autoAdjustFamilySize && item.subcategory && effectiveFamilySize > 1 && originalQuantity >= 1) {
         const currentSubcategoryConfig = allSubcategories.find(config => 
           config.name.en === item.subcategory || 
           config.name[language as 'en' | 'zh-TW' | 'zh-CN'] === item.subcategory
@@ -718,28 +770,38 @@ export default function ItemForm({ open, onOpenChange, editItem, reAddItem, init
         if (currentSubcategoryConfig) {
           const subcategoryNameEn = currentSubcategoryConfig.name.en;
           
-          // 修正：根據 isPremium 或預設列表決定是否調整
-          if (currentUser?.isPremium || DEFAULT_AUTO_SCALE_SUBCATEGORIES_EN.includes(subcategoryNameEn)) {
-              shouldAutoScale = true;
-          }
-
-          if (shouldAutoScale) {
-              const multiplier = settings.subcategoryMultipliers?.[subcategoryNameEn] ?? 1;
-              const calculatedQty = originalQuantity * effectiveFamilySize * multiplier;
-              finalQuantity = Math.round(calculatedQty);
+          // 檢查是否啟用高級數量設置
+          if (!settings.advancedQuantitySettings) {
+            // 基本模式：僅對特定子類別進行調整，比例為1:1
+            shouldAutoScale = DEFAULT_AUTO_SCALE_SUBCATEGORIES_EN.includes(subcategoryNameEn);
+            console.log(`[Save Multiple Basic Mode] 子類別 ${subcategoryNameEn} 是否應調整: ${shouldAutoScale}`);
+            
+            if (shouldAutoScale) {
+              // 基本模式下使用1:1比例
+              finalQuantity = originalQuantity * effectiveFamilySize;
               if (finalQuantity !== originalQuantity) {
                 quantityAdjusted = true;
                 anyQuantityAdjusted = true; // 如果任何一個項目被調整，設置此標誌
-                console.log(`[Save Multiple Adjusted]: ${item.name} (${subcategoryNameEn}), BaseQ: ${originalQuantity}, Family: ${effectiveFamilySize}, Multiplier: ${multiplier} => Result: ${finalQuantity}`);
+                console.log(`[Save Multiple Basic Mode] ${item.name} (${subcategoryNameEn}), 原始數量: ${originalQuantity}, 家庭大小: ${effectiveFamilySize} => 結果: ${finalQuantity}`);
               }
+            }
           } else {
-               console.log(`[Save Multiple Not Scaled - Basic/NonDefault]: ${item.name} (${subcategoryNameEn})`);
+            // 高級模式：所有子類別都可以調整，使用每人單位設置
+            shouldAutoScale = true;
+            const multiplier = settings.subcategoryMultipliers?.[subcategoryNameEn] ?? 1;
+            finalQuantity = Math.round(originalQuantity * effectiveFamilySize * multiplier);
+            if (finalQuantity !== originalQuantity) {
+              quantityAdjusted = true;
+              anyQuantityAdjusted = true;
+              console.log(`[Save Multiple Advanced Mode] ${item.name} (${subcategoryNameEn}), 原始數量: ${originalQuantity}, 家庭大小: ${effectiveFamilySize}, 乘數: ${multiplier} => 結果: ${finalQuantity}`);
+            }
           }
         } else {
-           console.log(`[Save Multiple Not Scaled - No Config]: ${item.name}`);
+          console.log(`[Save Multiple Not Scaled - No Config] ${item.name}`);
         }
+      } else {
+        console.log(`[Save Multiple No Adjustment] 原因: ${!settings.autoAdjustFamilySize ? '自動調整關閉' : !item.subcategory ? '無子類別' : effectiveFamilySize <= 1 ? '家庭大小 <= 1' : '數量 < 1'}`);
       }
-      // End Simplified Quantity Calculation
 
       return {
           name: item.name,
@@ -1003,15 +1065,11 @@ export default function ItemForm({ open, onOpenChange, editItem, reAddItem, init
     onOpenChange(false);
   }
 
-  // 條形碼掃描相關
-  const [barcodeResult, setBarcodeResult] = useState<string | null>(null);
-  const [barcodeFormat, setBarcodeFormat] = useState<string | null>(null);
-
   // 使用Microsoft Translate API翻譯產品名稱
   const translateProductName = async (text: string, targetLanguage: string): Promise<string> => {
     try {
       // 設置Microsoft Translator API的配置
-      const apiKey = "3ta7QMWDWLfH2CqBO4h0SwUlh6TlcIbiweSyVIRcKIyuFSSarA7eJQQJ99BDACL93NaXJ3w3AAAbACOGzNBK"; // API密鑰
+      const apiKey = "API_KEY_PLACEHOLDER"; // API密鑰應該存儲在環境變量中
       const endpoint = "https://api.cognitive.microsofttranslator.com";
       const region = "australiaeast"; // 區域
 
@@ -1506,730 +1564,825 @@ export default function ItemForm({ open, onOpenChange, editItem, reAddItem, init
     return Boolean(editItem) && !reAddItem
   }
 
+  // 添加首次使用提示狀態
+  const [showVoiceTooltip, setShowVoiceTooltip] = useState(false);
+  const [showBarcodeTooltip, setShowBarcodeTooltip] = useState(false);
+  
+  // 檢查功能是否為首次使用
+  useEffect(() => {
+    if (open) {
+      // 將這些設為 false，確保提示不會顯示
+      setShowVoiceTooltip(false);
+      setShowBarcodeTooltip(false);
+      
+      // 將使用狀態標記為已使用，這樣將來也不會顯示
+      localStorage.setItem('voiceFeatureUsed', 'true');
+      localStorage.setItem('barcodeFeatureUsed', 'true');
+    }
+  }, [open]);
+  
+  // 標記功能已使用
+  const markVoiceFeatureUsed = () => {
+    localStorage.setItem('voiceFeatureUsed', 'true');
+    setShowVoiceTooltip(false);
+  };
+  
+  const markBarcodeFeatureUsed = () => {
+    localStorage.setItem('barcodeFeatureUsed', 'true');
+    setShowBarcodeTooltip(false);
+  };
+  
+  // 修改語音處理函數以標記功能使用
+  const handleVoiceClick = async () => {
+    markVoiceFeatureUsed();
+    await handleVoiceMode();
+  };
+  
+  // 修改條碼掃描處理函數
+  const handleBarcodeClick = () => {
+    markBarcodeFeatureUsed();
+    handleBarcodeMode();
+  };
+
   return (
-    <>
-      <Dialog open={open} onOpenChange={handleOpenChange}>
-        <DialogContent 
-          className={`sm:max-w-md p-0 gap-0 overflow-hidden dialog-content-no-close-button max-h-[85vh] w-[95vw]`} 
-          autoFocus={false} // 禁用自動聚焦
-        >
-          {/* 使用 autoFocus={false} 來防止對話框自動聚焦在輸入欄位 */}
-          {/* 
-          調整 DialogContent 的樣式以改善行動裝置體驗：
-          - max-h-[90vh] 或類似值，限制最大高度
-          - display: flex, flex-direction: column，使內容和頁腳可以垂直排列
-          - overflow: hidden，防止父容器滾動
-        */}
-          <div className="bg-gradient-to-r from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/10 px-4 pt-4 pb-3 border-b shadow-sm flex-shrink-0">
-            <div>
-              <DialogTitle className="text-lg font-bold text-foreground mb-1 flex items-center">
-                <span className="bg-orange-500/10 rounded-full p-1 mr-2">
-                  {editItem ? <Pencil className="h-4 w-4 text-orange-600" /> : <PlusCircle className="h-4 w-4 text-orange-600" />}
-                </span>
-                {editItem 
-                  ? t('editItem') 
-                  : isShopListMode 
-                    ? (language === 'en' ? 'Add to Shopping List' : '添加到購物清單')
-                    : t('addItem')
-                }
-              </DialogTitle>
-              <div className="text-xs text-muted-foreground pl-7">
-                {language === 'en' ? 
-                  'Use manual, voice or barcode scanner to record items' : 
-                  language === 'zh-TW' ? 
-                  '使用手動、語音或條碼掃描來記錄物品' : 
-                  '使用手动、语音或条码扫描来记录物品'
-                }
+    <Dialog 
+      open={open} 
+      onOpenChange={handleOpenChange}
+    >
+      <DialogContent 
+        className="sm:max-w-md max-h-[90vh] overflow-y-auto p-4 sm:p-5 rounded-lg"
+        onInteractOutside={(e) => {
+          // 防止用戶意外通過點擊對話框外部關閉
+          if (itemName.trim() !== "" || voicedItemsList.length > 0) {
+            e.preventDefault();
+            setShowCloseConfirm(true);
+          }
+        }}
+        onEscapeKeyDown={(e) => {
+          // 防止用戶通過 ESC 鍵意外關閉
+          if (itemName.trim() !== "" || voicedItemsList.length > 0) {
+            e.preventDefault();
+            setShowCloseConfirm(true);
+          }
+        }}
+        // 確保對話框不會自動聚焦任何元素
+        autoFocus={false}
+        // 新增：阻止對話框嘗試自動聚焦元素
+        onOpenAutoFocus={(e) => {
+          e.preventDefault();
+          console.log('[ItemForm] Prevented auto-focus on dialog open');
+        }}
+      >
+        {/* 關閉確認提示 */}
+        {showCloseConfirm && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black/80 z-50 p-4">
+            <div className="bg-white dark:bg-slate-900 rounded-lg p-4 w-full max-w-[300px] shadow-lg">
+              <h3 className="text-sm font-semibold mb-2 text-slate-800 dark:text-slate-200">
+                {language === 'en' ? "Discard changes?" : "放棄更改?"}
+              </h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400 mb-4">
+                {language === 'en' ? "You have unsaved changes. Are you sure you want to close?" : "您有未保存的更改。確定要關閉嗎?"}
+              </p>
+              <div className="flex justify-end gap-2">
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  className="h-8 text-xs py-0 px-3 border-orange-200 text-slate-600 hover:bg-orange-50"
+                  onClick={cancelConfirmation}
+                >
+                  {language === 'en' ? "Cancel" : "取消"}
+                </Button>
+                <Button 
+                  type="button" 
+                  variant="destructive" 
+                  className="h-8 text-xs py-0 px-3"
+                  onClick={confirmCloseAndDiscard}
+                >
+                  {language === 'en' ? "Discard" : "放棄"}
+                </Button>
               </div>
             </div>
           </div>
-          
-          {/* 主要內容 - 調整最大高度，改為 60vh，以確保在移動設備上更好的體驗 */} 
-          <div className="max-h-[calc(60vh)] overflow-y-auto p-0 pb-2 mx-3 space-y-3">
-            {/* 輸入模式切換按鈕 - 移除此部分 */}
-            {voicedItemsList.length === 0 && (
-              <>
-                {/* 如果有圖片，顯示預覽和刪除按鈕 */}
-                {image && (
-                  <div className="mt-2 mb-2 relative">
-                    <img 
-                      src={image} 
-                      alt="Item Preview" 
-                      className="w-full h-28 object-cover rounded-md border" 
+        )}
+        
+        {/* 清除全部確認提示 */}
+        {showClearConfirm && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black/80 z-50 p-4">
+            <div className="bg-white dark:bg-slate-900 rounded-lg p-4 w-full max-w-[300px] shadow-lg">
+              <h3 className="text-sm font-semibold mb-2 text-slate-800 dark:text-slate-200">
+                {language === 'en' ? "Clear all items?" : "清除所有項目?"}
+              </h3>
+              <p className="text-xs text-slate-600 dark:text-slate-400 mb-4">
+                {language === 'en' ? "This will clear all detected items. Are you sure?" : "這將清除所有檢測到的項目。您確定嗎?"}
+              </p>
+              <div className="flex justify-end gap-2">
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  className="h-8 text-xs py-0 px-3 border-orange-200 text-slate-600 hover:bg-orange-50"
+                  onClick={() => setShowClearConfirm(false)}
+                >
+                  {language === 'en' ? "Cancel" : "取消"}
+                </Button>
+                <Button 
+                  type="button" 
+                  variant="destructive" 
+                  className="h-8 text-xs py-0 px-3"
+                  onClick={confirmClearAll}
+                >
+                  {language === 'en' ? "Clear All" : "清除全部"}
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
+        
+        {/* 使用 autoFocus={false} 來防止對話框自動聚焦在輸入欄位 */}
+        {/* 
+        調整 DialogContent 的樣式以改善行動裝置體驗：
+        - max-h-[90vh] 或類似值，限制最大高度
+        - display: flex, flex-direction: column，使內容和頁腳可以垂直排列
+        - overflow: hidden，防止父容器滾動
+      */}
+        <div className="bg-gradient-to-r from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/10 px-4 pt-4 pb-3 border-b shadow-sm flex-shrink-0">
+          <div>
+            <DialogTitle className="text-lg font-bold text-foreground mb-1 flex items-center">
+              <span className="bg-orange-500/10 rounded-full p-1 mr-2">
+                {editItem ? <Pencil className="h-4 w-4 text-orange-600" /> : <PlusCircle className="h-4 w-4 text-orange-600" />}
+              </span>
+              {editItem 
+                ? t('editItem') 
+                : isShopListMode 
+                  ? (language === 'en' ? 'Add to Shopping List' : '添加到購物清單')
+                  : t('addItem')
+              }
+            </DialogTitle>
+            <div className="text-xs text-muted-foreground pl-7">
+              {language === 'en' ? 
+                'Use manual, voice or barcode scanner to record items' : 
+                language === 'zh-TW' ? 
+                '使用手動、語音或條碼掃描來記錄物品' : 
+                '使用手动、语音或条码扫描来记录物品'
+              }
+            </div>
+          </div>
+        </div>
+        
+        {/* 主要內容 - 調整最大高度，改為 60vh，以確保在移動設備上更好的體驗 */} 
+        <div className="max-h-[calc(60vh)] overflow-y-auto p-0 pb-2 mx-3 space-y-3">
+          {/* 輸入模式切換按鈕 - 移除此部分 */}
+          {voicedItemsList.length === 0 && (
+            <>
+              {/* 如果有圖片，顯示預覽和刪除按鈕 */}
+              {image && (
+                <div className="mt-2 mb-2 relative">
+                  <img 
+                    src={image} 
+                    alt="Item Preview" 
+                    className="w-full h-28 object-cover rounded-md border" 
+                  />
+                  <Button
+                    type="button"
+                    variant="destructive"
+                    size="sm"
+                    className="absolute top-2 right-2 h-7 w-7 rounded-full p-0"
+                    onClick={handleDeleteImage}
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+              )}
+              {/* 1. 項目名稱部分 - 語音和條碼按鈕完全分離 */}
+              <div className="bg-white dark:bg-slate-900 shadow-sm rounded-lg p-3 border border-gray-100 dark:border-gray-800 mb-2">
+                <Label htmlFor="name" className="text-sm font-medium flex items-center text-slate-700 dark:text-slate-300 mb-1.5">
+                  <Pencil className="h-4 w-4 mr-1.5 text-orange-500" />
+                  {language === 'en' ? "Item Name" : "項目名稱"} <span className="text-red-500 ml-1">*</span>
+                </Label>
+                <div className="flex space-x-2">
+                  {/* 修改輸入欄位，添加清除按鈕 */}
+                  <div className="relative flex-1">
+                    <Input 
+                      id="name" // Keep id for label association
+                      ref={itemNameRef}
+                      value={itemName} 
+                      onChange={e => setItemName(e.target.value)} 
+                      placeholder={language === 'en' ? "Enter item name" : "輸入項目名稱"} 
+                      className="h-9 border-orange-200 focus:border-orange-500 focus:ring-orange-500 pr-10 text-base" 
+                      autoFocus={false} // Explicitly set to false
+                      tabIndex={1}
+                      onFocus={() => setInputFocused(true)}
+                      onBlur={() => setInputFocused(false)}
+                      readOnly={!inputFocused} // 只有當被點擊時才可編輯
+                      onClick={() => {
+                        // 確保點擊時啟用輸入
+                        setInputFocused(true);
+                        // 確保對焦點有控制
+                        itemNameRef.current?.focus();
+                      }}
                     />
-                    <Button
-                      type="button"
-                      variant="destructive"
-                      size="sm"
-                      className="absolute top-2 right-2 h-7 w-7 rounded-full p-0"
-                      onClick={handleDeleteImage}
-                    >
-                      <X className="h-4 w-4" />
-                    </Button>
-                  </div>
-                )}
-                {/* 1. 項目名稱部分 - 語音和條碼按鈕完全分離 */}
-                <div className="bg-white dark:bg-slate-900 shadow-sm rounded-lg p-2 border border-gray-100 dark:border-gray-800 mb-1.5">
-                  <Label htmlFor="name" className="text-sm font-medium flex items-center text-slate-700 dark:text-slate-300 mb-1">
-                    <Pencil className="h-4 w-4 mr-1.5 text-orange-500" />
-                    {language === 'en' ? "Item Name" : "項目名稱"} <span className="text-red-500 ml-1">*</span>
-                  </Label>
-                  <div className="flex space-x-2">
-                    {/* 修改輸入欄位，添加清除按鈕 */}
-                    <div className="relative flex-1">
-                      <Input 
-                        id="name" 
-                        ref={itemNameRef}
-                        value={itemName} 
-                        onChange={e => setItemName(e.target.value)} 
-                        placeholder={language === 'en' ? "Enter item name" : "輸入項目名稱"} 
-                        className="h-9 border-orange-200 focus:border-orange-500 focus:ring-orange-500 pr-8" 
-                        autoFocus={false}
-                        tabIndex={1}
-                      />
-                      {itemName && (
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => setItemName('')}
-                          className="h-6 w-6 p-0 absolute right-1.5 top-1/2 transform -translate-y-1/2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
-                        >
-                          <X className="h-3.5 w-3.5 text-muted-foreground" />
-                        </Button>
-                      )}
-                    </div>
-                    
-                    {/* 獨立的語音和條碼按鈕，使用類似類別按鈕的樣式 */}
-                    <div className="flex space-x-1 items-center">
+                    {itemName && (
                       <Button
                         type="button"
-                        onClick={handleVoiceMode}
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setItemName('')}
+                        className="h-8 w-8 p-0 absolute right-1.5 top-1/2 transform -translate-y-1/2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
+                      >
+                        <X className="h-4 w-4 text-muted-foreground" />
+                      </Button>
+                    )}
+                  </div>
+                  
+                  {/* 獨立的語音和條碼按鈕，使用類似類別按鈕的樣式 */}
+                  <div className="flex space-x-1 items-center">
+                    <div className="relative">
+                      <Button
+                        type="button"
+                        onClick={handleVoiceClick}
                         variant="outline"
-                        className={`h-9 px-2 border-orange-300 ${listening ? "bg-red-50 text-red-500 animate-pulse border-red-300" : "bg-orange-50/70 hover:bg-orange-100 text-orange-500"}`}
-                        title="Voice Input"
+                        className={cn(
+                          "h-9 w-9 p-0 border-orange-300", 
+                          listening ? "bg-red-50 text-red-500 border-red-300" : "bg-orange-50/70 hover:bg-orange-100 text-orange-500",
+                          listening && "relative before:absolute before:inset-0 before:rounded-xl before:bg-red-500/20 before:animate-ping"
+                        )}
+                        title={language === 'en' ? "Voice Input" : "語音輸入"}
                       >
                         {listening ? 
-                          <MicOff className="h-4 w-4" /> : 
+                          <div className="relative">
+                            <MicOff className="h-4 w-4 animate-pulse" />
+                            <span className="absolute -bottom-1 -right-1 h-2 w-2 rounded-full bg-red-500 animate-pulse"></span>
+                          </div> : 
                           <Mic className="h-4 w-4" />
                         }
                       </Button>
+                    </div>
+                    
+                    <div className="relative">
                       <Button
                         type="button"
-                        onClick={handleBarcodeMode}
+                        onClick={handleBarcodeClick}
                         variant="outline"
-                        className={`h-9 px-2 border-orange-300 ${isBarcodeMode ? "bg-orange-100 text-orange-600" : "bg-orange-50/70 hover:bg-orange-100 text-orange-500"}`}
-                        title="Barcode Scanner"
+                        className={`h-9 w-9 p-0 border-orange-300 ${isBarcodeMode ? "bg-orange-100 text-orange-600" : "bg-orange-50/70 hover:bg-orange-100 text-orange-500"}`}
+                        title={language === 'en' ? "Barcode Scanner" : "條碼掃描"}
                       >
                         <Barcode className="h-4 w-4" />
                       </Button>
                     </div>
                   </div>
                 </div>
+              </div>
 
-                {/* 2. 數量部分 - 寬度100%並優化家庭尺寸切換 */}
-                <div className="bg-white dark:bg-slate-900 shadow-sm rounded-lg p-2 border border-gray-100 dark:border-gray-800 mb-1.5">
-                  <div className="flex items-center justify-between">
-                    <Label className="text-sm font-medium flex items-center text-slate-700 dark:text-slate-300">
-                      <Hash className="h-4 w-4 mr-1.5 text-orange-500" />
-                      Quantity
-                    </Label>
-                    {/* 3. 簡潔的自動調整開關設計 - 統一間距 */}
-                    <div className="flex items-center px-2 py-1.5 rounded-md border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
-                      <div className="flex items-center space-x-2.5">
-                        <Users className="h-4 w-4 mr-1" />
-                        
-                        <span className="text-xs font-medium text-muted-foreground whitespace-nowrap">
-                          {language === 'en' ? 'Auto-adjust' : '自動調整'}
-                        </span>
-                        
-                        <span className="text-xs px-1.5 py-0.5 rounded bg-orange-100 text-orange-600 font-medium flex-shrink-0">
-                          x{settings.familySize || 1}
-                        </span>
-                        
-                        <div className="relative h-6 w-9 flex items-center cursor-pointer flex-shrink-0">
-                          {/* 背景軌道 */}
-                          <div className={`absolute w-full h-4 rounded-full transition-colors ${
-                            showFamilySizeHint ? 'bg-orange-300' : 'bg-gray-200 dark:bg-gray-600'
-                          }`}></div>
-                          
-                          {/* 滑動旋鈕 */}
-                          <div className={`absolute h-6 w-6 rounded-full shadow-md transform transition-transform ${
-                            showFamilySizeHint 
-                              ? 'translate-x-3 bg-orange-500' 
-                              : 'translate-x-0 bg-white'
-                          }`}></div>
-                          
-                          {/* 添加實際輸入元素，以便更好地處理事件 */}
-                          <input 
-                            type="checkbox" 
-                            id="family-toggle-itemform"
-                            checked={showFamilySizeHint}
-                            onChange={(e) => {
-                              setShowFamilySizeHint(e.target.checked);
-                            }}
-                            disabled={settings.familySize <= 1}
-                            className="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* 數量控制元件 - 改為水平布局 */}
-                  <div className="flex items-center gap-2 mt-1.5"> 
-                    <div className="flex items-center bg-white dark:bg-slate-900 border rounded-md overflow-hidden border-orange-200 w-1/2"> 
-                      <Button 
-                        type="button" 
-                        variant="ghost" 
-                        onClick={() => setQuantity(Math.max(1, quantity - 1))} 
-                        disabled={quantity <= 1} 
-                        className="h-8 w-8 rounded-none focus:ring-0 border-none flex-shrink-0"
-                      >
-                        <Minus className="h-4 w-4 text-orange-500" />
-                      </Button>
-                      {/* 基本數量顯示 */}
-                      <div className="flex-1 text-center font-medium border-x border-orange-200 text-slate-700 dark:text-slate-300">
-                        <input
-                          type="number"
-                          min="1" 
-                          value={quantity}
+              {/* 2. 數量部分 - 寬度100%並優化家庭尺寸切換 */}
+              <div className="bg-white dark:bg-slate-900 shadow-sm rounded-lg p-3 border border-gray-100 dark:border-gray-800 mb-2">
+                <div className="flex items-center justify-between">
+                  <Label className="text-sm font-medium flex items-center text-slate-700 dark:text-slate-300">
+                    <Hash className="h-4 w-4 mr-1.5 text-orange-500" />
+                    Quantity
+                  </Label>
+                  {/* 3. 簡潔的自動調整開關設計 - 統一間距 */}
+                  <div className="flex items-center px-2 py-1.5 rounded-md border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
+                    <div className="flex items-center space-x-2.5">
+                      <Users className="h-4 w-4 mr-1" />
+                      
+                      <span className="text-xs font-medium text-muted-foreground whitespace-nowrap">
+                        {language === 'en' ? 'Auto-adjust' : '自動調整'}
+                      </span>
+                      
+                      <span className="text-xs px-1.5 py-0.5 rounded bg-orange-100 text-orange-600 font-medium flex-shrink-0">
+                        x{settings.familySize || 1}
+                      </span>
+                      
+                      <div className={`ml-1 ${showFamilySizeHint ? 'bg-orange-200 dark:bg-orange-700' : 'bg-gray-200 dark:bg-gray-600'} rounded-full w-11 h-6 flex-shrink-0 relative`}>
+                        <div className={`absolute top-0.5 left-0.5 rounded-full w-5 h-5 transition-transform ${showFamilySizeHint ? 'translate-x-5 bg-orange-500' : 'translate-x-0 bg-white dark:bg-gray-300'}`}></div>
+                        <input 
+                          type="checkbox" 
+                          id="family-toggle"
+                          checked={showFamilySizeHint}
                           onChange={(e) => {
-                            const val = parseInt(e.target.value);
-                            if (!isNaN(val) && val >= 1) {
-                              setQuantity(val);
-                            } else if (e.target.value === '') {
-                              setQuantity(1);
-                            }
+                            setShowFamilySizeHint(e.target.checked);
                           }}
-                          className="w-full h-8 text-center border-0 bg-transparent text-base font-medium focus-visible:ring-0 focus-visible:ring-offset-0 p-0" 
-                          tabIndex={4}
+                          disabled={settings.familySize <= 1}
+                          className="opacity-0 absolute inset-0 w-full h-full cursor-pointer z-10"
                         />
                       </div>
-                      <Button 
-                        type="button" 
-                        variant="ghost" 
-                        onClick={() => setQuantity(quantity + 1)} 
-                        className="h-8 w-8 rounded-none focus:ring-0 border-none flex-shrink-0"
-                      >
-                        <Plus className="h-4 w-4 text-orange-500" />
-                      </Button>
-                    </div>
-                    
-                    {/* 替換為 ShopList 的自動調整數量顯示邏輯 */}
-                    <div className="w-1/2 rounded-md border border-orange-200 flex items-center px-2.5 py-1 bg-orange-50/50 h-8"> {/* Added h-8 */}
-                      {showFamilySizeHint && quantity.toString() !== finalCalculatedQuantity ? (
-                        <>
-                          <Users className="h-3.5 w-3.5 mr-0.5 text-orange-500" />
-                          <span className="mx-0.5 text-xs text-orange-700">{quantity}</span>
-                          <span className="mx-0.5 text-xs text-orange-700">x{settings.familySize || 1}</span>
-                          <span className="mx-0.5 text-xs text-orange-700">→</span>
-                          <span className="text-xs font-medium text-orange-700">{finalCalculatedQuantity} {language === 'en' ? 'units' : '單位'}</span>
-                        </>
-                      ) : (
-                        <>
-                          <span className="text-xs font-medium text-orange-700">{finalCalculatedQuantity} {language === 'en' ? 'units' : '單位'}</span>
-                        </>
-                      )}
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <div className="ml-1 rounded-full border border-orange-200 w-3.5 h-3.5 flex items-center justify-center cursor-help"> {/* Added cursor-help */}
-                              <span className="text-[8px] text-orange-500">i</span>
-                            </div>
-                          </TooltipTrigger>
-                          <TooltipContent className="max-w-xs p-2"> {/* Added padding */}
-                            {showFamilySizeHint && settings.familySize > 1 ? (
-                              <p className="text-xs">
-                                {language === 'en' 
-                                  ? `Quantity adjusted based on family size (${settings.familySize}). Applies to certain categories or with premium.`
-                                  : `數量已根據家庭人數(${settings.familySize})調整。適用於特定類別或高級用戶。`}
-                              </p>
-                            ) : (
-                              <p className="text-xs">
-                                {language === 'en' 
-                                  ? 'Original quantity (no auto-adjustment applied or needed)' 
-                                  : '原始數量（未應用或無需自動調整）'}
-                              </p>
-                            )}
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
                     </div>
                   </div>
                 </div>
-
-                {/* 類別和子類別選擇部分 - 改為頂部對齊 */}
-                <div className="flex flex-wrap gap-3 mb-1.5 bg-white dark:bg-slate-900 shadow-sm rounded-lg p-3 border border-gray-100 dark:border-gray-800 items-start"> 
-                  <div className="flex-shrink-0 w-[90px] min-w-[90px]"> 
-                    <Label htmlFor="category" className="text-sm font-medium mb-2 block flex items-center text-slate-700 dark:text-slate-300"> 
-                      <Layers className="h-[1.1rem] w-[1.1rem] mr-1.5 text-orange-500 flex-shrink-0" /> 
-                      {t('category')}
-                    </Label>
-                    {/* Removed fixed height, adjust button size/padding/gap */}
-                    <div className="flex justify-start gap-1.5 mt-1 p-1 rounded-lg"> {/* 移除背景色 */} 
-                      <Button
-                        type="button"
-                        onClick={() => setCategory('Food')}
-                        className={`w-10 h-10 p-0 ${category === 'Food' 
-                          ? 'border-2 border-orange-500 text-orange-500 bg-transparent'
-                          : 'bg-transparent border border-gray-300 text-gray-400'}`}
-                        tabIndex={2}
-                      >
-                        <Utensils className="h-4 w-4" />
-                      </Button>
-                      <Button
-                        type="button"
-                        onClick={() => setCategory('Household')}
-                        className={`w-10 h-10 p-0 ${category === 'Household' 
-                          ? 'border-2 border-orange-500 text-orange-500 bg-transparent'
-                          : 'bg-transparent border border-gray-300 text-gray-400'}`}
-                        tabIndex={3}
-                      >
-                        <Home className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </div>
-
-                  {/* 子類別選擇 */}
-                  <div className="flex-1 self-stretch"> {/* Ensure subcategory div takes full height */} 
-                    {/* Keep mb-2 for Subcategory title */}
-                    <Label htmlFor="subcategory" className="text-sm font-medium mb-2 block flex items-center text-slate-700 dark:text-slate-300">
-                      <Tag className="h-4 w-4 mr-1.5 text-orange-500 flex-shrink-0" /> 
-                      {t('subcategory')}
-                    </Label>
-                    <Select 
-                      value={subcategory} 
-                      onValueChange={(value: string) => setSubcategory(value)}
-                      disabled={!category || category === 'All' || category !== 'Food' && category !== 'Household' || subcategories.length === 0}
+                {/* 數量控制元件 - 改為水平布局並增大尺寸 */}
+                <div className="flex items-center gap-2 mt-2"> 
+                  <div className="flex items-center bg-white dark:bg-slate-900 border rounded-md overflow-hidden border-orange-200 w-1/2"> 
+                    <Button 
+                      type="button" 
+                      variant="ghost" 
+                      onClick={() => setQuantity(Math.max(1, quantity - 1))} 
+                      disabled={quantity <= 1} 
+                      className="h-9 w-9 rounded-none focus:ring-0 border-none flex-shrink-0"
                     >
-                      <SelectTrigger className="h-10 border-orange-200 w-full focus:ring-orange-300 focus-visible:ring-orange-300">
-                        <SelectValue placeholder={language === 'en' ? "Select subcategory" : "選擇子類別"} />
-                      </SelectTrigger>
-                      {/* ... SelectContent ... */}
-                       <SelectContent className="border-orange-200 max-h-[30vh]">
-                        {subcategories.map((sub) => (
-                          <SelectItem key={sub.name} value={sub.name}>
-                            <div className="flex items-center justify-between w-full">
-                              <span>{sub.name}</span>
-                              <span className="ml-2 text-xs text-orange-500 font-semibold bg-orange-100 dark:bg-orange-900/30 px-1.5 py-0.5 rounded-full">
-                                {sub.defaultExpiryDays} {t('days')}
-                              </span>
-                            </div>
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-                <div className="border-t pt-2 mt-1 mb-1.5">
-                  <div className="flex justify-between items-center">
-                    <Label className="text-sm font-medium flex items-center">
-                      <Timer className={`h-4 w-4 mr-1.5 ${category === 'Food' || category === 'Household' ? "text-orange-500" : "text-muted-foreground"}`} />
-                      {language === 'en' ? "Expires in" : "到期時間"}
-                    </Label>
-                  </div>
-                  <div className="mt-1">
-                    <div className="flex gap-1.5 items-center">
-                      <div className="flex items-center w-[35%]">
-                        <Input 
-                         value={daysUntilExpiry === '' ? '' : String(daysUntilExpiry)} 
-                         onChange={handleDaysInput}
-                         type="text"
-                         pattern="[0-9]*"
-                         inputMode="numeric"
-                         className="h-9 w-[3.5rem] text-center border-orange-200 focus:border-orange-500 focus:ring-orange-500"
-                         maxLength={3}
-                         autoFocus={false}
-                        />
-                        <span className="ml-1 text-xs text-muted-foreground whitespace-nowrap min-w-[30px]">
-                          {language === 'en' ? "days" : "天"}
-                        </span>
-                      </div>
-                      <div className="flex gap-0.5 flex-1 justify-evenly">
-                        {[3, 7, 14, 30, 60].map(days => (
-                          <Button 
-                            key={days} 
-                            type="button" 
-                            variant="outline" 
-                            size="sm" 
-                            className={`w-[16%] h-7 text-xs p-0 transition-all duration-200 ${
-                              daysUntilExpiry === days 
-                                ? "bg-white dark:bg-slate-800 text-orange-500 border-orange-300 shadow-sm" 
-                                : "bg-orange-50/50 dark:bg-orange-900/10 border-orange-200/50 hover:bg-white dark:hover:bg-slate-800/30 text-muted-foreground hover:text-orange-500"
-                            }`} 
-                            onClick={() => {
-                              setDaysUntilExpiry(days);
-                              // 同時更新日期
-                              const newDate = addDays(new Date(), days);
-                              setExpiryDate(newDate);
-                            }}
-                          >
-                            {days}d
-                          </Button>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="flex justify-between items-center mt-1.5">
-                      <div className="flex items-center">
-                        <p className="text-xs text-muted-foreground mr-1">
-                          {language === 'en' ? "Date:" : "日期:"} {formatDateWithUserPreference(format(expiryDate, 'yyyy-MM-dd'), settings.dateFormat)}
-                        </p>
-                        <div className="relative">
-                          <Button 
-                            type="button" 
-                            variant="outline" 
-                            size="sm" 
-                            className="h-5 p-1"
-                            onClick={() => {
-                              // 點擊顯示隱藏的原生日期選擇器
-                              const dateInput = document.getElementById('hidden-date-input');
-                              if (dateInput) dateInput.click();
-                            }}
-                          >
-                            <CalendarIcon className="h-3 w-3 text-orange-500" />
-                          </Button>
-                          <input 
-                            id="hidden-date-input"
-                            type="date" 
-                            value={format(expiryDate, 'yyyy-MM-dd')} 
-                            onChange={(e) => { 
-                              const date = new Date(e.target.value); 
-                              if (!isNaN(date.getTime())) { 
-                                setExpiryDate(date); 
-                                // 同時更新天數
-                                const now = new Date();
-                                now.setHours(0, 0, 0, 0);
-                                const days = differenceInDays(date, now);
-                                setDaysUntilExpiry(Math.max(0, days));
-                              } 
-                            }} 
-                            min={format(new Date(), 'yyyy-MM-dd')} 
-                            className="opacity-0 absolute top-0 left-0 w-full h-full cursor-pointer" 
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {/* Notify Before Section - 只在編輯項目時顯示 */}
-                {shouldShowNotifySection() && (
-                  <div className="space-y-1 mb-5">
-                    <div className="flex items-center justify-between">
-                      <Label className="text-sm font-medium flex items-center">
-                        <BellRing className="h-4 w-4 mr-2 text-orange-500" />
-                        {t('notifyMeBefore' as TranslationKey)}
-                      </Label>
-                      <div className="flex items-center space-x-2 relative w-24">
-                        <Select
-                          value={String(notifyDaysBefore)}
-                          onValueChange={(value: string) => {
-                            setNotifyDaysBefore(parseInt(value, 10));
-                          }}
-                        >
-                          <SelectContent>
-                            <SelectItem value="0">0</SelectItem>
-                            <SelectItem value="1">1</SelectItem>
-                            <SelectItem value="2">2</SelectItem>
-                            <SelectItem value="3">3</SelectItem>
-                            <SelectItem value="4">4</SelectItem>
-                            <SelectItem value="5">5</SelectItem>
-                            <SelectItem value="6">6</SelectItem>
-                            <SelectItem value="7">7</SelectItem>
-                            <SelectItem value="8">8</SelectItem>
-                            <SelectItem value="9">9</SelectItem>
-                            <SelectItem value="10">10</SelectItem>
-                            <SelectItem value="11">11</SelectItem>
-                            <SelectItem value="12">12</SelectItem>
-                            <SelectItem value="13">13</SelectItem>
-                            <SelectItem value="14">14</SelectItem>
-                            <SelectItem value="15">15</SelectItem>
-                            <SelectItem value="16">16</SelectItem>
-                            <SelectItem value="17">17</SelectItem>
-                            <SelectItem value="18">18</SelectItem>
-                            <SelectItem value="19">19</SelectItem>
-                            <SelectItem value="20">20</SelectItem>
-                            <SelectItem value="21">21</SelectItem>
-                            <SelectItem value="22">22</SelectItem>
-                            <SelectItem value="23">23</SelectItem>
-                            <SelectItem value="24">24</SelectItem>
-                            <SelectItem value="25">25</SelectItem>
-                            <SelectItem value="26">26</SelectItem>
-                            <SelectItem value="27">27</SelectItem>
-                            <SelectItem value="28">28</SelectItem>
-                            <SelectItem value="29">29</SelectItem>
-                            <SelectItem value="30">30</SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <span className="absolute right-2 text-xs text-muted-foreground">
-                          {t('days')}
-                        </span>
-                      </div>
-                    </div>
-                    {notifyDaysBefore === -1 && (
-                      <div className="text-xs text-muted-foreground">{t('notificationDisabled' as TranslationKey)}</div>
-                    )}
-                  </div>
-                )}
-              </>
-            )}
-            
-            {/* 批量項目列表 */}
-            {voicedItemsList.length > 0 && (
-              <div className="space-y-1.5 mt-2 rounded-lg border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden">
-                <div className="flex justify-between items-center p-3 bg-gradient-to-r from-orange-50 to-orange-100 dark:from-orange-950/30 dark:to-orange-900/20 border-b">
-                  <h3 className="text-sm font-semibold flex items-center gap-2">
-                    <Barcode className="h-4 w-4 text-orange-500" />
-                    Items Detected ({voicedItemsList.length})
-                  </h3>
-                  <div className="flex items-center gap-2">
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      className={`h-7 px-2 text-xs ${listening ? "bg-red-50 text-red-500 border-red-200 animate-pulse" : "hover:bg-orange-50 hover:text-orange-600 border-orange-200"}`}
-                      onClick={handleVoiceMode}
-                      title={listening ? "Stop Listening" : "Add More with Voice"}
-                    >
-                      {listening ? 
-                        <MicOff className="h-4 w-4 mr-1 text-red-500" /> : 
-                        <Mic className="h-4 w-4 mr-1 text-orange-500" />
-                      }
-                      {listening ? "Stop" : "Add More"}
+                      <Minus className="h-4 w-4 text-orange-500" />
                     </Button>
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      className="h-7 px-1.5 text-xs text-muted-foreground hover:text-destructive"
-                      onClick={handleClearAll} 
-                    >
-                      <Trash2 className="h-4 w-4 mr-0.5" />
-                      Clear All
-                    </Button>
-                  </div>
-                </div>
-
-                {/* 添加標題行，説明各欄位的用途 */}
-                <div className="flex items-center gap-x-1.5 px-3 py-2 text-xs text-muted-foreground bg-muted/30">
-                  <div className="flex-1 min-w-0">Name</div>
-                  <div className="w-[60px] text-center">Qty</div>
-                  <div className="w-[48px] text-center">Type</div>
-                  <div className="w-[60px] text-center">Expire</div>
-                  <div className="w-[24px]"></div>
-                </div>
-
-                {/* 列表容器 - 微調 */} 
-                <div className="space-y-1 max-h-[calc(70vh-220px)] overflow-y-auto p-2"> 
-                  {voicedItemsList.map((item, index) => (
-                    <div key={item.id} className="flex items-center gap-x-1.5 bg-muted/40 rounded-md p-1.5 hover:bg-orange-50/50 dark:hover:bg-orange-900/10 transition-colors"> 
-                      {/* 名稱 - 使用 flex-1 佔據剩餘空間 */} 
-                      <div className="flex-1 min-w-0"> 
-                        <input
-                          type="text"
-                          className="w-full border-0 bg-transparent py-0.5 px-1 focus:ring-1 focus:ring-orange-300 rounded text-sm font-medium"
-                          value={item.name}
-                          onChange={(e) => { 
-                              const newList = [...voicedItemsList];
-                              newList[index].name = e.target.value;
-                              setVoicedItemsList(newList);
-                           }}
-                        />
-                      </div>
-                
-                      {/* 數量 - 減小按鈕 padding p-0.5 */} 
-                      <div className="flex items-center shrink-0 border border-orange-200 dark:border-orange-900/50 rounded-md">
-                         <button type="button" className="p-0.5 hover:bg-orange-50 dark:hover:bg-orange-900/30 rounded-l-md" onClick={() => {
-                            const newList = [...voicedItemsList];
-                            const qty = parseInt(newList[index].quantity) || 1;
-                            newList[index].quantity = Math.max(1, qty - 1).toString();
-                            setVoicedItemsList(newList);
-                          }}><Minus className="h-4 w-4 text-orange-500" /></button>
-                         <span className="min-w-[1.1rem] text-center text-xs px-0.5 border-x border-orange-200 dark:border-orange-900/50">{item.quantity}</span>
-                         <button type="button" className="p-0.5 hover:bg-orange-50 dark:hover:bg-orange-900/30 rounded-r-md" onClick={() => {
-                            const newList = [...voicedItemsList];
-                            const qty = parseInt(newList[index].quantity) || 0;
-                            newList[index].quantity = (qty + 1).toString();
-                            setVoicedItemsList(newList);
-                          }}><Plus className="h-4 w-4 text-orange-500" /></button>
-                      </div>
-                       {/* 類別 - 減小按鈕 padding p-1 */} 
-                      <div className="flex items-center shrink-0 space-x-0.5">
-                         <button type="button" className={`p-1 rounded-full ${item.category === 'Food' ? 'bg-orange-100 text-orange-600 dark:bg-orange-900/40 dark:text-orange-400' : 'bg-muted/40 hover:bg-orange-50 dark:hover:bg-orange-900/20'}`} onClick={() => {
-                            const newList = [...voicedItemsList];
-                            newList[index].category = 'Food';
-                            setVoicedItemsList(newList);
-                          }}><Apple className="h-4 w-4" /></button>
-                         <button type="button" className={`p-1 rounded-full ${item.category === 'Household' ? 'bg-orange-100 text-orange-600 dark:bg-orange-900/40 dark:text-orange-400' : 'bg-muted/40 hover:bg-orange-50 dark:hover:bg-orange-900/20'}`} onClick={() => {
-                            const newList = [...voicedItemsList];
-                            newList[index].category = 'Household';
-                            setVoicedItemsList(newList);
-                          }}><ShoppingBag className="h-4 w-4" /></button>
-                    </div>
-                       {/* 過期 - 減小按鈕 padding p-0.5 */} 
-                      <div className="flex items-center shrink-0 border border-orange-200 dark:border-orange-900/50 rounded-md">
-                         <button type="button" className="p-0.5 hover:bg-orange-50 dark:hover:bg-orange-900/30 rounded-l-md" onClick={() => {
-                            const newList = [...voicedItemsList];
-                            newList[index].daysUntilExpiry = Math.max(1, newList[index].daysUntilExpiry - 1);
-                            setVoicedItemsList(newList);
-                          }}><Minus className="h-4 w-4 text-orange-500" /></button>
-                         <span className="text-xs min-w-[1.1rem] text-center px-0.5 border-x border-orange-200 dark:border-orange-900/50">{item.daysUntilExpiry}d</span>
-                         <button type="button" className="p-0.5 hover:bg-orange-50 dark:hover:bg-orange-900/30 rounded-r-md" onClick={() => {
-                            const newList = [...voicedItemsList];
-                            newList[index].daysUntilExpiry = newList[index].daysUntilExpiry + 1;
-                            setVoicedItemsList(newList);
-                          }}><Plus className="h-4 w-4 text-orange-500" /></button>
-                  </div>
-                       {/* 刪除 - 減小按鈕 padding p-1 */} 
-                      <button
-                        type="button"
-                        className="p-1 hover:bg-red-100 text-muted-foreground hover:text-destructive rounded-md shrink-0 ml-auto"
-                        onClick={() => {
-                          setVoicedItemsList(voicedItemsList.filter((_, i) => i !== index));
+                    {/* 基本數量顯示 */}
+                    <div className="flex-1 text-center font-medium border-x border-orange-200 text-slate-700 dark:text-slate-300">
+                      <input
+                        type="number"
+                        min="1" 
+                        value={quantity}
+                        onChange={(e) => {
+                          const val = parseInt(e.target.value);
+                          if (!isNaN(val) && val >= 1) {
+                            setQuantity(val);
+                          } else if (e.target.value === '') {
+                            setQuantity(1);
+                          }
                         }}
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </button>
+                        className="w-full h-9 text-center border-0 bg-transparent text-base font-medium focus-visible:ring-0 focus-visible:ring-offset-0 p-0" 
+                        tabIndex={4}
+                      />
                     </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* 底部按鈕 */} 
-          <div className="px-3 py-3 border-t bg-gradient-to-b from-gray-50 to-gray-100 dark:from-slate-900 dark:to-slate-950">
-            {voicedItemsList.length > 0 ? (
-              // Bulk mode: Save All and Cancel
-              <div className="flex flex-row justify-between gap-2 mt-1">
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={() => handleOpenChange(false)}
-                  className="h-9 w-9 p-0 transition-all duration-200 hover:bg-white dark:hover:bg-slate-800 shadow-sm hover:shadow border-gray-200 dark:border-gray-700" 
-                  title="Cancel"
-                >
-                  <X className="h-4 w-4" />
-                </Button>
-                <Button
-                  type="button"
-                  size="sm"
-                  onClick={saveMultipleItems}
-                  disabled={voicedItemsList.some(item => !item.name.trim())}
-                  className="bg-gradient-to-br from-primary to-primary-light hover:from-primary-dark hover:to-primary active:scale-98 h-9 shadow-sm hover:shadow transition-all duration-200 touch-feedback" 
-                >
-                  <Save className="h-4 w-4 mr-1" />
-                  Save {voicedItemsList.length} Items
-                </Button>
-              </div>
-            ) : (
-              <div className="mx-3 flex justify-between">
-                <div className="flex flex-row justify-between w-full">
-                  <div>
-                    {/* Cancel Button */}
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      onClick={() => handleOpenChange(false)}
-                      className="h-10 w-10 p-0 transition-all duration-200 hover:bg-white dark:hover:bg-slate-800 shadow-sm hover:shadow"
-                      title="Cancel"
+                    <Button 
+                      type="button" 
+                      variant="ghost" 
+                      onClick={() => setQuantity(quantity + 1)} 
+                      className="h-9 w-9 rounded-none focus:ring-0 border-none flex-shrink-0"
                     >
-                      <X className="h-4 w-4" />
+                      <Plus className="h-4 w-4 text-orange-500" />
                     </Button>
                   </div>
                   
-                  {/* Buttons on the right */}
-                  <div className="flex gap-2">
-                    {/* Save/Update Button (Primary Action) */}
-                    <Button
-                      type="button"
-                      size="sm"
-                      onClick={handleSubmit}
-                      className="bg-gradient-to-br from-primary to-primary-light hover:from-primary-dark hover:to-primary active:scale-98 h-10 shadow-sm hover:shadow transition-all duration-200 px-3 touch-feedback"
-                      disabled={!itemName.trim()}
-                      tabIndex={7}
-                    >
-                      <Save className="h-4 w-4 mr-1.5" />
-                      Save to Dashboard
-                    </Button>
-                    
-                    {/* Save and New Button (always show when not editing) */}
-                    {!editItem && (
-                      <Button 
-                        onClick={handleSaveAndContinue} 
-                        variant="secondary" 
-                        size="sm"
-                        className="h-10 bg-orange-100 hover:bg-orange-200 text-orange-600 border border-orange-200 shadow-sm hover:shadow transition-all duration-200 px-3 touch-feedback"
-                      >
-                        <PlusCircle className="h-4 w-4 mr-1.5" />
-                        Save & Add More
-                      </Button>
+                  {/* 替換為 ShopList 的自動調整數量顯示邏輯 */}
+                  <div className="w-1/2 rounded-md border border-orange-200 flex items-center px-3 py-1 bg-orange-50/50 h-9">
+                    {showFamilySizeHint && quantity.toString() !== finalCalculatedQuantity ? (
+                      <>
+                        <Users className="h-4 w-4 mr-1 text-orange-500" />
+                        <span className="mx-0.5 text-xs text-orange-700">{quantity}</span>
+                        <span className="mx-0.5 text-xs text-orange-700">x{settings.familySize || 1}</span>
+                        <span className="mx-0.5 text-xs text-orange-700">→</span>
+                        <span className="text-sm font-medium text-orange-700">{finalCalculatedQuantity} {language === 'en' ? 'units' : '單位'}</span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="text-sm font-medium text-orange-700">{finalCalculatedQuantity} {language === 'en' ? 'units' : '單位'}</span>
+                      </>
                     )}
                   </div>
                 </div>
               </div>
-            )}
-           </div>
-        </DialogContent>
-      </Dialog>
-      
-      {/* 確認關閉對話框 (使用 Dialog) */} 
-      <Dialog 
-        open={showCloseConfirm} 
-        onOpenChange={(isOpen) => {
-          if (!isOpen) {
-            setShowCloseConfirm(false);
-          }
-        }}
-      >
-        <DialogContent className="sm:max-w-md dialog-content-no-close-button max-h-[90vh] w-[95vw]" autoFocus={false}>
-          <DialogHeader>
-            <DialogTitle>Unsaved Items</DialogTitle>
-          </DialogHeader>
-          <DialogDescription>
-            You have {voicedItemsList.length} unsaved items. Are you sure?
-          </DialogDescription>
-          <DialogFooter className="gap-2 sm:justify-end pt-4">
-            <Button variant="outline" onClick={cancelConfirmation} className="h-9 w-9 p-0" title="Cancel">
-              <X className="h-4 w-4" />
-            </Button>
-            <Button variant="destructive" onClick={confirmCloseAndDiscard}>
-              Close and Discard
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-      
-      {/* 確認清除全部對話框 (使用 Dialog) */} 
-      <Dialog
-        open={showClearConfirm} 
-        onOpenChange={(isOpen) => {
-          if (!isOpen) {
-            setShowClearConfirm(false);
-          }
-        }}
-      >
-        <DialogContent className="sm:max-w-md dialog-content-no-close-button max-h-[90vh] w-[95vw]" autoFocus={false}>
-          <DialogHeader className="bg-gradient-to-r from-orange-50 to-orange-100 dark:from-orange-950/30 dark:to-orange-900/20 p-4 rounded-t-lg border-b">
-            <DialogTitle className="flex items-center gap-2">
-              <AlertTriangle className="h-4 w-4 text-orange-500" />
-              Clear All Items?
-            </DialogTitle>
-          </DialogHeader>
-          <DialogDescription className="p-4">
-            Are you sure you want to clear all {voicedItemsList.length} items?
-          </DialogDescription>
-          <DialogFooter className="gap-2 sm:justify-end px-4 py-3 border-t bg-gradient-to-b from-gray-50 to-gray-100 dark:from-slate-900 dark:to-slate-950">
-            <Button variant="outline" onClick={cancelConfirmation} className="h-9 w-9 p-0 hover:bg-white dark:hover:bg-slate-800 shadow-sm hover:shadow border-gray-200 dark:border-gray-700" title="Cancel">
-              <X className="h-4 w-4" />
-            </Button>
-            <Button variant="destructive" onClick={confirmClearAll} className="shadow-sm hover:shadow transition-all duration-200">
-              Clear All
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </>
+
+              {/* 類別和子類別選擇部分 - 改為頂部對齊並優化移動端佈局 */}
+              <div className="flex flex-wrap gap-3 mb-2 bg-white dark:bg-slate-900 shadow-sm rounded-lg p-3 border border-gray-100 dark:border-gray-800 items-start"> {/* Changed items-end back to items-start */}
+                <div className="flex-shrink-0 w-[100px] min-w-[100px]"> 
+                  <Label htmlFor="category" className="text-sm font-medium mb-2 block flex items-center text-slate-700 dark:text-slate-300"> 
+                    <Layers className="h-[1.1rem] w-[1.1rem] mr-1.5 text-orange-500 flex-shrink-0" /> 
+                    {t('category')}
+                  </Label>
+                  {/* Buttons for category selection */}
+                  <div className="flex justify-start gap-2">
+                    <Button
+                      type="button"
+                      onClick={() => setCategory('Food')}
+                      className={`w-10 h-9 p-0 ${category === 'Food' 
+                        ? 'border-2 border-orange-500 text-orange-500 bg-transparent'
+                        : 'bg-transparent border border-gray-300 text-gray-400'}`}
+                      tabIndex={2}
+                    >
+                      <Utensils className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      type="button"
+                      onClick={() => setCategory('Household')}
+                      className={`w-10 h-9 p-0 ${category === 'Household' 
+                        ? 'border-2 border-orange-500 text-orange-500 bg-transparent'
+                        : 'bg-transparent border border-gray-300 text-gray-400'}`}
+                      tabIndex={3}
+                    >
+                      <Home className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+
+                {/* 子類別選擇 - Removed justify-end */}
+                <div className="flex-1 self-stretch flex flex-col">
+                  <Label htmlFor="subcategory" className="text-sm font-medium mb-2 block flex items-center text-slate-700 dark:text-slate-300">
+                    <Tag className="h-4 w-4 mr-1.5 text-orange-500 flex-shrink-0" /> 
+                    {t('subcategory')}
+                  </Label>
+                  {/* Subcategory select dropdown */}
+                  <Select 
+                    value={subcategory} 
+                    onValueChange={(value: string) => setSubcategory(value)}
+                    disabled={!category || category === 'All' || category !== 'Food' && category !== 'Household' || subcategories.length === 0}
+                  >
+                    <SelectTrigger className="h-9 border-orange-200 w-full focus:ring-orange-300 focus-visible:ring-orange-300">
+                      <SelectValue placeholder={language === 'en' ? "Select subcategory" : "選擇子類別"} />
+                    </SelectTrigger>
+                    <SelectContent className="border-orange-200 max-h-[40vh]">
+                      {subcategories.map((sub) => (
+                        <SelectItem key={sub.name} value={sub.name}>
+                          <div className="flex items-center justify-between w-full">
+                            <span>{sub.name}</span>
+                            <span className="ml-2 text-xs text-orange-500 font-semibold bg-orange-100 dark:bg-orange-900/30 px-1.5 py-0.5 rounded-full">
+                              {sub.defaultExpiryDays} {t('days')}
+                            </span>
+                          </div>
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+              {/* 過期日與通知區域 - 使用Accordion */}
+              <Accordion type="single" collapsible className="border-t mt-1 mb-1.5">
+                <AccordionItem value="expiry-settings" className="border-b-0">
+                  <AccordionTrigger className="py-2 px-0 hover:no-underline">
+                    <div className="flex items-center">
+                      <Timer className={`h-4 w-4 mr-1.5 ${category === 'Food' || category === 'Household' ? "text-orange-500" : "text-muted-foreground"}`} />
+                      <span className="text-sm font-medium">{language === 'en' ? "Expiry & Notification" : "到期與通知"}</span>
+                    </div>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    {/* 過期天數選擇 */}
+                    <div className="mt-1">
+                      <Label className="text-xs font-medium flex items-center mb-1.5">
+                        {language === 'en' ? "Expires in" : "到期時間"}
+                      </Label>
+                      <div className="flex gap-1.5 items-center">
+                        <div className="flex items-center w-[35%]">
+                          <Input 
+                           value={String(daysUntilExpiry)} 
+                           onChange={handleDaysInput}
+                           type="text"
+                           pattern="[0-9]*"
+                           inputMode="numeric"
+                           className="h-9 w-[3.5rem] text-center border-orange-200 focus:border-orange-500 focus:ring-orange-500"
+                           maxLength={3}
+                           autoFocus={false}
+                          />
+                          <span className="ml-1 text-xs text-muted-foreground whitespace-nowrap min-w-[30px]">
+                            {language === 'en' ? "days" : "天"}
+                          </span>
+                        </div>
+                        <div className="flex gap-0.5 flex-1 justify-evenly">
+                          {[3, 7, 14, 30, 60].map(days => (
+                            <Button 
+                              key={days} 
+                              type="button" 
+                              variant="outline" 
+                              size="sm" 
+                              className={`h-7 text-xs p-0 transition-all duration-200 ${
+                                daysUntilExpiry === days 
+                                  ? "bg-white dark:bg-slate-800 text-orange-500 border-orange-300 shadow-sm" 
+                                  : "bg-orange-50/50 dark:bg-orange-900/10 border-orange-200/50 hover:bg-white dark:hover:bg-slate-800/30 text-muted-foreground hover:text-orange-500"
+                              }`} 
+                              style={{width: "18%"}} // 5個按鈕調整寬度
+                              onClick={() => {
+                                setDaysUntilExpiry(days);
+                                // 同時更新日期
+                                const newDate = addDays(new Date(), days);
+                                setExpiryDate(newDate);
+                              }}
+                            >
+                              {days}d
+                            </Button>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="flex justify-between items-center mt-1.5">
+                        <div className="flex items-center">
+                          <p className="text-xs text-muted-foreground mr-1">
+                            {language === 'en' ? "Date:" : "日期:"} {formatDateWithUserPreference(format(expiryDate, 'yyyy-MM-dd'), settings.dateFormat)}
+                          </p>
+                          <div className="relative">
+                            <Button 
+                              type="button" 
+                              variant="outline" 
+                              size="sm" 
+                              className="h-5 p-1"
+                              onClick={() => {
+                                // 點擊顯示隱藏的原生日期選擇器
+                                const dateInput = document.getElementById('hidden-date-input');
+                                if (dateInput) dateInput.click();
+                              }}
+                            >
+                              <CalendarIcon className="h-3 w-3 text-orange-500" />
+                            </Button>
+                            <input 
+                              id="hidden-date-input"
+                              type="date" 
+                              value={format(expiryDate, 'yyyy-MM-dd')} 
+                              onChange={(e) => { 
+                                const date = new Date(e.target.value); 
+                                if (!isNaN(date.getTime())) { 
+                                  setExpiryDate(date); 
+                                  // 同時更新天數
+                                  const now = new Date();
+                                  now.setHours(0, 0, 0, 0);
+                                  const days = differenceInDays(date, now);
+                                  setDaysUntilExpiry(Math.max(0, days));
+                                } 
+                              }} 
+                              min={format(new Date(), 'yyyy-MM-dd')} 
+                              className="opacity-0 absolute top-0 left-0 w-full h-full cursor-pointer" 
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      
+                      {/* 通知區域 - 重新設計為與ItemModal相同風格 */}
+                      <div className="mt-4 mb-2">
+                        <Label className="text-xs font-medium flex items-center mb-1.5">
+                          <BellRing className="h-4 w-4 mr-1.5 text-orange-500" />
+                          {language === 'en' ? "Notify me" : "提醒我"}
+                        </Label>
+                        <div className="flex gap-1.5 items-center">
+                          <div className="flex items-center w-[35%]">
+                            <Input 
+                              value={notifyDaysBefore === 0 ? '0' : String(notifyDaysBefore)} 
+                              onChange={handleNotifyDaysInput}
+                              type="text"
+                              pattern="[0-9]*"
+                              inputMode="numeric"
+                              className="h-9 w-[3.5rem] text-center border-orange-200 focus:border-orange-500 focus:ring-orange-500"
+                              maxLength={3}
+                            />
+                            <span className="ml-1 text-xs text-muted-foreground whitespace-nowrap min-w-[30px]">
+                              {language === 'en' ? "days" : "天"}
+                            </span>
+                          </div>
+                          <div className="flex gap-0.5 flex-1 justify-evenly">
+                            {[1, 3, 7, 14, 30].map(days => (
+                              <Button 
+                                key={days} 
+                                type="button" 
+                                variant="outline" 
+                                size="sm" 
+                                className={`h-7 text-xs p-0 transition-all duration-200 ${
+                                  notifyDaysBefore === days 
+                                    ? "bg-white dark:bg-slate-800 text-orange-500 border-orange-300 shadow-sm" 
+                                    : "bg-orange-50/50 dark:bg-orange-900/10 border-orange-200/50 hover:bg-white dark:hover:bg-slate-800/30 text-muted-foreground hover:text-orange-500"
+                                }`} 
+                                style={{width: "18%"}} // 5個按鈕調整寬度
+                                onClick={() => {
+                                  setNotifyDaysBefore(days);
+                                }}
+                              >
+                                {days}d
+                              </Button>
+                            ))}
+                          </div>
+                        </div>
+                        {notifyDaysBefore === 0 && (
+                          <div className="mt-1 text-xs text-muted-foreground">
+                            {t('notificationDisabled' as TranslationKey)}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </>
+          )}
+          
+          {/* 批量項目列表 */}
+          {voicedItemsList.length > 0 && (
+            <div className="space-y-1.5 mt-2 rounded-lg border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden">
+              <div className="flex justify-between items-center p-3 bg-gradient-to-r from-orange-50 to-orange-100 dark:from-orange-950/30 dark:to-orange-900/20 border-b">
+                <h3 className="text-sm font-semibold">
+                  Items Detected ({voicedItemsList.length})
+                </h3>
+                <div className="flex items-center gap-2">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className={`h-7 px-2 text-xs ${listening ? "bg-red-50 text-red-500 border-red-200 animate-pulse" : "hover:bg-orange-50 hover:text-orange-600 border-orange-200"}`}
+                    onClick={handleVoiceMode}
+                    title={listening ? "Stop Listening" : "Add More with Voice"}
+                  >
+                    {listening ? 
+                      <MicOff className="h-4 w-4 mr-1 text-red-500" /> : 
+                      <Mic className="h-4 w-4 mr-1 text-orange-500" />
+                    }
+                    {listening ? "Stop" : "Add More"}
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="h-7 px-1.5 text-xs text-muted-foreground hover:text-destructive"
+                    onClick={handleClearAll} 
+                  >
+                    <Trash2 className="h-4 w-4 mr-0.5" />
+                    Clear All
+                  </Button>
+                </div>
+              </div>
+
+              {/* 添加標題行，説明各欄位的用途 */}
+              <div className="flex items-center gap-x-1.5 px-3 py-2 text-xs text-muted-foreground bg-muted/30">
+                <div className="flex-1 min-w-0">Name</div>
+                <div className="w-[70px] text-center">Quantity</div>
+                <div className="w-[70px] text-center">Expiry</div>
+                <div className="w-[24px]"></div>
+              </div>
+
+              {/* 列表容器 - 微調 */} 
+              <div className="space-y-1 max-h-[calc(70vh-220px)] overflow-y-auto p-2"> 
+                {voicedItemsList.map((item, index) => (
+                  <div key={item.id} className="flex items-center gap-x-1.5 bg-muted/40 rounded-md p-1.5 hover:bg-orange-50/50 dark:hover:bg-orange-900/10 transition-colors"> 
+                    {/* 名稱 - 使用 flex-1 佔據剩餘空間 */} 
+                    <div className="flex-1 min-w-0"> 
+                      <input
+                        type="text"
+                        className="w-full border-0 bg-transparent py-0.5 px-1 focus:ring-1 focus:ring-orange-300 rounded text-sm font-medium"
+                        value={item.name}
+                        onChange={(e) => { 
+                            const newList = [...voicedItemsList];
+                            newList[index].name = e.target.value;
+                            setVoicedItemsList(newList);
+                         }}
+                      />
+                    </div>
+              
+                    {/* 數量 - 樣式與ItemForm主體對齊 */}
+                    <div className="flex items-center shrink-0 border border-orange-200 dark:border-orange-900/50 rounded-md overflow-hidden h-8 w-[70px]"> 
+                      <button 
+                        type="button" 
+                        className="h-full w-6 flex items-center justify-center hover:bg-orange-50 dark:hover:bg-orange-900/30 rounded-l-md focus:outline-none focus:ring-1 focus:ring-orange-300" 
+                        onClick={() => {
+                          const newList = [...voicedItemsList];
+                          const qty = parseInt(newList[index].quantity) || 1;
+                          newList[index].quantity = Math.max(1, qty - 1).toString();
+                          setVoicedItemsList(newList);
+                        }}
+                      >
+                        <Minus className="h-4 w-4 text-orange-500" />
+                      </button>
+                      <span className="flex-1 text-center text-xs px-0.5 border-x border-orange-200 dark:border-orange-900/50 flex items-center justify-center">
+                        {item.quantity}
+                      </span>
+                      <button 
+                        type="button" 
+                        className="h-full w-6 flex items-center justify-center hover:bg-orange-50 dark:hover:bg-orange-900/30 rounded-r-md focus:outline-none focus:ring-1 focus:ring-orange-300" 
+                        onClick={() => {
+                          const newList = [...voicedItemsList];
+                          const qty = parseInt(newList[index].quantity) || 0;
+                          newList[index].quantity = (qty + 1).toString();
+                          setVoicedItemsList(newList);
+                        }}
+                      >
+                        <Plus className="h-4 w-4 text-orange-500" />
+                      </button>
+                    </div>
+                    
+                     {/* 類別選擇已移除 */}
+                     {/* 
+                     <div className="flex items-center shrink-0 space-x-0.5">
+                       <button 
+                         type="button" 
+                         className={`w-8 h-8 flex items-center justify-center rounded-full ${item.category === 'Food' ? 'bg-orange-100 text-orange-600 dark:bg-orange-900/40 dark:text-orange-400' : 'bg-muted/40 hover:bg-orange-50 dark:hover:bg-orange-900/20'}`} 
+                         onClick={() => {
+                           const newList = [...voicedItemsList];
+                           newList[index].category = 'Food';
+                           setVoicedItemsList(newList);
+                         }}
+                       >
+                         <Utensils className="h-4 w-4" /> 
+                       </button>
+                       <button 
+                         type="button" 
+                         className={`w-8 h-8 flex items-center justify-center rounded-full ${item.category === 'Household' ? 'bg-orange-100 text-orange-600 dark:bg-orange-900/40 dark:text-orange-400' : 'bg-muted/40 hover:bg-orange-50 dark:hover:bg-orange-900/20'}`} 
+                         onClick={() => {
+                           const newList = [...voicedItemsList];
+                           newList[index].category = 'Household';
+                           setVoicedItemsList(newList);
+                         }}
+                       >
+                         <Home className="h-4 w-4" /> 
+                       </button>
+                     </div>
+                     */}
+                     
+                     {/* 過期 - 樣式與ItemForm主體對齊 */} 
+                    <div className="flex items-center shrink-0 border border-orange-200 dark:border-orange-900/50 rounded-md overflow-hidden h-8 w-[70px]"> {/* Added h-8 and explicit width */} 
+                       <button 
+                         type="button" 
+                         className="h-full w-6 flex items-center justify-center hover:bg-orange-50 dark:hover:bg-orange-900/30 rounded-l-md focus:outline-none focus:ring-1 focus:ring-orange-300" 
+                         onClick={() => {
+                           const newList = [...voicedItemsList];
+                           newList[index].daysUntilExpiry = Math.max(1, newList[index].daysUntilExpiry - 1);
+                           setVoicedItemsList(newList);
+                         }}
+                       >
+                         <Minus className="h-4 w-4 text-orange-500" />
+                       </button>
+                       <span className="flex-1 text-xs text-center px-0.5 border-x border-orange-200 dark:border-orange-900/50 flex items-center justify-center">
+                         {item.daysUntilExpiry}d
+                       </span>
+                       <button 
+                         type="button" 
+                         className="h-full w-6 flex items-center justify-center hover:bg-orange-50 dark:hover:bg-orange-900/30 rounded-r-md focus:outline-none focus:ring-1 focus:ring-orange-300" 
+                         onClick={() => {
+                           const newList = [...voicedItemsList];
+                           newList[index].daysUntilExpiry = newList[index].daysUntilExpiry + 1;
+                           setVoicedItemsList(newList);
+                         }}
+                       >
+                         <Plus className="h-4 w-4 text-orange-500" />
+                       </button>
+                  </div>
+                       {/* 刪除 */} 
+                    <button
+                      type="button"
+                      className="w-8 h-8 flex items-center justify-center hover:bg-red-100 text-muted-foreground hover:text-destructive rounded-md shrink-0 ml-auto"
+                      onClick={() => {
+                        setVoicedItemsList(voicedItemsList.filter((_, i) => i !== index));
+                      }}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* 底部按鈕 */} 
+        <div className="px-3 py-3 border-t bg-gradient-to-b from-gray-50 to-gray-100 dark:from-slate-900 dark:to-slate-950">
+          {voicedItemsList.length > 0 ? (
+            // Bulk mode: Save All and Cancel
+            <div className="flex flex-row justify-between gap-2 mt-1">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => handleOpenChange(false)} // Use handleOpenChange to trigger confirmation if needed
+                className="h-9 w-9 p-0 transition-all duration-200 hover:bg-white dark:hover:bg-slate-800 shadow-sm hover:shadow border-gray-200 dark:border-gray-700" 
+                title="Cancel"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+              <Button
+                type="button"
+                size="sm"
+                onClick={saveMultipleItems}
+                disabled={voicedItemsList.some(item => !item.name.trim())}
+                className="bg-gradient-to-br from-primary to-primary-light hover:from-primary-dark hover:to-primary active:scale-98 h-9 shadow-sm hover:shadow transition-all duration-200 touch-feedback" 
+              >
+                <Save className="h-4 w-4 mr-1" />
+                Save {voicedItemsList.length} Items
+              </Button>
+            </div>
+          ) : (
+            <div className="mx-3 flex justify-between">
+              <div className="flex flex-row justify-between w-full">
+                <div>
+                  {/* Cancel Button */}
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleOpenChange(false)}
+                    className="h-9 w-9 p-0 transition-all duration-200 hover:bg-white dark:hover:bg-slate-800 shadow-sm hover:shadow"
+                    title="Cancel"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+                
+                {/* Buttons on the right */}
+                <div className="flex gap-2">
+                  {/* Save/Update Button (Primary Action) */}
+                  <Button
+                    type="button"
+                    size="sm"
+                    onClick={handleSubmit}
+                    className="h-9 bg-orange-100 hover:bg-orange-200 text-orange-600 border border-orange-200 shadow-sm hover:shadow transition-all duration-200 px-3 touch-feedback"
+                    disabled={!itemName.trim()}
+                    tabIndex={7}
+                  >
+                    <Save className="h-4 w-4 mr-1.5" />
+                    {editItem ? 'Save Changes' : 'Save'}
+                  </Button>
+                  
+                  {/* Save and New Button (always show when not editing) */}
+                  {!editItem && (
+                    <Button 
+                      onClick={handleSaveAndContinue} 
+                      variant="secondary" 
+                      size="sm"
+                      className="bg-gradient-to-br from-primary to-primary-light hover:from-primary-dark hover:to-primary active:scale-98 h-9 shadow-sm hover:shadow transition-all duration-200 px-3 touch-feedback"
+                    >
+                      <PlusCircle className="h-4 w-4 mr-1.5" />
+                      Save & Add More
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+         </div>
+      </DialogContent>
+    </Dialog>
   );
 } 

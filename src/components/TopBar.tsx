@@ -16,20 +16,20 @@ const TopBar: React.FC = () => {
   const getTitle = () => {
     switch (location.pathname) {
       case '/':
-        return t('appName');
+        return t('dashboard');
       case '/stats':
         return t('insight');
       case '/settings':
         return t('settings');
       case '/shoplist':
-        return 'ShopList';
+        return t('shopList');
       default:
         return t('appName');
     }
   };
 
   return (
-    <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-sm border-b border-border/30 safe-area-top" role="banner" aria-label="顶部栏">
+    <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-sm border-b border-border/30 safe-area-top" role="banner" aria-label="頂部欄">
       <div className="max-w-md mx-auto flex h-16 items-center justify-between px-4">
         <div className="flex items-center">
           <h1 

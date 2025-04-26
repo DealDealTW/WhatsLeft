@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+  <!-- 背景 -->
+  <rect width="600" height="400" fill="#f8f9fa" rx="20" ry="20" />
+  
+  <!-- 頂部標題欄 -->
+  <rect x="0" y="0" width="600" height="60" fill="#64748b" rx="20" ry="20" />
+  <text x="300" y="40" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="white">Settings</text>
+  
+  <!-- 設置選項列表 -->
+  <rect x="20" y="80" width="560" height="300" fill="white" rx="10" ry="10" stroke="#ddd" stroke-width="1" />
+  
+  <!-- 家庭尺寸設置部分 -->
+  <text x="40" y="110" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#111827">Family Size</text>
+  <text x="40" y="130" font-family="Arial, sans-serif" font-size="14" fill="#4b5563">Set family size to calculate appropriate food quantities</text>
+  
+  <!-- 人數選擇器 -->
+  <rect x="40" y="150" width="300" height="40" fill="#f1f5f9" rx="8" ry="8" />
+  
+  <!-- 1人選項 -->
+  <rect x="40" y="150" width="60" height="40" fill="#f1f5f9" rx="8" ry="8" />
+  <text x="70" y="175" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#4b5563">1</text>
+  
+  <!-- 2人選項 -->
+  <rect x="100" y="150" width="60" height="40" fill="#f1f5f9" rx="8" ry="8" />
+  <text x="130" y="175" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#4b5563">2</text>
+  
+  <!-- 3人選項 -->
+  <rect x="160" y="150" width="60" height="40" fill="#f1f5f9" rx="8" ry="8" />
+  <text x="190" y="175" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#4b5563">3</text>
+  
+  <!-- 4人選項 (選中) -->
+  <rect x="220" y="150" width="60" height="40" fill="#64748b" rx="8" ry="8" />
+  <text x="250" y="175" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="white">4</text>
+  
+  <!-- 5+人選項 -->
+  <rect x="280" y="150" width="60" height="40" fill="#f1f5f9" rx="8" ry="8" />
+  <text x="310" y="175" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#4b5563">5+</text>
+  
+  <!-- 分隔線 -->
+  <line x1="40" y1="210" x2="540" y2="210" stroke="#ddd" stroke-width="1" />
+  
+  <!-- 通知設置部分 -->
+  <text x="40" y="240" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#111827">Expiry Notifications</text>
+  <text x="40" y="260" font-family="Arial, sans-serif" font-size="14" fill="#4b5563">Set reminders for different categories</text>
+  
+  <!-- 食品類別通知 -->
+  <text x="40" y="290" font-family="Arial, sans-serif" font-size="16" fill="#111827">Food</text>
+  <rect x="150" y="275" width="120" height="30" fill="#f1f5f9" rx="6" ry="6" stroke="#d1d5db" stroke-width="1" />
+  <text x="180" y="295" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#4b5563">3 days before</text>
+  <polygon points="250,280 260,290 250,300" fill="#64748b" />
+  
+  <!-- 乳製品類別通知 -->
+  <text x="300" y="290" font-family="Arial, sans-serif" font-size="16" fill="#111827">Dairy</text>
+  <rect x="410" y="275" width="120" height="30" fill="#f1f5f9" rx="6" ry="6" stroke="#d1d5db" stroke-width="1" />
+  <text x="440" y="295" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#4b5563">2 days before</text>
+  <polygon points="510,280 520,290 510,300" fill="#64748b" />
+  
+  <!-- 肉類類別通知 -->
+  <text x="40" y="330" font-family="Arial, sans-serif" font-size="16" fill="#111827">Meat</text>
+  <rect x="150" y="315" width="120" height="30" fill="#f1f5f9" rx="6" ry="6" stroke="#d1d5db" stroke-width="1" />
+  <text x="180" y="335" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#4b5563">2 days before</text>
+  <polygon points="250,320 260,330 250,340" fill="#64748b" />
+  
+  <!-- 家居用品類別通知 -->
+  <text x="300" y="330" font-family="Arial, sans-serif" font-size="16" fill="#111827">Household</text>
+  <rect x="410" y="315" width="120" height="30" fill="#f1f5f9" rx="6" ry="6" stroke="#d1d5db" stroke-width="1" />
+  <text x="440" y="335" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#4b5563">7 days before</text>
+  <polygon points="510,320 520,330 510,340" fill="#64748b" />
+  
+  <!-- 全局通知開關 -->
+  <line x1="40" y1="355" x2="540" y2="355" stroke="#ddd" stroke-width="1" />
+  
+  <text x="40" y="380" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#111827">Enable Notifications</text>
+  
+  <!-- 打開的開關 -->
+  <rect x="180" y="365" width="50" height="26" fill="#22c55e" rx="13" ry="13" />
+  <circle cx="217" cy="378" r="11" fill="white" />
+  
+  <!-- 提示氣泡 -->
+  <rect x="150" y="130" width="300" height="60" fill="#dbeafe" rx="10" ry="10" stroke="#93c5fd" stroke-width="1" filter="drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1))">
+    <animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite" />
+  </rect>
+  <text x="300" y="155" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#1e40af">
+    <animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite" />
+    Family Size Updated
+  </text>
+  <text x="300" y="175" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#1e40af">
+    <animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite" />
+    Food purchasing calculations adjusted for 4 people
+  </text>
+  
+  <!-- 底部導航欄 -->
+  <rect x="0" y="360" width="600" height="40" fill="white" />
+  <rect x="0" y="359" width="600" height="1" fill="#ddd" />
+  
+  <!-- 導航項目 - 主控台 -->
+  <circle cx="75" cy="380" r="12" fill="#94a3b8" />
+  <rect x="70" y="374" width="10" height="7" fill="white" />
+  <rect x="70" y="383" width="10" height="3" fill="white" />
+  <text x="75" y="395" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#64748b">Dashboard</text>
+  
+  <!-- 導航項目 - 購物清單 -->
+  <circle cx="225" cy="380" r="12" fill="#94a3b8" />
+  <line x1="218" y1="380" x2="232" y2="380" stroke="white" stroke-width="2" />
+  <line x1="218" y1="376" x2="232" y2="376" stroke="white" stroke-width="1" />
+  <line x1="218" y1="384" x2="232" y2="384" stroke="white" stroke-width="1" />
+  <line x1="220" y1="376" x2="220" y2="384" stroke="white" stroke-width="1" />
+  <text x="225" y="395" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#64748b">Shopping List</text>
+  
+  <!-- 導航項目 - 統計分析 -->
+  <circle cx="375" cy="380" r="12" fill="#94a3b8" />
+  <rect x="370" y="374" width="10" height="12" fill="white" />
+  <line x1="373" y1="386" x2="373" y2="374" stroke="#94a3b8" stroke-width="1" />
+  <line x1="376" y1="386" x2="376" y2="378" stroke="#94a3b8" stroke-width="1" />
+  <line x1="379" y1="386" x2="379" y2="380" stroke="#94a3b8" stroke-width="1" />
+  <text x="375" y="395" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#64748b">Insights</text>
+  
+  <!-- 導航項目 - 設置 (活動) -->
+  <rect x="450" y="360" width="150" height="40" fill="#f1f5f9" />
+  <circle cx="525" cy="380" r="12" fill="#64748b" />
+  <circle cx="525" cy="380" r="6" fill="none" stroke="white" stroke-width="2" />
+  <line x1="531" y1="374" x2="535" y2="370" stroke="white" stroke-width="2" />
+  <text x="525" y="395" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#64748b">Settings</text>
+</svg> 

@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+  <!-- 背景 -->
+  <rect width="600" height="400" fill="#f8f9fa" rx="20" ry="20" />
+  
+  <!-- 標題 -->
+  <text x="300" y="50" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="#111827">仪表板与导航</text>
+  
+  <!-- 模擬手機界面 -->
+  <rect x="120" y="80" width="360" height="280" fill="white" stroke="#e5e7eb" stroke-width="2" rx="15" ry="15" />
+  
+  <!-- 頂部導航欄 -->
+  <rect x="120" y="80" width="360" height="50" fill="#FF6200" rx="15" ry="15" />
+  <rect x="120" y="110" width="360" height="20" fill="#FF6200" />
+  <text x="150" y="110" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="white">仪表板</text>
+  
+  <!-- 搜索框 -->
+  <rect x="150" y="140" width="300" height="35" fill="white" stroke="#d1d5db" stroke-width="1" rx="8" ry="8" />
+  <text x="170" y="163" font-family="Arial, sans-serif" font-size="14" fill="#9ca3af">搜索项目...</text>
+  <text x="430" y="163" font-family="Arial, sans-serif" font-size="16" fill="#9ca3af">🔍</text>
+  
+  <!-- 分類標籤 -->
+  <rect x="150" y="185" width="80" height="30" fill="#f3f4f6" rx="15" ry="15" stroke="#e5e7eb" stroke-width="1" />
+  <text x="190" y="205" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#374151">全部</text>
+  
+  <rect x="240" y="185" width="80" height="30" fill="#fff7ed" rx="15" ry="15" stroke="#ffedd5" stroke-width="1" />
+  <text x="280" y="205" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#9a3412">饮品</text>
+  
+  <rect x="330" y="185" width="80" height="30" fill="#f3f4f6" rx="15" ry="15" stroke="#e5e7eb" stroke-width="1" />
+  <text x="370" y="205" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#374151">水果</text>
+  
+  <!-- 項目列表 -->
+  <rect x="150" y="225" width="300" height="60" fill="white" stroke="#e5e7eb" stroke-width="1" rx="8" ry="8" />
+  <text x="170" y="250" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#111827">牛奶</text>
+  <text x="170" y="270" font-family="Arial, sans-serif" font-size="14" fill="#4b5563">饮品 · 还有5天过期</text>
+  <rect x="400" y="240" width="30" height="30" fill="#ffedd5" rx="15" ry="15" />
+  <text x="415" y="260" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#9a3412">5</text>
+  
+  <rect x="150" y="295" width="300" height="60" fill="white" stroke="#e5e7eb" stroke-width="1" rx="8" ry="8" />
+  <text x="170" y="320" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#111827">苹果</text>
+  <text x="170" y="340" font-family="Arial, sans-serif" font-size="14" fill="#4b5563">水果 · 已过期2天</text>
+  <rect x="400" y="310" width="30" height="30" fill="#fee2e2" rx="15" ry="15" />
+  <text x="415" y="330" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#b91c1c">-2</text>
+  
+  <!-- 底部導航欄 -->
+  <rect x="120" y="340" width="360" height="20" fill="white" />
+  <rect x="120" y="340" width="360" height="20" fill="white" />
+  <rect x="120" y="340" width="360" height="60" fill="white" rx="0" ry="0" />
+  
+  <rect x="130" y="340" width="55" height="2" fill="#FF6200" rx="1" ry="1" />
+  <text x="157" y="365" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#FF6200">首页</text>
+  
+  <text x="227" y="365" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#6b7280">添加</text>
+  
+  <text x="297" y="365" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#6b7280">购物清单</text>
+  
+  <text x="367" y="365" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#6b7280">报表</text>
+  
+  <text x="437" y="365" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#6b7280">设置</text>
+  
+  <!-- 添加按鈕 -->
+  <circle cx="300" y="300" r="25" fill="#FF6200" />
+  <text x="300" y="310" font-family="Arial, sans-serif" font-size="30" font-weight="bold" text-anchor="middle" fill="white">+</text>
+  
+  <!-- 說明文字 -->
+  <text x="300" y="380" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#4b5563">通过底部导航在不同功能之间切换，点击+号快速添加新物品</text>
+</svg> 

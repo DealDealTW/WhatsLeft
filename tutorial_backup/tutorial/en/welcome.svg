@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="600" height="400" fill="#f5f5f5"/>
+  
+  <!-- Title -->
+  <text x="300" y="40" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="#333333">Welcome to WhatsLeft</text>
+  
+  <!-- App icon -->
+  <circle cx="300" cy="110" r="50" fill="#4299e1"/>
+  <path d="M275,100 L325,100 M300,75 L300,125" stroke="#ffffff" stroke-width="8" stroke-linecap="round"/>
+  <text x="300" y="110" font-family="Arial, sans-serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#ffffff">WhatsLeft</text>
+  
+  <!-- Features showcase -->
+  <rect x="120" y="180" width="360" height="150" rx="10" ry="10" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+  
+  <!-- Left features -->
+  <circle cx="170" cy="210" r="18" fill="#4299e1"/>
+  <path d="M165,210 L175,210 M170,205 L170,215" stroke="#ffffff" stroke-width="2"/>
+  <text x="220" y="215" font-family="Arial, sans-serif" font-size="16" text-anchor="start" fill="#333333">Track expiry dates</text>
+  
+  <circle cx="170" cy="255" r="18" fill="#38a169"/>
+  <path d="M165,255 L170,260 L180,245" stroke="#ffffff" stroke-width="2"/>
+  <text x="220" y="260" font-family="Arial, sans-serif" font-size="16" text-anchor="start" fill="#333333">Reduce waste</text>
+  
+  <circle cx="170" cy="300" r="18" fill="#dd6b20"/>
+  <path d="M160,300 L180,300 M170,290 L170,310" stroke="#ffffff" stroke-width="2"/>
+  <text x="220" y="305" font-family="Arial, sans-serif" font-size="16" text-anchor="start" fill="#333333">Save money</text>
+  
+  <!-- Right features -->
+  <circle cx="350" cy="210" r="18" fill="#805ad5"/>
+  <path d="M345,210 L355,210 M350,205 L350,215" stroke="#ffffff" stroke-width="2"/>
+  <text x="400" y="215" font-family="Arial, sans-serif" font-size="16" text-anchor="start" fill="#333333">Smart categories</text>
+  
+  <circle cx="350" cy="255" r="18" fill="#d53f8c"/>
+  <path d="M345,255 L355,255 M350,250 L350,260" stroke="#ffffff" stroke-width="2"/>
+  <text x="400" y="260" font-family="Arial, sans-serif" font-size="16" text-anchor="start" fill="#333333">Easy to use</text>
+  
+  <circle cx="350" cy="300" r="18" fill="#3182ce"/>
+  <path d="M345,300 L355,300 M350,295 L350,305" stroke="#ffffff" stroke-width="2"/>
+  <text x="400" y="305" font-family="Arial, sans-serif" font-size="16" text-anchor="start" fill="#333333">Full analytics</text>
+  
+  <!-- Bottom description -->
+  <text x="300" y="360" font-family="Arial, sans-serif" font-size="16" font-style="italic" text-anchor="middle" fill="#666666">Effortlessly manage household items, no more expiry worries</text>
+  <text x="300" y="380" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#666666">Start your smart home management journey</text>
+</svg> 

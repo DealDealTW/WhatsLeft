@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+  <!-- 背景 -->
+  <rect width="600" height="400" fill="#f8f9fa" rx="20" ry="20" />
+  
+  <!-- 應用標題 -->
+  <text x="300" y="100" font-family="Arial, sans-serif" font-size="42" font-weight="bold" text-anchor="middle" fill="#4f46e5">WhatsLeft</text>
+  
+  <!-- 應用圖標 -->
+  <circle cx="300" cy="180" r="60" fill="#4f46e5" />
+  <path d="M280 180 L295 195 L320 165" stroke="white" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M300 160 Q330 150 335 180 Q340 210 310 215 Q280 220 275 190 Q270 160 300 160" stroke="white" stroke-width="4" fill="none" />
+  
+  <!-- 圖示 -->
+  <circle cx="200" cy="280" r="30" fill="#f97316" opacity="0.8" />
+  <path d="M190 280 L200 290 L215 270" stroke="white" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  <text x="200" y="330" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#444">追蹤庫存</text>
+  
+  <circle cx="300" cy="280" r="30" fill="#84cc16" opacity="0.8" />
+  <path d="M290 280 L300 290 L315 270" stroke="white" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  <text x="300" y="330" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#444">減少浪費</text>
+  
+  <circle cx="400" cy="280" r="30" fill="#3b82f6" opacity="0.8" />
+  <path d="M390 280 L400 290 L415 270" stroke="white" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  <text x="400" y="330" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#444">省錢省心</text>
+  
+  <!-- 副標題 -->
+  <text x="300" y="380" font-family="Arial, sans-serif" font-size="18" text-anchor="middle" fill="#666">您的食品與家居物品管理助手</text>
+</svg> 

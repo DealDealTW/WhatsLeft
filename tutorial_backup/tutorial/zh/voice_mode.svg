@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景 -->
+  <rect width="600" height="400" fill="#f5f5f5"/>
+  
+  <!-- 標題 -->
+  <text x="300" y="40" font-family="Arial, sans-serif" font-size="22" font-weight="bold" text-anchor="middle" fill="#333333">語音輸入模式</text>
+  
+  <!-- 手機螢幕 -->
+  <rect x="180" y="80" width="240" height="420" rx="20" ry="20" fill="#333333"/>
+  <rect x="190" y="100" width="220" height="260" rx="5" ry="5" fill="#ffffff"/>
+  
+  <!-- 應用界面 -->
+  <rect x="190" y="100" width="220" height="50" rx="5" ry="5" fill="#4299e1"/>
+  <text x="300" y="130" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#ffffff">WhatsLeft</text>
+  <circle cx="380" cy="125" r="15" fill="#ffffff" fill-opacity="0.2"/>
+  <path d="M380,120 L380,130 M375,125 L385,125" stroke="#ffffff" stroke-width="2"/>
+  
+  <!-- 語音輸入界面 -->
+  <rect x="210" y="160" width="180" height="180" rx="10" ry="10" fill="#f0f4f8" stroke="#d1dbe8" stroke-width="1"/>
+  
+  <!-- 聲波動畫 -->
+  <circle cx="300" cy="200" r="40" fill="#4299e1" fill-opacity="0.2"/>
+  <circle cx="300" cy="200" r="30" fill="#4299e1" fill-opacity="0.4"/>
+  <circle cx="300" cy="200" r="20" fill="#4299e1" fill-opacity="0.6"/>
+  
+  <!-- 麥克風圖標 -->
+  <circle cx="300" cy="200" r="25" fill="#3182ce"/>
+  <path d="M300,190 L300,210 M295,185 Q300,180 305,185 L305,200 Q305,205 300,205 Q295,205 295,200 Z" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- 語音文本 -->
+  <rect x="220" y="250" width="160" height="70" rx="5" ry="5" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+  <text x="230" y="270" font-family="Arial, sans-serif" font-size="14" fill="#333333">偵測到的內容：</text>
+  <text x="300" y="295" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#333333">「新增一瓶牛奶」</text>
+  
+  <!-- 底部按鈕 -->
+  <rect x="210" y="350" width="80" height="40" rx="20" ry="20" fill="#e2e8f0"/>
+  <text x="250" y="375" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#64748b">取消</text>
+  
+  <rect x="310" y="350" width="80" height="40" rx="20" ry="20" fill="#4299e1"/>
+  <text x="350" y="375" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#ffffff">確認</text>
+  
+  <!-- 語音提示和資訊 -->
+  <path d="M100,200 C120,180 140,190 160,190" fill="none" stroke="#666666" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <rect x="40" y="150" width="120" height="70" rx="10" ry="10" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="100" y="175" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#333333">語音指令</text>
+  <text x="100" y="195" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666666">直接說出您想新增的物品</text>
+  <text x="100" y="210" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666666">自動識別並分類</text>
+  
+  <!-- 批量添加提示 -->
+  <path d="M500,240 C480,220 460,230 440,230" fill="none" stroke="#666666" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <rect x="440" y="180" width="120" height="80" rx="10" ry="10" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="500" y="205" font-family="Arial, sans-serif" font-size="14" font-weight="bold" text-anchor="middle" fill="#333333">批量模式</text>
+  <text x="500" y="225" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666666">說「批量模式」</text>
+  <text x="500" y="240" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666666">連續添加多個物品</text>
+  <text x="500" y="255" font-family="Arial, sans-serif" font-size="12" text-anchor="middle" fill="#666666">提高效率</text>
+  
+  <!-- 注釋 -->
+  <text x="300" y="380" font-family="Arial, sans-serif" font-size="14" font-style="italic" text-anchor="middle" fill="#666666">語音輸入讓添加物品變得更快速方便</text>
+</svg> 

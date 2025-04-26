@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f9f9f9" rx="10" ry="10" />
+  
+  <!-- Item Details Screen -->
+  <rect x="150" y="30" width="500" height="540" rx="20" ry="20" fill="white" stroke="#ddd" stroke-width="2" />
+  
+  <!-- Item Name Section -->
+  <rect x="150" y="30" width="500" height="180" rx="20" ry="20" fill="white" stroke="#f0f0f0" stroke-width="1" />
+  
+  <!-- Pencil Icon -->
+  <line x1="180" y1="100" x2="200" y2="80" stroke="#FF6B2B" stroke-width="3" stroke-linecap="round" />
+  <line x1="180" y1="100" x2="170" y2="110" stroke="#FF6B2B" stroke-width="3" stroke-linecap="round" />
+  <line x1="170" y1="110" x2="180" y2="115" stroke="#FF6B2B" stroke-width="3" stroke-linecap="round" />
+  <line x1="180" y1="115" x2="205" y2="85" stroke="#FF6B2B" stroke-width="3" stroke-linecap="round" />
+  
+  <!-- Item Name Label and Asterisk -->
+  <text x="230" y="100" font-family="Arial" font-size="36" font-weight="bold" fill="#374151">Item Name</text>
+  <text x="420" y="100" font-family="Arial" font-size="36" font-weight="bold" fill="#E53E3E">*</text>
+  
+  <!-- Item Name Input Field with Value -->
+  <rect x="170" y="130" width="460" height="60" rx="30" ry="30" fill="white" stroke="#FFE5D4" stroke-width="2" />
+  <text x="210" y="170" font-family="Arial" font-size="32" fill="#333333">Fish</text>
+  <text x="740" y="170" font-family="Arial" font-size="20" fill="#9CA3AF">×</text>
+  
+  <!-- Voice and Barcode Buttons -->
+  <rect x="640" y="130" width="60" height="60" rx="15" ry="15" fill="#FFF8F2" stroke="#FFE5D4" stroke-width="2" />
+  <circle cx="670" cy="160" r="15" fill="#FFF8F2" stroke="#FF6B2B" stroke-width="2" />
+  <path d="M662,160 L670,168 L678,160 M670,168 L670,152" stroke="#FF6B2B" stroke-width="2" fill="none" />
+  
+  <rect x="710" y="130" width="60" height="60" rx="15" ry="15" fill="#FFF8F2" stroke="#FFE5D4" stroke-width="2" />
+  <rect x="725" y="155" width="30" height="15" fill="none" stroke="#FF6B2B" stroke-width="2" />
+  <line x1="728" y1="155" x2="728" y2="170" stroke="#FF6B2B" stroke-width="2" />
+  <line x1="732" y1="155" x2="732" y2="170" stroke="#FF6B2B" stroke-width="2" />
+  <line x1="736" y1="155" x2="736" y2="170" stroke="#FF6B2B" stroke-width="2" />
+  <line x1="740" y1="155" x2="740" y2="170" stroke="#FF6B2B" stroke-width="2" />
+  <line x1="744" y1="155" x2="744" y2="170" stroke="#FF6B2B" stroke-width="2" />
+  <line x1="748" y1="155" x2="748" y2="170" stroke="#FF6B2B" stroke-width="2" />
+  <line x1="752" y1="155" x2="752" y2="170" stroke="#FF6B2B" stroke-width="2" />
+  
+  <!-- Quantity Section -->
+  <rect x="150" y="220" width="500" height="180" rx="20" ry="20" fill="white" stroke="#f0f0f0" stroke-width="1" />
+  
+  <!-- Quantity Label -->
+  <text x="170" y="270" font-family="Arial" font-size="36" fill="#FF6B2B" font-weight="bold">#</text>
+  <text x="230" y="270" font-family="Arial" font-size="36" font-weight="bold" fill="#374151">Quantity</text>
+  
+  <!-- Auto-adjust Section -->
+  <rect x="430" y="240" width="220" height="60" rx="30" ry="30" fill="#F7FAFC" stroke="#E2E8F0" stroke-width="1" />
+  <circle cx="470" cy="270" r="18" fill="none" stroke="#666" stroke-width="2" />
+  <circle cx="470" cy="264" r="5" fill="#666" />
+  <circle cx="462" cy="270" r="5" fill="#666" />
+  <circle cx="478" cy="270" r="5" fill="#666" />
+  <text x="500" y="277" font-family="Arial" font-size="24" fill="#4A5568">Auto-adjust</text>
+  <rect x="620" y="250" width="40" height="30" rx="15" ry="15" fill="#FFF1E7" stroke="#FF6B2B" stroke-width="1" />
+  <text x="630" y="273" font-family="Arial" font-size="20" font-weight="bold" fill="#FF6B2B">x2</text>
+  
+  <!-- Toggle Switch -->
+  <rect x="680" y="240" width="60" height="30" rx="15" ry="15" fill="#E2E8F0" />
+  <circle cx="695" cy="255" r="13" fill="white" stroke="#D1D5DB" stroke-width="1" />
+  
+  <!-- Quantity Controls -->
+  <rect x="170" y="320" width="360" height="60" rx="30" ry="30" fill="white" stroke="#E2E8F0" stroke-width="1" />
+  <line x1="250" y1="320" x2="250" y2="380" stroke="#E2E8F0" stroke-width="1" />
+  <line x1="470" y1="320" x2="470" y2="380" stroke="#E2E8F0" stroke-width="1" />
+  <text x="200" y="360" font-family="Arial" font-size="24" font-weight="bold" fill="#FF6B2B">−</text>
+  <text x="500" y="360" font-family="Arial" font-size="24" font-weight="bold" fill="#FF6B2B">+</text>
+  <text x="350" y="360" font-family="Arial" font-size="36" font-weight="bold" fill="#333333">1</text>
+  
+  <!-- Units Display -->
+  <rect x="550" y="320" width="80" height="60" rx="30" ry="30" fill="#FFF9F5" stroke="#FFE5D4" stroke-width="1" />
+  <text x="565" y="360" font-family="Arial" font-size="24" font-weight="bold" fill="#FF6B2B">1 units</text>
+  
+  <!-- Category Section -->
+  <rect x="150" y="410" width="500" height="160" rx="20" ry="20" fill="white" stroke="#f0f0f0" stroke-width="1" />
+  
+  <!-- Category Label and Icon -->
+  <rect x="180" y="460" width="60" height="60" rx="15" ry="15" fill="#FFF8F2" stroke="#FF6B2B" stroke-width="2" />
+  <line x1="200" y1="475" x2="220" y2="475" stroke="#FF6B2B" stroke-width="3" />
+  <line x1="200" y1="485" x2="220" y2="485" stroke="#FF6B2B" stroke-width="3" />
+  <line x1="200" y1="495" x2="220" y2="495" stroke="#FF6B2B" stroke-width="3" />
+  <line x1="200" y1="505" x2="220" y2="505" stroke="#FF6B2B" stroke-width="3" />
+  
+  <text x="260" y="490" font-family="Arial" font-size="36" font-weight="bold" fill="#374151">Category</text>
+  
+  <!-- Home Icon -->
+  <rect x="345" y="460" width="60" height="60" rx="15" ry="15" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="2" />
+  <path d="M355,490 L355,510 L395,510 L395,490 L375,470 Z" fill="none" stroke="#9CA3AF" stroke-width="2" />
+  
+  <!-- Subcategory Section -->
+  <text x="525" y="490" font-family="Arial" font-size="36" font-weight="bold" fill="#374151">Subcategory</text>
+  
+  <!-- Subcategory Selection -->
+  <rect x="500" y="530" width="150" height="40" rx="20" ry="20" fill="#FFF9F5" stroke="#FFE5D4" stroke-width="1" />
+  <text x="520" y="555" font-family="Arial" font-size="24" font-weight="bold" fill="#333333">Seafood</text>
+  <rect x="630" y="535" width="80" height="30" rx="15" ry="15" fill="#FFF1E7" stroke="#FF6B2B" stroke-width="1" />
+  <text x="645" y="555" font-family="Arial" font-size="18" font-weight="bold" fill="#FF6B2B">3 days</text>
+  
+  <!-- Highlight Annotations -->
+  <!-- Name Field Highlight -->
+  <rect x="165" y="80" width="470" height="120" rx="5" ry="5" fill="none" stroke="#FF6B2B" stroke-width="2" stroke-dasharray="5,5" />
+  <text x="650" y="140" font-family="Arial" font-size="18" font-weight="bold" fill="#FF6B2B">Name your item</text>
+  <line x1="640" y1="140" x2="600" y2="140" stroke="#FF6B2B" stroke-width="2" />
+  
+  <!-- Quantity Highlight -->
+  <rect x="165" y="240" width="370" height="130" rx="5" ry="5" fill="none" stroke="#FF6B2B" stroke-width="2" stroke-dasharray="5,5" />
+  <text x="120" y="300" font-family="Arial" font-size="18" font-weight="bold" fill="#FF6B2B">Set quantity</text>
+  <line x1="150" y1="300" x2="180" y2="300" stroke="#FF6B2B" stroke-width="2" />
+  
+  <!-- Category Highlight -->
+  <rect x="165" y="460" width="230" height="60" rx="5" ry="5" fill="none" stroke="#FF6B2B" stroke-width="2" stroke-dasharray="5,5" />
+  <text x="120" y="490" font-family="Arial" font-size="18" font-weight="bold" fill="#FF6B2B">Choose category</text>
+  <line x1="150" y1="490" x2="175" y2="490" stroke="#FF6B2B" stroke-width="2" />
+  
+  <!-- Subcategory Highlight -->
+  <rect x="495" y="525" width="155" height="50" rx="5" ry="5" fill="none" stroke="#FF6B2B" stroke-width="2" stroke-dasharray="5,5" />
+  <text x="660" y="550" font-family="Arial" font-size="18" font-weight="bold" fill="#FF6B2B">Auto expiry settings</text>
+  <line x1="650" y1="550" x2="620" y2="550" stroke="#FF6B2B" stroke-width="2" />
+</svg> 

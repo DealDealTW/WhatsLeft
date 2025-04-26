@@ -151,7 +151,7 @@
   .app-title {
     font-family: 'Poppins', sans-serif;
     font-weight: 700; /* Bold */
-    font-size: 24px;
+    font-size: 22px;
     color: var(--brand-orange);
     letter-spacing: -0.5px;
   }
@@ -160,7 +160,7 @@
   .section-header {
     font-family: 'Poppins', sans-serif;
     font-weight: 700; /* Bold */
-    font-size: 18px;
+    font-size: 22px;
     color: var(--text-dark);
     letter-spacing: -0.3px;
     margin-bottom: 0.5rem;
@@ -312,6 +312,84 @@
     transform: scale(1);
     opacity: 1;
   }
+}
+
+/* 互動式教學動畫 */
+@keyframes pulse-border {
+  0% {
+    opacity: 0.7;
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(233, 109, 43, 0.5);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.02);
+    box-shadow: 0 0 0 6px rgba(233, 109, 43, 0);
+  }
+  100% {
+    opacity: 0.7;
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(233, 109, 43, 0);
+  }
+}
+
+@keyframes outer-glow {
+  0% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+}
+
+@keyframes bounce-pointer {
+  0% {
+    transform: translateY(-8px);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+  100% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes pulse-message {
+  0% {
+    box-shadow: 0 0 0 0 rgba(233, 109, 43, 0.6);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 10px 5px rgba(233, 109, 43, 0.3);
+    transform: scale(1.01);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(233, 109, 43, 0.6);
+    transform: scale(1);
+  }
+}
+
+.tutorial-highlight-border {
+  animation: pulse-border 3s infinite ease-in-out;
+}
+
+.tutorial-outer-glow {
+  animation: outer-glow 2.5s infinite ease-in-out;
+}
+
+.tutorial-pointer {
+  animation: bounce-pointer 1.5s infinite ease-in-out;
+}
+
+.tutorial-message-highlight {
+  animation: pulse-message 3s infinite;
+  border: 3px solid #E96D2B !important;
 }
 
 @layer utilities {

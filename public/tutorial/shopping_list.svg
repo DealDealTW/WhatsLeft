@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+  <!-- 背景 -->
+  <rect width="600" height="400" fill="#f8f9fa" rx="20" ry="20" />
+  
+  <!-- 頂部標題欄 -->
+  <rect x="0" y="0" width="600" height="60" fill="#3b82f6" rx="20" ry="20" />
+  <text x="300" y="40" font-family="Arial, sans-serif" font-size="24" font-weight="bold" text-anchor="middle" fill="white">購物清單</text>
+  
+  <!-- 搜索欄 -->
+  <rect x="20" y="80" width="560" height="40" fill="white" rx="10" ry="10" stroke="#ddd" stroke-width="1" />
+  <circle cx="45" cy="100" r="12" fill="none" stroke="#666" stroke-width="2" />
+  <line x1="54" y1="109" x2="60" y2="115" stroke="#666" stroke-width="2" />
+  <text x="70" y="105" font-family="Arial, sans-serif" font-size="14" fill="#999">搜索購物清單...</text>
+  
+  <!-- 類別標籤 - 蔬果 -->
+  <rect x="20" y="140" width="560" height="40" fill="#f0fdf4" rx="8" ry="8" />
+  <circle cx="40" cy="160" r="12" fill="#22c55e" />
+  <text x="60" y="165" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#166534">蔬果</text>
+  
+  <!-- 購物項目 - 已勾選 -->
+  <rect x="40" y="190" width="520" height="50" fill="white" rx="8" ry="8" stroke="#ddd" stroke-width="1" />
+  <rect x="55" y="205" width="20" height="20" fill="none" stroke="#22c55e" stroke-width="2" rx="4" ry="4" />
+  <path d="M60 215 L67 222 L75 208" stroke="#22c55e" stroke-width="2" fill="none" />
+  <text x="90" y="220" font-family="Arial, sans-serif" font-size="16" fill="#333" text-decoration="line-through">蘋果</text>
+  <text x="520" y="220" font-family="Arial, sans-serif" font-size="14" text-anchor="end" fill="#666">2 kg</text>
+  
+  <!-- 購物項目 - 未勾選 -->
+  <rect x="40" y="250" width="520" height="50" fill="white" rx="8" ry="8" stroke="#ddd" stroke-width="1" />
+  <rect x="55" y="265" width="20" height="20" fill="none" stroke="#ddd" stroke-width="2" rx="4" ry="4" />
+  <text x="90" y="280" font-family="Arial, sans-serif" font-size="16" fill="#333">香蕉</text>
+  <text x="520" y="280" font-family="Arial, sans-serif" font-size="14" text-anchor="end" fill="#666">500 g</text>
+  
+  <!-- 類別標籤 - 乳製品 -->
+  <rect x="20" y="320" width="560" height="40" fill="#EFF6FF" rx="8" ry="8" />
+  <circle cx="40" cy="340" r="12" fill="#3b82f6" />
+  <text x="60" y="345" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#1e40af">乳製品</text>
+  
+  <!-- 購物項目 - 未勾選 -->
+  <rect x="40" y="370" width="520" height="50" fill="white" rx="8" ry="8" stroke="#ddd" stroke-width="1" />
+  <rect x="55" y="385" width="20" height="20" fill="none" stroke="#ddd" stroke-width="2" rx="4" ry="4" />
+  <text x="90" y="400" font-family="Arial, sans-serif" font-size="16" fill="#333">牛奶</text>
+  <text x="520" y="400" font-family="Arial, sans-serif" font-size="14" text-anchor="end" fill="#666">2 盒</text>
+  
+  <!-- 底部工具欄 -->
+  <rect x="0" y="440" width="600" height="80" fill="white" rx="0" ry="0" stroke="#ddd" stroke-width="1" />
+  
+  <!-- 新增按鈕 -->
+  <circle cx="300" cy="433" r="25" fill="#3b82f6" />
+  <line x1="300" y1="423" x2="300" y2="443" stroke="white" stroke-width="4" />
+  <line x1="290" y1="433" x2="310" y2="433" stroke="white" stroke-width="4" />
+  
+  <!-- 移動到庫存按鈕 -->
+  <rect x="400" y="450" width="180" height="60" fill="#3b82f6" rx="8" ry="8" />
+  <text x="490" y="485" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">移動至我的庫存</text>
+  <circle cx="430" cy="480" r="15" fill="white" opacity="0.9" />
+  <line x1="425" y1="480" x2="435" y2="480" stroke="#3b82f6" stroke-width="2" />
+  <line x1="430" y1="475" x2="430" y2="485" stroke="#3b82f6" stroke-width="2" />
+  
+  <!-- 勾選按鈕 -->
+  <rect x="20" y="450" width="180" height="60" fill="white" rx="8" ry="8" stroke="#3b82f6" stroke-width="2" />
+  <text x="110" y="485" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#3b82f6">全部勾選</text>
+  <rect x="55" y="470" width="20" height="20" fill="none" stroke="#3b82f6" stroke-width="2" rx="4" ry="4" />
+  <path d="M60 480 L67 487 L75 473" stroke="#3b82f6" stroke-width="2" fill="none" />
+  
+  <!-- 已購買提示 -->
+  <rect x="150" y="130" width="300" height="60" fill="#f0fdf4" rx="10" ry="10" stroke="#86efac" stroke-width="1" filter="drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1))">
+    <animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite" />
+  </rect>
+  <text x="300" y="155" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#166534">
+    <animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite" />
+    已購買 1 個項目
+  </text>
+  <text x="300" y="175" font-family="Arial, sans-serif" font-size="14" text-anchor="middle" fill="#166534">
+    <animate attributeName="opacity" values="0;1;1;0" dur="5s" repeatCount="indefinite" />
+    已添加到您的庫存
+  </text>
+  
+  <!-- 底部導航欄 -->
+  <rect x="0" y="360" width="600" height="40" fill="white" />
+  <rect x="0" y="359" width="600" height="1" fill="#ddd" />
+  
+  <!-- 導航項目 - 主控台 -->
+  <circle cx="75" cy="380" r="12" fill="#94a3b8" />
+  <rect x="70" y="374" width="10" height="7" fill="white" />
+  <rect x="70" y="383" width="10" height="3" fill="white" />
+  <text x="75" y="395" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#64748b">主控台</text>
+  
+  <!-- 導航項目 - 購物清單 (活動) -->
+  <rect x="150" y="360" width="150" height="40" fill="#dbeafe" />
+  <circle cx="225" cy="380" r="12" fill="#3b82f6" />
+  <line x1="218" y1="380" x2="232" y2="380" stroke="white" stroke-width="2" />
+  <line x1="218" y1="376" x2="232" y2="376" stroke="white" stroke-width="1" />
+  <line x1="218" y1="384" x2="232" y2="384" stroke="white" stroke-width="1" />
+  <line x1="220" y1="376" x2="220" y2="384" stroke="white" stroke-width="1" />
+  <text x="225" y="395" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#3b82f6">購物清單</text>
+  
+  <!-- 導航項目 - 統計分析 -->
+  <circle cx="375" cy="380" r="12" fill="#94a3b8" />
+  <rect x="370" y="374" width="10" height="12" fill="white" />
+  <line x1="373" y1="386" x2="373" y2="374" stroke="#94a3b8" stroke-width="1" />
+  <line x1="376" y1="386" x2="376" y2="378" stroke="#94a3b8" stroke-width="1" />
+  <line x1="379" y1="386" x2="379" y2="380" stroke="#94a3b8" stroke-width="1" />
+  <text x="375" y="395" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#64748b">統計分析</text>
+  
+  <!-- 導航項目 - 設置 -->
+  <circle cx="525" cy="380" r="12" fill="#94a3b8" />
+  <circle cx="525" cy="380" r="6" fill="none" stroke="white" stroke-width="2" />
+  <line x1="531" y1="374" x2="535" y2="370" stroke="white" stroke-width="2" />
+  <text x="525" y="395" font-family="Arial, sans-serif" font-size="10" text-anchor="middle" fill="#64748b">設置</text>
+</svg> 

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- 背景 -->
+  <rect width="600" height="400" fill="#f5f5f5"/>
+  
+  <!-- 標題 -->
+  <text x="300" y="40" font-family="Arial, sans-serif" font-size="22" font-weight="bold" text-anchor="middle" fill="#333333">使用統計洞察</text>
+  
+  <!-- 頂部數據卡片部分 -->
+  <rect x="50" y="70" width="500" height="80" rx="10" ry="10" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+  
+  <!-- 數據卡片1: 本月已使用 -->
+  <rect x="65" y="85" width="150" height="50" rx="8" ry="8" fill="#ebf8ff" stroke="#90cdf4" stroke-width="1"/>
+  <text x="140" y="110" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#2b6cb0" text-anchor="middle">本月已使用</text>
+  <text x="140" y="130" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#3182ce" text-anchor="middle">42 項</text>
+  
+  <!-- 數據卡片2: 本月浪費 -->
+  <rect x="225" y="85" width="150" height="50" rx="8" ry="8" fill="#fff5f5" stroke="#fed7d7" stroke-width="1"/>
+  <text x="300" y="110" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#c53030" text-anchor="middle">本月浪費</text>
+  <text x="300" y="130" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#e53e3e" text-anchor="middle">5 項</text>
+  
+  <!-- 數據卡片3: 節省金額 -->
+  <rect x="385" y="85" width="150" height="50" rx="8" ry="8" fill="#f0fff4" stroke="#9ae6b4" stroke-width="1"/>
+  <text x="460" y="110" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#2f855a" text-anchor="middle">估計節省</text>
+  <text x="460" y="130" font-family="Arial, sans-serif" font-size="18" font-weight="bold" fill="#38a169" text-anchor="middle">$120</text>
+  
+  <!-- 左側：消費趨勢圖表 -->
+  <rect x="50" y="160" width="240" height="200" rx="10" ry="10" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="170" y="185" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#333333">消費趨勢</text>
+  
+  <!-- 趨勢圖背景線 -->
+  <line x1="80" y1="320" x2="260" y2="320" stroke="#e0e0e0" stroke-width="1"/>
+  <line x1="80" y1="290" x2="260" y2="290" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="80" y1="260" x2="260" y2="260" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="80" y1="230" x2="260" y2="230" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="80" y1="200" x2="260" y2="200" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="3,3"/>
+  
+  <!-- Y軸標籤 -->
+  <text x="70" y="323" font-family="Arial, sans-serif" font-size="10" fill="#888888" text-anchor="end">0</text>
+  <text x="70" y="293" font-family="Arial, sans-serif" font-size="10" fill="#888888" text-anchor="end">10</text>
+  <text x="70" y="263" font-family="Arial, sans-serif" font-size="10" fill="#888888" text-anchor="end">20</text>
+  <text x="70" y="233" font-family="Arial, sans-serif" font-size="10" fill="#888888" text-anchor="end">30</text>
+  <text x="70" y="203" font-family="Arial, sans-serif" font-size="10" fill="#888888" text-anchor="end">40</text>
+  
+  <!-- X軸標籤 -->
+  <text x="100" y="335" font-family="Arial, sans-serif" font-size="10" fill="#888888" text-anchor="middle">一月</text>
+  <text x="140" y="335" font-family="Arial, sans-serif" font-size="10" fill="#888888" text-anchor="middle">二月</text>
+  <text x="180" y="335" font-family="Arial, sans-serif" font-size="10" fill="#888888" text-anchor="middle">三月</text>
+  <text x="220" y="335" font-family="Arial, sans-serif" font-size="10" fill="#888888" text-anchor="middle">四月</text>
+  
+  <!-- 柱狀圖 -->
+  <rect x="90" y="260" width="20" height="60" fill="#90cdf4"/>
+  <rect x="130" y="230" width="20" height="90" fill="#90cdf4"/>
+  <rect x="170" y="250" width="20" height="70" fill="#90cdf4"/>
+  <rect x="210" y="210" width="20" height="110" fill="#4299e1"/>
+  
+  <!-- 浪費指標 -->
+  <rect x="90" y="315" width="20" height="5" fill="#e53e3e"/>
+  <rect x="130" y="310" width="20" height="10" fill="#e53e3e"/>
+  <rect x="170" y="315" width="20" height="5" fill="#e53e3e"/>
+  <rect x="210" y="312" width="20" height="8" fill="#e53e3e"/>
+  
+  <!-- 右側：類別分布圓餅圖 -->
+  <rect x="310" y="160" width="240" height="200" rx="10" ry="10" fill="#ffffff" stroke="#e0e0e0" stroke-width="1"/>
+  <text x="430" y="185" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="#333333">類別消費分布</text>
+  
+  <!-- 圓餅圖 -->
+  <circle cx="430" cy="255" r="70" fill="none" stroke="#e0e0e0" stroke-width="1"/>
+  
+  <!-- 圓餅圖區塊 -->
+  <path d="M 430 255 L 500 255 A 70 70 0 0 1 465 315 Z" fill="#4299e1"/>
+  <path d="M 430 255 L 465 315 A 70 70 0 0 1 385 315 Z" fill="#38a169"/>
+  <path d="M 430 255 L 385 315 A 70 70 0 0 1 360 255 Z" fill="#ecc94b"/>
+  <path d="M 430 255 L 360 255 A 70 70 0 0 1 430 185 L 430 255 Z" fill="#e53e3e"/>
+  
+  <!-- 圖例 -->
+  <rect x="380" y="340" width="12" height="12" fill="#4299e1"/>
+  <text x="397" y="350" font-family="Arial, sans-serif" font-size="12" fill="#333333">乳製品 (35%)</text>
+  
+  <rect x="455" y="340" width="12" height="12" fill="#38a169"/>
+  <text x="472" y="350" font-family="Arial, sans-serif" font-size="12" fill="#333333">蔬果 (25%)</text>
+  
+  <rect x="380" y="365" width="12" height="12" fill="#ecc94b"/>
+  <text x="397" y="375" font-family="Arial, sans-serif" font-size="12" fill="#333333">肉類 (20%)</text>
+  
+  <rect x="455" y="365" width="12" height="12" fill="#e53e3e"/>
+  <text x="472" y="375" font-family="Arial, sans-serif" font-size="12" fill="#333333">其他 (20%)</text>
+  
+  <!-- 注釋 -->
+  <text x="300" y="390" font-family="Arial, sans-serif" font-size="14" font-style="italic" text-anchor="middle" fill="#666666">追蹤消費模式，降低浪費</text>
+</svg> 
